@@ -22,9 +22,9 @@ function Home(): Node {
 
   return (
     <>
-      <h1>MERN Template</h1>
+      <h1>Studying Activity</h1>
       <p>
-        Below will tell you if the API is running.
+        Insert studying activity here
         <br />
         {text}
       </p>

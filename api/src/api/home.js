@@ -4,16 +4,48 @@ const { errorWrap } = require('../middleware');
 const { createResponse } = require('../utils');
 
 // uncomment to use the schema
-// const Home = require('../models/home');
+const Home = require('../models/home');
 
 router.get(
   '/',
   errorWrap(async (req, res) => {
-    // MongoDB connection
-    // const homeText = await Home.findOne();
-    const homeText = "You've connected the database! Isn't it so beautiful???";
+    const homeText = await Home.find();
 
     // Template for formulating a successful API response
+    const statusCode = 200;
+    const responseBody = createResponse(
+      statusCode,
+      'Successfully returned home text',
+      homeText,
+    );
+    res.status(statusCode).json(responseBody);
+  }),
+);
+
+router.post(
+  '/',
+  errorWrap(async (req, res) => {
+    let { text } = req.body;
+    if (text && text != null) {
+      const newHomeText = new Home({
+        text
+      })
+      await newHomeText.save();
+      const statusCode = 200;
+      const responseBody = createResponse(
+        statusCode,
+        'Successfully created new Home object',
+        newHomeText,
+      );
+      res.status(statusCode).json(responseBody);
+    }
+  }),
+);
+
+router.get(
+  '/id/:id',
+  errorWrap(async (req, res) => {
+    const homeText = await Home.findOne({_id: req.params.id});
     const statusCode = 200;
     const responseBody = createResponse(
       statusCode,

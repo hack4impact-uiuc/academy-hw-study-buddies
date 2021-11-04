@@ -1,0 +1,10 @@
+@import '../styles/colors.scss';
+
+.navbar {
+  background-color: $accent !important;
+
+  .nav-item {
+    color: $light !important;
+    font-weight: bold !important;
+  }
+}

@@ -1,12 +1,10 @@
-// @flow
 import React, { useEffect, useState } from 'react';
-import type { Node } from 'react';
 
 import { getSampleResponse } from '../utils/apiWrapper';
 
-import '../css/Home.css';
+import '../css/Home.scss';
 
-function Home(): Node {
+function Home() {
   const [text, setText] = useState('You did not run local API!');
 
   useEffect(() => {
@@ -19,6 +17,8 @@ function Home(): Node {
 
     populateText();
   }, []);
+
+  console.log('poo');
 
   return (
     <>

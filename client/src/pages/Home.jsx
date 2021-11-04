@@ -5,7 +5,7 @@ import { getSampleResponse } from '../utils/apiWrapper';
 import '../css/Home.scss';
 
 function Home() {
-  const [text, setText] = useState('You did not run local API!');
+  const [text, setText] = useState([]);
 
   useEffect(() => {
     const populateText = async () => {
@@ -26,7 +26,7 @@ function Home() {
       <p>
         Insert studying activity here
         <br />
-        {text}
+        {text.length > 0 ? `You have successfully fetched ${text.length} documents!`: 'You did not run local API!'}
       </p>
     </>
   );

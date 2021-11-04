@@ -9,16 +9,18 @@ const Home = require('../models/home');
 router.get(
   '/',
   errorWrap(async (req, res) => {
-    const homeText = await Home.find();
+    const home = await Home.findOne();
 
     // Template for formulating a successful API response
-    const statusCode = 200;
-    const responseBody = createResponse(
-      statusCode,
-      'Successfully returned home text',
-      homeText,
-    );
-    res.status(statusCode).json(responseBody);
+    if (home) {
+      const statusCode = 200;
+      const responseBody = createResponse(
+        statusCode,
+        'Successfully returned home text',
+        home.text,
+      );
+      res.status(statusCode).json(responseBody);
+    }
   }),
 );
 
@@ -26,10 +28,10 @@ router.post(
   '/',
   errorWrap(async (req, res) => {
     let { text } = req.body;
-    if (text && text != null) {
+    if (text && text !== null) {
       const newHomeText = new Home({
-        text
-      })
+        text,
+      });
       await newHomeText.save();
       const statusCode = 200;
       const responseBody = createResponse(
@@ -45,7 +47,7 @@ router.post(
 router.get(
   '/id/:id',
   errorWrap(async (req, res) => {
-    const homeText = await Home.findOne({_id: req.params.id});
+    const homeText = await Home.findOne({ _id: req.params.id });
     const statusCode = 200;
     const responseBody = createResponse(
       statusCode,

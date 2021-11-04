@@ -26,7 +26,9 @@ function Home() {
       <p>
         Insert studying activity here
         <br />
-        {text.length > 0 ? `You have successfully fetched ${text.length} documents!`: 'You did not run local API!'}
+        {text.length > 0
+          ? `You have successfully fetched ${text.length} documents!`
+          : 'You did not run local API!'}
       </p>
     </>
   );

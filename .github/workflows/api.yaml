@@ -55,6 +55,8 @@ jobs:
 
   api-test:
     runs-on: ubuntu-latest
+    env:
+      MONGO_URL: ${{ secrets.MONGO_URL }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v2

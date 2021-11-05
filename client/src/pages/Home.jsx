@@ -18,8 +18,6 @@ function Home() {
     populateText();
   }, []);
 
-  console.log('poo');
-
   return (
     <>
       <h1>Studying Activity</h1>

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
+import SessionSummary from '../components/SessionSummary';
 import { getSampleResponse } from '../utils/apiWrapper';
 
 import '../css/Home.scss';
 
 function Home() {
+  const sessions = [{creator: "Aaron Alexander", class: "CS 124", location: "Grainger Engineering Library"}, {creator: "Aaron Alexander", class: "CS 124", location: "Grainger Engineering Library"}];
   const [text, setText] = useState([]);
 
   useEffect(() => {
@@ -21,6 +23,9 @@ function Home() {
   return (
     <>
       <h1>Studying Activity</h1>
+      {sessions.map((session, i) => (
+        <SessionSummary session={session} key={i}/> 
+      ))}
       <p>
         Insert studying activity here
         <br />

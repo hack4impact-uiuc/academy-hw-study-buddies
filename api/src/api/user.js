@@ -20,7 +20,7 @@ router.post(
     }),
 );
 
-router.get{
+router.get(
     '/',
     errorWrap(async (req, res) => {
         const users = await User.find();
@@ -31,7 +31,7 @@ router.get{
         })
         return;
     }),
-};
+);
 
 // router.get{
 //     '/:Id',

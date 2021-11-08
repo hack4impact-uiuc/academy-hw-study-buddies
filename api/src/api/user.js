@@ -20,7 +20,7 @@ router.post(
     }),
 );
 
-router.get{
+router.get(
     '/',
     errorWrap(async (req, res) => {
         const users = await User.find();
@@ -31,21 +31,21 @@ router.get{
         })
         return;
     }),
-};
+);
 
-// router.get{
-//     '/:Id',
+router.get(
+    '/:Id',
 
-//     errorWrap(async (req, res) => {
-//         const users = await User.find();
-//         req.status(200).json({
-//             message: "successfully retrieved users",
-//             success: true,
-//             result: users,
-//         })
-//         return;
-//     }),
-// };
+    errorWrap(async (req, res) => {
+        const users = await User.findById(req.params.Id);
+        req.status(200).json({
+            message: "successfully retrieved users",
+            success: true,
+            result: users,
+        })
+        return;
+    }),
+);
 
 
 

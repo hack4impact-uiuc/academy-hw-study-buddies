@@ -1,10 +1,16 @@
 @import '../styles/colors.scss';
 
-/* @font-face {
-    font-family: $tommy;
-     src: url($tommy+'.ttf') format ('truetype');
-   }
-*/
+// @font-face {
+//     font-family: 'Tommy';
+//     src: local('Tommy'), url('./fonts/Tommy.ttf') format('truetype');
+//   }
+
+// @font-face {
+//   font-family: 'Tommy';
+//   src: local('Tommy'), url(./fonts/Tommy.woff) format('woff');
+
+// }
+
 .sessionCard {
   box-shadow: none !important;
   text-align: left !important;
@@ -12,6 +18,7 @@
   height: 100px !important;
   margin-bottom: 20px !important;
   border-radius: 15px !important;
+  // font-family: Tommy !important;
 }
 
 .homeHeader {
@@ -29,7 +36,7 @@
 
 .btn {
   margin-left: 300px;
-  background-color: #C4C4C4;
+  background-color: #c4c4c4;
   color: black;
   padding: 5px 15px;
   border-radius: 5px;

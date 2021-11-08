@@ -1,14 +1,14 @@
 @import '../styles/colors.scss';
 
-// @font-face {
-//     font-family: 'tommy';
-//     src: local('tommy'), url('client/src/fonts') format('ttf');
-//   }
-
+/* @font-face {
+    font-family: $tommy;
+     src: url($tommy+'.ttf') format ('truetype');
+   }
+*/
 .sessionCard {
   box-shadow: none !important;
   text-align: left !important;
-  width: 500px !important;
+  width: 400px !important;
   height: 100px !important;
   margin-bottom: 20px !important;
   border-radius: 15px !important;
@@ -20,4 +20,20 @@
   margin-bottom: 50px;
   font-size: 80px;
   text-align: left;
+}
+
+.insideCard {
+  margin-top: 5px !important;
+  padding: 20px !important;
+}
+
+.btn {
+  margin-left: 300px;
+  background-color: #C4C4C4;
+  color: black;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+.btn:hover {
+  color: black;
 }

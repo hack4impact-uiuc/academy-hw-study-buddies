@@ -4,10 +4,9 @@ import { Card } from 'semantic-ui-react';
 function SessionSummary({ session }) {
   return (
     <Card centered className="sessionCard">
-      <Card.Content>
-        <Card.Header>{session.class}</Card.Header>
-        <Card.Description>{session.creator}</Card.Description>
-        <Card.Description>{session.location}</Card.Description>
+      <Card.Content className="insideCard">
+        <Card.Header>{session.creator} is studying {session.class} at {session.location}</Card.Header>  
+        <a href="uiucrejects.com" className="btn">JOIN</a>
       </Card.Content>
     </Card>
   );

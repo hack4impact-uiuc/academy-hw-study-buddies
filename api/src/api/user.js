@@ -6,48 +6,74 @@ const { createResponse } = require('../utils');
 const Home = require('../models/home');
 
 router.post(
-    '/',
-    errorWrap(async (req, res) => {
-        const newUser = await User.create(req.body);
-        if (newUser) {
-            req.status(200).json({
-                message: "successfully created new user",
-                success: true,
-                result: newUser,
-            });
-            return;
-        }
-    }),
+  '/',
+  errorWrap(async (req, res) => {
+    const newUser = await User.create(req.body);
+    if (newUser) {
+      req.status(200).json({
+        message: 'successfully created new user',
+        success: true,
+        result: newUser,
+      });
+      return;
+    }
+  }),
 );
 
 router.get(
-    '/',
-    errorWrap(async (req, res) => {
-        const users = await User.find();
-        req.status(200).json({
-            message: "successfully retrieved users",
-            success: true,
-            result: users,
-        })
-        return;
-    }),
+  '/',
+  errorWrap(async (req, res) => {
+    const users = await User.find();
+    req.status(200).json({
+      message: 'successfully retrieved users',
+      success: true,
+      result: users,
+    });
+    return;
+  }),
 );
 
 router.get(
-    '/:Id',
+  '/:Id',
 
-    errorWrap(async (req, res) => {
-        const users = await User.findById(req.params.Id);
-        req.status(200).json({
-            message: "successfully retrieved users",
-            success: true,
-            result: users,
-        })
-        return;
-    }),
+  errorWrap(async (req, res) => {
+    const users = await User.findById(req.params.Id);
+    req.status(200).json({
+      message: 'successfully retrieved users',
+      success: true,
+      result: users,
+    });
+    return;
+  }),
 );
 
+router.post(
+  '/',
+  errorWrap(async (req, res) => {
+    const newUser = await User.create(req.body);
+    if (newUser) {
+      res.status(200).json({
+        message: 'Successfully created new user',
+        success: true,
+        result: newUser,
+      });
+    }
+  }),
+);
 
+router.delete(
+  '/:Id',
+  requireAdmin,
+  errorWrap(async (req, res) => {
+    const deletedUser = await User.findByIdAndDelete(req.params.Id);
+
+    res.status(200).json({
+      success: true,
+      message: 'User successfully deleted',
+      result: deletedUser,
+    });
+  }),
+);
 
 /*
 // uncomment to use the schema

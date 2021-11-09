@@ -6,7 +6,13 @@ function SessionSummary({ session }) {
     <Card centered className="sessionCard">
       <Card.Content className="insideCard">
         <Card.Header>{session.creator} is studying {session.class} at {session.location}</Card.Header>  
-        <a href="uiucrejects.com" className="btn">JOIN</a>
+        {/* <button className="ui active button">
+          <i className="plus"></i>
+          Join
+        </button>
+        <button className="ui disabled button">
+          Followed
+        </button> */}
       </Card.Content>
     </Card>
   );

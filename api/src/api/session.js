@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { errorWrap } = require('../middleware');
-import { ObjectId } from 'mongodb';
 
 // uncomment to use the schema
 const Session = require('../models/session');
-const isValidMongoId = (id) => ObjectId.isValid(id);
 
 router.post(
   '/',
@@ -38,14 +36,6 @@ router.get(
   '/:sessionId',
 
   errorWrap(async (req, res) => {
-    if (!isValidMongoId(req.params.sessionId)) {
-      res.status(400).json({
-        success: false,
-        message: 'Bad ID format',
-      });
-      return;
-    }
-
     const session = await Session.findById(req.params.sessionId);
     if (!session) {
       res.status(404).json({
@@ -65,14 +55,6 @@ router.get(
 router.put(
   '/:sessionId',
   errorWrap(async (req, res) => {
-    if (!isValidMongoId(req.params.sessionId)) {
-      res.status(400).json({
-        success: false,
-        message: 'Bad ID format',
-      });
-      return;
-    }
-
     const updatedSession = await Session.findByIdAndUpdate(
       req.params.sessionId,
       req.body,
@@ -98,14 +80,6 @@ router.put(
 router.delete(
   '/:sessionId',
   errorWrap(async (req, res) => {
-    if (!isValidMongoId(req.params.sessionId)) {
-      res.status(400).json({
-        success: false,
-        message: 'Bad ID format',
-      });
-      return;
-    }
-
     const deletedSession = await Session.findByIdAndDelete(
       req.params.sessionId,
     );

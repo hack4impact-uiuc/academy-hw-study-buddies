@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 function SessionSummary({ session }) {
   return (
@@ -8,9 +9,16 @@ function SessionSummary({ session }) {
         <Card.Header>
           {session.creator} is studying {session.class} at {session.location}
         </Card.Header>
-        <a href="uiucrejects.com" className="btn">
+        <button className="small ui button" id="join-btn">
           JOIN
-        </a>
+        </button>
+        <button
+          className="small ui button"
+          onClick="join-function"
+          id="follow-btn"
+        >
+          <i className="user icon"></i>FOLLOW
+        </button>
       </Card.Content>
     </Card>
   );

@@ -1,15 +1,9 @@
 @import '../styles/colors.scss';
 
-// @font-face {
-//     font-family: 'Tommy';
-//     src: local('Tommy'), url('./fonts/Tommy.ttf') format('truetype');
-//   }
-
-// @font-face {
-//   font-family: 'Tommy';
-//   src: local('Tommy'), url(./fonts/Tommy.woff) format('woff');
-
-// }
+@font-face {
+  font-family: 'Tommy';
+  src: local('Tommy'), url('../fonts/Tommy.ttf') format('truetype');
+}
 
 .sessionCard {
   box-shadow: none !important;
@@ -18,15 +12,17 @@
   height: 100px !important;
   margin-bottom: 20px !important;
   border-radius: 15px !important;
-  transition: all 0.3s ease;
-  // font-family: Tommy !important;
-}
-.sessionCard:hover .insideCard {
-  transition: all 0.3s ease;
-  background-color: #b2caee !important;
-  color: white;
+  font-family: Tommy !important;
+  transition: all 0.3s ease !important;
 }
 
+.ui.card > .content > .header {
+  font-family: Tommy !important;
+}
+.sessionCard:hover {
+  transition: all 0.3s ease;
+  background-color: #b2caee !important;
+}
 
 .homeHeader {
   margin-top: 50px;
@@ -34,21 +30,34 @@
   margin-bottom: 50px;
   font-size: 80px;
   text-align: left;
+  font-family: Tommy;
+}
+
+h1 {
+  font-family: Tommy;
 }
 
 .insideCard {
   margin-top: 5px !important;
   padding: 20px !important;
+  font-family: Tommy !important;
 }
 
-.btn {
-  margin-left: 300px;
-  background-color: #c4c4c4;
-  color: black;
-  padding: 5px 15px;
-  border-radius: 5px;
+#join-btn {
+  padding: 3px 20px;
+  margin-top: 5px;
+  transition: all 0.3s ease !important;
+  font-family: Tommy !important;
 }
-.btn:hover {
-  color: black;
-  transition: all 0.3s ease;
+#follow-btn {
+  padding: 3px 20px;
+  font-size: 13px;
+  font-family: Tommy !important;
+  transition: all 0.3s ease !important;
+}
+#join-btn:hover {
+  transition: all 0.3s ease !important;
+}
+#follow-btn:hover {
+  transition: all 0.3s ease !important;
 }

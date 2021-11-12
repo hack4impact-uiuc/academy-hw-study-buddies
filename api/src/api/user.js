@@ -24,7 +24,7 @@ router.get(
   errorWrap(async (req, res) => {
     const users = await User.find();
     res.status(200).json({
-      message: 'Successfully retrieved users',
+      message: 'Successfully retrieved all users',
       success: true,
       result: users,
     });
@@ -34,7 +34,6 @@ router.get(
 
 router.get(
   '/:userId',
-
   errorWrap(async (req, res) => {
     const user = await User.findById(req.params.userId);
     if (!user) {
@@ -67,6 +66,12 @@ router.put(
         result: updatedUser,
       });
     }
+    if (!updatedUser) {
+      res.status(404).json({
+        message: "User not found, update unsuccessful",
+        success: false,
+      });
+    }
   }),
 );
 
@@ -74,72 +79,20 @@ router.delete(
   '/:userId',
   errorWrap(async (req, res) => {
     const deletedUser = await User.findByIdAndDelete(req.params.userId);
-    res.status(200).json({
-      success: true,
-      message: 'User successfully deleted',
-      result: deletedUser,
-    });
-  }),
-);
-
-/*
-// uncomment to use the schema
-const Home = require('../models/home');
-
-router.get(
-  '/',
-  errorWrap(async (req, res) => {
-    const home = await Home.findOne();
-
-    // Template for formulating a successful API response
-    if (home) {
-      const statusCode = 200;
-      const responseBody = createResponse(
-        statusCode,
-        'Successfully returned home text',
-        home.text,
-      );
-      res.status(statusCode).json(responseBody);
-    }
-  }),
-);
-
-router.post(
-  '/',
-  errorWrap(async (req, res) => {
-    let { text } = req.body;
-    if (text && text !== null) {
-      const newHomeText = new Home({
-        text,
+    if (deletedUser) {
+      res.status(200).json({
+        success: true,
+        message: 'User successfully deleted',
+        result: deletedUser,
       });
-      await newHomeText.save();
-      const statusCode = 200;
-      const responseBody = createResponse(
-        statusCode,
-        'Successfully created new Home object',
-        newHomeText,
-      );
-      res.status(statusCode).json(responseBody);
+    }
+    if (!deletedUser) {
+      res.status(404).json({
+        success: false,
+        message: 'User not found, deletion unsuccessful'
+      });
     }
   }),
 );
-
-router.get(
-  '/id/:id',
-  errorWrap(async (req, res) => {
-    const homeText = await Home.findOne({ _id: req.params.id });
-    const statusCode = 200;
-    const responseBody = createResponse(
-      statusCode,
-      'Successfully returned home text',
-      homeText,
-    );
-    res.status(statusCode).json(responseBody);
-  }),
-);
-
-module.exports = router;
-
-*/
 
 module.exports = router;

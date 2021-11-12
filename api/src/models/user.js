@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const User = new mongoose.Schema({
   classes: {
-    type: [String],
+    type: [String], default: null
   },
 });
 

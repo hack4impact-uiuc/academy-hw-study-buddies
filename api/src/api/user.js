@@ -41,13 +41,13 @@ router.get(
         success: false,
         message: 'User not found with id',
       });
-    } else {
-      res.status(200).json({
-        message: 'Successfully retrieved user',
-        success: true,
-        result: user,
-      });
+      return;
     }
+    res.status(200).json({
+      message: 'Successfully retrieved user',
+      success: true,
+      result: user,
+    });
     return;
   }),
 );
@@ -58,20 +58,21 @@ router.put(
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
       req.body,
+      { new: true, runValidators: true },
     );
-    if (updatedUser) {
-      res.status(200).json({
-        message: 'Successfully updated user',
-        success: true,
-        result: updatedUser,
-      });
-    }
     if (!updatedUser) {
       res.status(404).json({
         message: 'User not found, update unsuccessful',
         success: false,
       });
+      return;
     }
+    res.status(200).json({
+      message: 'Successfully updated user',
+      success: true,
+      result: updatedUser,
+    });
+    return;
   }),
 );
 
@@ -79,19 +80,19 @@ router.delete(
   '/:userId',
   errorWrap(async (req, res) => {
     const deletedUser = await User.findByIdAndDelete(req.params.userId);
-    if (deletedUser) {
-      res.status(200).json({
-        success: true,
-        message: 'User successfully deleted',
-        result: deletedUser,
-      });
-    }
     if (!deletedUser) {
       res.status(404).json({
         success: false,
         message: 'User not found, deletion unsuccessful',
       });
+      return;
     }
+    res.status(200).json({
+      success: true,
+      message: 'User successfully deleted',
+      result: deletedUser,
+    });
+    return;
   }),
 );
 

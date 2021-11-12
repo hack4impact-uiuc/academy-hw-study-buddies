@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import SessionSummary from '../components/SessionSummary';
-import HomeHeader from '../components/HomeHeader';
+// import HomeHeader from '../components/HomeHeader';
 import { getSampleResponse } from '../utils/apiWrapper';
 
 import '../css/Home.scss';
@@ -18,7 +18,8 @@ function Home() {
       class: 'CS 124',
       location: 'Grainger Engineering Library',
     },
-  ];
+  ]
+  const creator = 'Name Last';
   const [text, setText] = useState([]);
 
   useEffect(() => {
@@ -31,12 +32,10 @@ function Home() {
 
     populateText();
   }, []);
-
   return (
     <>
-      <HomeHeader creator="Name Last" />
+      <h2 className="homeHeader">Welcome, {creator}</h2>
       <h1>Studying Activity</h1>
-      {/* move HomeHeader.jsx here? */}
       <p></p>
       {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />

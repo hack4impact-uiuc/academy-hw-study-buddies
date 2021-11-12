@@ -18,7 +18,7 @@ function Home() {
       class: 'CS 124',
       location: 'Grainger Engineering Library',
     },
-  ]
+  ];
   const creator = 'Name Last';
   const [text, setText] = useState([]);
 

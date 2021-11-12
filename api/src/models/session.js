@@ -8,7 +8,7 @@ const Session = new mongoose.Schema({
   notes: { type: String, default: null },
   active: { type: Boolean, default: false, required: true },
   startTime: { type: Number, default: Date.now() / 1000, required: true },
-  timeout: { type: Number, default: 43200 }, // length of timeout in milliseconds, 12 hours
+  timeout: { type: Number, default: 43200 }, // length of timeout in seconds, 12 hours
 });
 
 module.exports = mongoose.model('Session', Session);

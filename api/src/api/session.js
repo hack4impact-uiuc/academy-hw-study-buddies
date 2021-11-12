@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { errorWrap } = require('../middleware');
-
-// uncomment to use the schema
 const Session = require('../models/session');
 
 router.post(
@@ -24,7 +22,7 @@ router.get(
   errorWrap(async (req, res) => {
     const sessions = await Session.find({});
     res.status(200).json({
-      message: `Successfully retrieved all resources.`,
+      message: `Successfully retrieved all sessions.`,
       success: true,
       result: sessions,
     });
@@ -34,7 +32,6 @@ router.get(
 
 router.get(
   '/:sessionId',
-
   errorWrap(async (req, res) => {
     const session = await Session.findById(req.params.sessionId);
     if (!session) {

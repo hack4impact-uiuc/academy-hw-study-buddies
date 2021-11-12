@@ -12,13 +12,6 @@ function SessionSummary({ session }) {
         <button className="small ui button" id="join-btn">
           JOIN
         </button>
-        <button
-          className="small ui button"
-          onClick="join-function"
-          id="follow-btn"
-        >
-          <i className="user icon"></i>FOLLOW
-        </button>
       </Card.Content>
     </Card>
   );

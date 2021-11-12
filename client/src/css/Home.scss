@@ -1,10 +1,5 @@
 @import '../styles/colors.scss';
 
-@font-face {
-  font-family: 'Tommy';
-  src: local('Tommy'), url('../fonts/Tommy.ttf') format('truetype');
-}
-
 .sessionCard {
   box-shadow: none !important;
   text-align: left !important;
@@ -12,8 +7,8 @@
   height: 100px !important;
   margin-bottom: 20px !important;
   border-radius: 15px !important;
-  font-family: Tommy !important;
   transition: all 0.3s ease !important;
+  // box-shadow: 3px 3px 6px grey !important;
 }
 
 .ui.card > .content > .header {
@@ -22,6 +17,7 @@
 .sessionCard:hover {
   transition: all 0.3s ease;
   background-color: #b2caee !important;
+  box-shadow: 3px 3px 6px grey !important;
 }
 
 .homeHeader {
@@ -32,32 +28,20 @@
   text-align: left;
   font-family: Tommy;
 }
-
 h1 {
   font-family: Tommy;
 }
-
 .insideCard {
   margin-top: 5px !important;
   padding: 20px !important;
   font-family: Tommy !important;
 }
-
 #join-btn {
-  padding: 3px 20px;
-  margin-top: 5px;
+  padding: 5px 27px;
+  margin-left: 280px;
   transition: all 0.3s ease !important;
   font-family: Tommy !important;
-}
-#follow-btn {
-  padding: 3px 20px;
-  font-size: 13px;
-  font-family: Tommy !important;
-  transition: all 0.3s ease !important;
 }
 #join-btn:hover {
-  transition: all 0.3s ease !important;
-}
-#follow-btn:hover {
   transition: all 0.3s ease !important;
 }

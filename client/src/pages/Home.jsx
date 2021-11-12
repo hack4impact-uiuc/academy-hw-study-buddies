@@ -36,6 +36,7 @@ function Home() {
     <>
       <HomeHeader creator="Name Last" />
       <h1>Studying Activity</h1>
+      {/* move HomeHeader.jsx here? */}
       <p></p>
       {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />

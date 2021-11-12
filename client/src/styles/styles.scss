@@ -1,5 +1,10 @@
 @import 'colors.scss';
 
+@font-face {
+  font-family: 'Tommy';
+  src: local('Tommy'), url('../fonts/Tommy.ttf') format('truetype');
+}
+
 body {
   background-color: $light;
   color: $primary;

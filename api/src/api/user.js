@@ -68,7 +68,7 @@ router.put(
     }
     if (!updatedUser) {
       res.status(404).json({
-        message: "User not found, update unsuccessful",
+        message: 'User not found, update unsuccessful',
         success: false,
       });
     }
@@ -89,7 +89,7 @@ router.delete(
     if (!deletedUser) {
       res.status(404).json({
         success: false,
-        message: 'User not found, deletion unsuccessful'
+        message: 'User not found, deletion unsuccessful',
       });
     }
   }),

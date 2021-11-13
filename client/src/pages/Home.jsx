@@ -40,6 +40,10 @@ function Home() {
       {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />
       ))}
+      <button className="small ui button" id="join-btn">
+          +
+      </button>
+
       <p>
         {text.length > 0
           ? `You have successfully fetched ${text.length} documents!`

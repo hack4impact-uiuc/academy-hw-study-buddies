@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Button } from 'semantic-ui-react';
 
+import { putUserClass } from '../utils/apiWrapper';
+
 // import '../css/Class.scss';
 
 function ClassCard(props) {
@@ -11,7 +13,7 @@ function ClassCard(props) {
                 <Card.Description>
                 {text}
                 </Card.Description>
-                <Button basic color='red'>
+                <Button basic color='red' onclick={putUserClass()}>
                     Delete
                 </Button>
             </Card.Content>

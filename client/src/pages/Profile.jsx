@@ -1,11 +1,12 @@
 import React from 'react';
-import Class from '../components/Class';
+
+import ClassCard from '../components/ClassCard';
 
 function Profile() {
   return (
     <>
       <h1>Profile Page</h1>
-      <Class
+      <ClassCard
         text={"CS125"}
       />
     </>

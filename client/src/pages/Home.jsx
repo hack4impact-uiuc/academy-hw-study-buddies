@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import SessionSummary from '../components/SessionSummary';
 // import HomeHeader from '../components/HomeHeader';
 import { getSampleResponse } from '../utils/apiWrapper';
-// import detailsModal from '../components/modal/details';
 import '../css/Home.scss';
 
 function Home() {

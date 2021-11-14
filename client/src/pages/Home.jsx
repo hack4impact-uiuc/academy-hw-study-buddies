@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'semantic-ui-react';
 
 import SessionSummary from '../components/SessionSummary';
+import SessionForm from '../components/SessionForm';
 // import HomeHeader from '../components/HomeHeader';
 import { getSampleResponse } from '../utils/apiWrapper';
 
@@ -32,6 +34,7 @@ function Home() {
 
     populateText();
   }, []);
+
   return (
     <>
       <h2 className="homeHeader">Welcome, {creator}</h2>
@@ -40,9 +43,11 @@ function Home() {
       {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />
       ))}
-      <button className="small ui button" id="join-btn">
-          +
-      </button>
+       <SessionForm
+              button={<Button type="default">
+              +
+            </Button>}
+        /> 
 
       <p>
         {text.length > 0

@@ -53,11 +53,10 @@ router.get(
   '/attending/:userId',
   errorWrap(async (req, res) => {
     const attendingSessions = await Session.find({
-      userId: {
-        $in: [Session.attendees],
+      attendees: {
+        $in: [req.params.userId],
       },
     });
-
     if (!attendingSessions) {
       res.status(404).json({
         success: false,

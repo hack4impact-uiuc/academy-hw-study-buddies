@@ -8,7 +8,7 @@ import { putUserClass } from '../utils/apiWrapper';
 function ClassCard(props) {
   const { text } = props;
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ height: '85px' }}>
       <Card.Content>
         <Card.Description>{text}</Card.Description>
         <Button basic color="red" onclick={putUserClass()}>

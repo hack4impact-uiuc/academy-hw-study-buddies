@@ -10,7 +10,7 @@ function DetailsModal({ session }) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button>JOIN</Button>}
+      trigger={<Button className="join-button">JOIN</Button>}
     >
       <Modal.Content>
         <Modal.Description>
@@ -26,6 +26,9 @@ function DetailsModal({ session }) {
             <div className="notes-bg">
               <p>{session.notes}</p>
             </div>
+            <Button className="join-session-button" onClick={() => setOpen(false)}>
+          JOIN SESSION 
+        </Button>
           </p>
         </Modal.Description>
       </Modal.Content>

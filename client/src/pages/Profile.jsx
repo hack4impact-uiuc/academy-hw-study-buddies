@@ -1,9 +1,34 @@
 import React from 'react';
+import axios from 'axios';
 
 import 'semantic-ui-css/semantic.min.css';
 import '../css/Profile.scss';
 import SessionSummary from '../components/SessionSummary';
-import ClassForm from '../components/ClassForm';
+import ClassForm from '../components/ClassForm.jsx';
+
+
+
+const BASE_URL = process.env.REACT_APP_VERCEL_URL
+  ? `https://${process.env.REACT_APP_VERCEL_URL}/api`
+  : 'http://localhost:9000/api';
+
+/**
+ * Returns a sample API response to demonstrate a working backend
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
+export const getAttendingSessions = () => {
+  const requestString = `${BASE_URL}/attending/:userId`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
 
 function Profile() {
   const userId = "618a03da68cc5220e45822c5";
@@ -31,7 +56,6 @@ function Profile() {
       <ClassForm
               button={<button className="small ui button" id="add-class-btn">Add class</button>}
       /> 
-      <button className="small ui button" id="add-class-btn">Add class</button>
     </>
   );
 }

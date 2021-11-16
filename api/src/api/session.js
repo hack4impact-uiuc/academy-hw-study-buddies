@@ -53,10 +53,8 @@ router.get(
   '/attending/:userId',
   errorWrap(async (req, res) => {
     const attendingSessions = await Session.find({
-      attendees: {
-        $in: [req.params.userId],
-      },
-    });
+      attendees: req.params.userId,
+    }).sort({"startTime": 1});
     if (!attendingSessions) {
       res.status(404).json({
         success: false,

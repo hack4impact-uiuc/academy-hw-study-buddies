@@ -39,3 +39,17 @@ export const addSampleResponse = (body) => {
       error,
     }));
 };
+
+export const addSession = (body) => {
+  const postSession = `${BASE_URL}/api/session`;
+  return axios
+    .post(postSession, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'POST_SESSION_FAIL',
+      error,
+    }));
+};

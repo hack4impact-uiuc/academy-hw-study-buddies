@@ -7,6 +7,7 @@ import '../css/SessionForm.scss';
 function SessionForm(props) {
   const {button} = props;
   const [open, setOpen] = React.useState(false);
+  
   return (
     <Modal
       onClose={() => setOpen(false)}
@@ -15,7 +16,7 @@ function SessionForm(props) {
       trigger={button}
     >
       <Modal.Content form>
-        <Form centered>
+        <Form centered className="popup-form">
           <Form.Group inline>
             <Form.Field
               required
@@ -27,6 +28,11 @@ function SessionForm(props) {
               required
               label="Course Number"
               placeholder="Course number"
+              control={Input}
+            />
+            <Form.Field
+              label="Course Suffix"
+              placeholder="Course suffix"
               control={Input}
             />
             <Form.Field
@@ -75,7 +81,7 @@ function SessionForm(props) {
             placeholder="Additional notes"
             control={TextArea}
           />
-          <Form.Button>Submit</Form.Button>
+          <Form.Button onClick = "addSession">Submit</Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

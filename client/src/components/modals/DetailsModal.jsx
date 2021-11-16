@@ -20,9 +20,9 @@ function DetailsModal({ session }) {
             <br />
             Location: {session.location}
             <br />
-            Expected Group Size: {session.attendees}
+            Attendees: {session.attendees}
             <br />
-            Notes from {session.creator}
+            Notes from {session.creator}: 
             <div className="notes-bg">
               <p>{session.notes}</p>
             </div>

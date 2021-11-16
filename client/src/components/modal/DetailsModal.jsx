@@ -5,11 +5,11 @@ function DetailsModal() {
   return (
     <Modal
       trigger={<Button>JOIN</Button>}
-      header='Test'
-      content='Hello!'
+      header="Test"
+      content="Hello!"
       actions={['Snooze', { key: 'done', content: 'Done', positive: true }]}
     />
-  )
+  );
 }
 
 export default DetailsModal;

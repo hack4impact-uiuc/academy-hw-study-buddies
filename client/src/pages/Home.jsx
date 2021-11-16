@@ -12,14 +12,14 @@ function Home() {
       class: 'CS 124',
       location: 'Grainger Engineering Library',
       attendees: '2',
-      notes: 'hey bestie'
+      notes: 'hey bestie',
     },
     {
       creator: 'Aaron Alexander',
       class: 'CS 124',
       location: 'Grainger Engineering Library',
       attendees: '3',
-      notes: 'hey hey hey'
+      notes: 'hey hey hey',
     },
   ];
   const creator = 'Name Last';
@@ -51,5 +51,4 @@ function Home() {
     </>
   );
 }
- export default Home 
-
+export default Home;

@@ -1,11 +1,12 @@
-import React from 'react'
-import { Button, Modal, Header } from 'semantic-ui-react'
+import React from 'react';
+import { Button, Modal, Header } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
-function DetailsModal({session}) {
-  const [open, setOpen] = React.useState(false)
+function DetailsModal({ session }) {
+  const [open, setOpen] = React.useState(false);
   return (
-    <Modal className="modal-container"
+    <Modal
+      className="modal-container"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
@@ -16,22 +17,20 @@ function DetailsModal({session}) {
           <Header>Join {session.creator}</Header>
           <p id="form-text">
             Class: {session.class}
-            <br/>
+            <br />
             Location: {session.location}
-            <br/>
+            <br />
             Expected Group Size: {session.attendees}
-            <br/> 
+            <br />
             Notes from {session.creator}
             <div className="notes-bg">
-              <p>
-                {session.notes}
-              </p>
+              <p>{session.notes}</p>
             </div>
           </p>
         </Modal.Description>
       </Modal.Content>
     </Modal>
-  )
+  );
 }
 
 export default DetailsModal;

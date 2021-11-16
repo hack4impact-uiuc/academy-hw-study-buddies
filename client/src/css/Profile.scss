@@ -1,6 +1,10 @@
 @import '../styles/colors.scss';
-.add-class-button {
-    background-color: $accent !important;
-    border: none;
-    text-align: center;
-}
+#add-class-btn {
+    padding: 5px 27px;
+    transition: all 0.3s ease !important;
+    font-family: Tommy !important;
+  }
+  
+#add-class-btn:hover {
+    transition: all 0.3s ease !important;
+  }

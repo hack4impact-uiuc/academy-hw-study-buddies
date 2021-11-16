@@ -1,14 +1,36 @@
 import React from 'react'
-import { Button, Modal } from 'semantic-ui-react'
+import { Button, Modal, Header } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css';
 
-function DetailsModal() {
+function DetailsModal({session}) {
+  const [open, setOpen] = React.useState(false)
   return (
-    <Modal
+    <Modal className="modal-container"
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      open={open}
       trigger={<Button>JOIN</Button>}
-      header='Reminder!'
-      content='Call Benjamin regarding the reports.'
-      actions={['Snooze', { key: 'done', content: 'Done', positive: true }]}
-    />
+    >
+      <Modal.Content>
+        <Modal.Description>
+          <Header>Join {session.creator}</Header>
+          <p id="form-text">
+            Class: {session.class}
+            <br/>
+            Location: {session.location}
+            <br/>
+            Expected Group Size: {session.attendees}
+            <br/> 
+            Notes from {session.creator}
+            <div className="notes-bg">
+              <p>
+                {session.notes}
+              </p>
+            </div>
+          </p>
+        </Modal.Description>
+      </Modal.Content>
+    </Modal>
   )
 }
 

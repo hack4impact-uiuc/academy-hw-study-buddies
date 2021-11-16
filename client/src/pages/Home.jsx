@@ -11,11 +11,15 @@ function Home() {
       creator: 'Aaron Alexander',
       class: 'CS 124',
       location: 'Grainger Engineering Library',
+      attendees: '2',
+      notes: 'hey bestie'
     },
     {
       creator: 'Aaron Alexander',
       class: 'CS 124',
       location: 'Grainger Engineering Library',
+      attendees: '3',
+      notes: 'hey hey hey'
     },
   ];
   const creator = 'Name Last';

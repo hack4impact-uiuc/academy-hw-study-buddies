@@ -11,7 +11,7 @@ function SessionSummary({ session }) {
         <Card.Header>
           {session.creator} is studying {session.class} at {session.location}
         </Card.Header>
-        <DetailsModal/>
+        <DetailsModal session={session}/>
       </Card.Content>
     </Card>
   );

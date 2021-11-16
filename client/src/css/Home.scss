@@ -52,3 +52,33 @@ h1 {
 #join-btn:hover {
   transition: all 0.3s ease !important;
 }
+
+
+.ui.header {
+  font-family: Tommy;
+}
+
+.ui.header:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6){
+  font-size: 30px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+#form-text {
+  padding-left: 10px;
+}
+.ui.modal {
+  background-color:#C5CAD4!important;
+  font-family: Tommy;
+  
+}
+.ui.modal>.content {
+  background: #C5CAD4;
+  padding-left: 25px;
+  padding-bottom: 30px;
+}
+
+.ui.modal>:last-child {
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+
+}

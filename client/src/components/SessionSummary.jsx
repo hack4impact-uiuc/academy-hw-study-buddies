@@ -2,7 +2,6 @@ import React from 'react';
 import { Card } from 'semantic-ui-react';
 
 import DetailsModal from './modals/DetailsModal';
-
 import 'semantic-ui-css/semantic.min.css';
 
 function SessionSummary({ session }) {
@@ -12,7 +11,7 @@ function SessionSummary({ session }) {
         <Card.Header>
           {session.creator} is studying {session.class} at {session.location}
         </Card.Header>
-        <DetailsModal />
+        <DetailsModal/>
       </Card.Content>
     </Card>
   );

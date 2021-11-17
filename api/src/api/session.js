@@ -49,6 +49,28 @@ router.get(
   }),
 );
 
+router.get(
+  '/attending/:userId',
+  errorWrap(async (req, res) => {
+    const attendingSessions = await Session.find({
+      attendees: req.params.userId,
+    }).sort({ startTime: 1 });
+    if (!attendingSessions) {
+      res.status(404).json({
+        success: false,
+        message: 'Could not retrieve sessions attended by user',
+      });
+      return;
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Successfully retrieved sessions attended by user',
+      result: attendingSessions,
+    });
+    return;
+  }),
+);
+
 router.put(
   '/:sessionId',
   errorWrap(async (req, res) => {

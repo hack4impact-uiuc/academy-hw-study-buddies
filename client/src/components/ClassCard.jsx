@@ -4,14 +4,15 @@ import { Card, Button } from 'semantic-ui-react';
 import { editUserClasses } from '../utils/apiWrapper';
 import '../css/ClassCard.scss';
 
-
 function ClassCard(props) {
   const { classCardText } = props;
   return (
-    <Card>
+    <Card className="card">
       <Card.Content className="card-content-container">
-        <Card.Description>{ classCardText }</Card.Description>
-        <Button basic color="red" onClick={ editUserClasses() }>X</Button>
+        <Card.Description className="class-text">{classCardText}</Card.Description>
+        <Button basic color="red" className="delete-button" onClick={editUserClasses}>
+          x
+        </Button>
       </Card.Content>
     </Card>
   );

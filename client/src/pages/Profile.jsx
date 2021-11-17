@@ -6,7 +6,7 @@ function Profile() {
   return (
     <>
       <h1>Profile Page</h1>
-        <ClassCard classCardText={'CS125'} />
+      <ClassCard classCardText={'CS125'} />
     </>
   );
 }

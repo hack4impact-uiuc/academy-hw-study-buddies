@@ -20,11 +20,22 @@ function DetailsModal({ session }) {
             <br />
             Location: {session.location}
             <br />
+            <br />
+            Time Started: {session.time}
+            <br />
             Attendees: {session.attendees}
             <br />
-            Notes from {session.creator}: 
+            <br />
+            Notes from {session.creator}:
             <div className="notes-bg">
-              <p>{session.notes}</p>
+              <div className="ui form">
+                <div className="fifteen wide field">
+                  <textarea
+                    rows="3"
+                    placeholder="How's the study sesh going?"
+                  ></textarea>
+                </div>
+              </div>
             </div>
             <Button
               className="join-session-button"

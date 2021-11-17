@@ -15,7 +15,6 @@
   font-family: Tommy !important;
 }
 .sessionCard:hover {
-  transition: all 0.3s ease;
   background-color: #b2caee !important;
   box-shadow: 3px 3px 6px grey !important;
 }
@@ -24,13 +23,11 @@
   font-family: Tommy;
   padding: 5px 27px;
   margin-left: 280px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease !important;
 }
 
 .homeHeader {
-  margin-top: 50px;
-  margin-left: 100px;
-  margin-bottom: 50px;
+  margin: 50px 0px 50px 100px;
   font-size: 80px;
   text-align: left;
   font-family: Tommy;
@@ -55,28 +52,4 @@ h1 {
 
 .ui.header {
   font-family: Tommy;
-}
-
-.ui.header:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-  font-size: 30px;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-#form-text {
-  padding-left: 10px;
-}
-.ui.modal {
-  background-color: #c5cad4 !important;
-  font-family: Tommy;
-  width: 500px;
-}
-.ui.modal > .content {
-  background: #c5cad4;
-  padding-left: 25px;
-  padding-bottom: 30px;
-}
-
-.ui.modal > :last-child {
-  border-bottom-left-radius: 100px;
-  border-bottom-right-radius: 100px;
 }

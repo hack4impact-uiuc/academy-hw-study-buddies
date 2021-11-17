@@ -4,6 +4,7 @@ import SessionSummary from '../components/SessionSummary';
 // import HomeHeader from '../components/HomeHeader';
 import { getSampleResponse } from '../utils/apiWrapper';
 import '../css/Home.scss';
+import '../css/DetailsModal.scss';
 
 function Home() {
   const sessions = [
@@ -11,15 +12,17 @@ function Home() {
       creator: 'Aaron Alexander',
       class: 'CS 124',
       location: 'Grainger Engineering Library',
-      attendees: ['Ellie ', 'Danielle ', 'Grace '],
+      attendees: ['Ellie', ', ', 'Danielle', ', ', 'Grace'],
       notes: 'hey bestie',
+      time: 'January 1, 1970 | 00:00 GMT',
     },
     {
       creator: 'Aaron Alexander',
       class: 'CS 124',
       location: 'Grainger Engineering Library',
-      attendees: '3',
+      attendees: ['Anthony', ', ', 'Jessica', ', ', 'Ashwin'],
       notes: 'hey hey hey',
+      time: 'January 1, 1970 | 00:00 GMT',
     },
   ];
   const creator = 'Name Last';

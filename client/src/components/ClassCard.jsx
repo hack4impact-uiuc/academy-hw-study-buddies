@@ -1,19 +1,17 @@
 import React from 'react';
 import { Card, Button } from 'semantic-ui-react';
 
-import { putUserClass } from '../utils/apiWrapper';
+import { editUserClasses } from '../utils/apiWrapper';
+import '../css/ClassCard.scss';
 
-// import '../css/Class.scss';
 
 function ClassCard(props) {
-  const { text } = props;
+  const { classCardText } = props;
   return (
-    <Card style={{ height: '85px' }}>
-      <Card.Content>
-        <Card.Description>{text}</Card.Description>
-        <Button basic color="red" onclick={putUserClass()}>
-          Delete
-        </Button>
+    <Card>
+      <Card.Content className="card-content-container">
+        <Card.Description>{ classCardText }</Card.Description>
+        <Button basic color="red" onClick={ editUserClasses() }>X</Button>
       </Card.Content>
     </Card>
   );

@@ -41,7 +41,7 @@ export const addSampleResponse = (body) => {
 };
 
 //calling backend endpoint to edit user class in profile
-export const putUserClass = (body) => {
+export const editUserClasses = (body) => {
   const requestString = `${BASE_URL}/user/:userID`;
   return axios
     .put(requestString, body, {

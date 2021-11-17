@@ -21,22 +21,20 @@
   text-align: left;
   font-family: Tommy;
 }
-h1 {
-  font-family: Tommy;
-}
+
 .insideCard {
   margin-top: 5px !important;
   padding: 20px !important;
-  font-family: Tommy !important;
 }
+
 #join-btn {
   padding: 5px 27px;
   margin-left: 280px;
   transition: all 0.3s ease !important;
-  font-family: Tommy !important;
-}
-#join-btn:hover {
-  transition: all 0.3s ease !important;
+
+  &:hover {
+    transition: all 0.3s ease !important;
+  }
 }
 
 .ui.header {

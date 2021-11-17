@@ -2,10 +2,9 @@
 
 .ui.modal {
   background-color: #c5cad4 !important;
-  font-family: Tommy;
   width: 500px;
 
-  .ui.header:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+  .ui.header {
     font-size: 30px;
     padding: 10px 0px 0px 10px;
   }
@@ -14,7 +13,7 @@
     color: black !important;
   }
   .join-session-button {
-    margin: 10px 0px 0px 300px;
+    margin: 10px 0px 0px 320px;
     padding: 10px 10px 10px 10px;
     background-color: #575a89 !important;
     color: #ffffff !important;

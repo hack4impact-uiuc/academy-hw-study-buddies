@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal, Header } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+import '../css/DetailsModal.scss';
 
 function DetailsModal({ session }) {
   const [open, setOpen] = React.useState(false);
@@ -28,14 +29,9 @@ function DetailsModal({ session }) {
             <br />
             Notes from {session.creator}:
             <div className="notes-bg">
-              <div className="ui form">
-                <div className="fifteen wide field">
-                  <textarea
-                    rows="3"
-                    placeholder="How's the study sesh going?"
-                  ></textarea>
-                </div>
-              </div>
+              <p>
+                <i>{session.notes}</i>
+              </p>
             </div>
             <Button
               className="join-session-button"

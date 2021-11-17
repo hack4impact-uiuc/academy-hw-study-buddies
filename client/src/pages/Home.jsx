@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import SessionSummary from '../components/SessionSummary';
-// import HomeHeader from '../components/HomeHeader';
 import { getSampleResponse } from '../utils/apiWrapper';
 import '../css/Home.scss';
-import '../css/SessionSummary.scss';
-import '../css/DetailsModal.scss';
 
 function Home() {
   const sessions = [

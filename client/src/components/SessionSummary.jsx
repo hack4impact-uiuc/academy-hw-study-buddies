@@ -1,8 +1,10 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react';
 
-import DetailsModal from './modals/DetailsModal';
+import DetailsModal from './DetailsModal';
 import 'semantic-ui-css/semantic.min.css';
+
+import '../css/SessionSummary.scss';
 
 function SessionSummary({ session }) {
   return (

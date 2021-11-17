@@ -21,8 +21,9 @@ function DetailsModal({ session }) {
             Location: {session.location}
             <br />
             Attendees: {session.attendees}
-            <br />
+            <br /> 
             Notes from {session.creator}: 
+            
             <div className="notes-bg">
               <p>{session.notes}</p>
             </div>

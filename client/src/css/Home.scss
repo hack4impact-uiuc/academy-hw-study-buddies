@@ -1,16 +1,5 @@
 @import '../styles/colors.scss';
 
-.sessionCard {
-  box-shadow: none !important;
-  text-align: left !important;
-  width: 400px !important;
-  height: 100px !important;
-  margin-bottom: 20px !important;
-  border-radius: 15px !important;
-  transition: all 0.3s ease !important;
-  // box-shadow: 3px 3px 6px grey !important;
-}
-
 .ui.card > .content > .header {
   font-family: Tommy !important;
 }

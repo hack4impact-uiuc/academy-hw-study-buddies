@@ -4,6 +4,7 @@ import SessionSummary from '../components/SessionSummary';
 // import HomeHeader from '../components/HomeHeader';
 import { getSampleResponse } from '../utils/apiWrapper';
 import '../css/Home.scss';
+import '../css/SessionSummary.scss';
 
 function Home() {
   const sessions = [

@@ -1,12 +1,11 @@
 .card {
   flex: none;
-  width: 20px
+  width: 175px !important;
 }
 
 .card-content-container {
   display: flex;
   justify-content: space-evenly;
-  width: 250px;
 }
 
 .delete-button {

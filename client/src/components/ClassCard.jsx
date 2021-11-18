@@ -10,9 +10,7 @@ function ClassCard(props) {
     <Card className="card">
       <Card.Content className="card-content-container">
         <Card.Description className="class-text">{classCardText}</Card.Description>
-        <Button basic color="red" className="delete-button" onClick={editUserClasses}>
-          x
-        </Button>
+        <Button basic color="red" className="delete-button" onClick={editUserClasses}> X </Button>
       </Card.Content>
     </Card>
   );

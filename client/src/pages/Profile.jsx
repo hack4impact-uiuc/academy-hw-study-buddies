@@ -16,8 +16,8 @@ const BASE_URL = process.env.REACT_APP_VERCEL_URL
  * Returns a sample API response to demonstrate a working backend
  * Returns GET_SAMPLE_FAIL upon failure
  */
-export const getAttendingSessions = () => {
-  const requestString = `${BASE_URL}/session/attending/618df3376c0bc6046ea8382f`;
+export const getAttendingSessions = (userId) => {
+  const requestString = `${BASE_URL}/session/attending/${userId}`;
   return axios
     .get(requestString, {
       headers: {

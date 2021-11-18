@@ -7,7 +7,7 @@ import '../css/ClassCard.scss';
 function ClassCard(props) {
   const { classCardText } = props;
   return (
-    <Card className="card">
+    <Card className="class-card">
       <Card.Content className="card-content-container">
         <Card.Description className="class-text">
           {classCardText}

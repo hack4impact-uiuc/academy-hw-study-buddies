@@ -1,0 +1,18 @@
+.class-card {
+  flex: none;
+  width: 175px !important;
+
+  .card-content-container {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .delete-button {
+    height: 25px;
+    width: 25px;
+  }
+
+  .class-text {
+    font-size: 200%;
+  }
+}

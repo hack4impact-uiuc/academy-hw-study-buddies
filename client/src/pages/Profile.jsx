@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -17,7 +17,7 @@ const BASE_URL = process.env.REACT_APP_VERCEL_URL
  * Returns GET_SAMPLE_FAIL upon failure
  */
 export const getAttendingSessions = () => {
-  const requestString = `${BASE_URL}/attending/:userId`;
+  const requestString = `${BASE_URL}/session/attending/618df3376c0bc6046ea8382f`;
   return axios
     .get(requestString, {
       headers: {
@@ -30,20 +30,38 @@ export const getAttendingSessions = () => {
     }));
 };
 
+
 function Profile() {
-  const userId = "618a03da68cc5220e45822c5";
-  const sessions = [
-    {
-      creator: 'Aaron Alexander',
-      class: 'CS 124',
-      location: 'Grainger Engineering Library',
-    },
-    {
-      creator: 'Aaron Alexander',
-      class: 'CS 124',
-      location: 'Grainger Engineering Library',
-    },
-  ];
+
+
+  const userId = "618df3376c0bc6046ea8382f";
+
+  const [sessions, setSessions] = useState([]);
+
+  useEffect(() => {
+    const populateSessions = async () => {
+      const resp = await getAttendingSessions();
+      if (!resp.error) {
+        console.log(resp.data.result);
+        setSessions(resp.data.result);
+      }
+    };
+
+    populateSessions();
+  }, []);
+
+  // const sessions = [
+  //   {
+  //     creator: 'Aaron Alexander',
+  //     class: 'CS 124',
+  //     location: 'Grainger Engineering Library',
+  //   },
+  //   {
+  //     creator: 'Aaron Alexander',
+  //     class: 'CS 124',
+  //     location: 'Grainger Engineering Library',
+  //   },
+  // ];
     return (
     <>
       <h1>Profile Page</h1>

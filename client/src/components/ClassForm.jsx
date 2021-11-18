@@ -8,6 +8,9 @@ function ClassForm(props) {
   const {button} = props;
   const [open, setOpen] = React.useState(false);
   
+  //addClass function for button needs to add class to user
+  //
+
   return (
     <Modal
       onClose={() => setOpen(false)}
@@ -36,7 +39,7 @@ function ClassForm(props) {
               control={Input}
             />
           </Form.Group>
-          <Form.Button onClick = "addClass">Submit</Form.Button>
+          <Form.Button onClick = {addClass} >Submit</Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

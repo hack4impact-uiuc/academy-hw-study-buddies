@@ -30,6 +30,42 @@ router.get(
   }),
 );
 
+//get all displayed sessions on the home page
+router.get(
+  '/displayed',
+  errorWrap(async (req, res) => {
+    let activeSessions = await Session.find({ active: 'true' });
+    if (activeSessions.length >= 10) {
+      res.status(200).json({
+        message: `Successfully retrieved all displayed sessions on the home page.`,
+        success: true,
+        result: activeSessions,
+      });
+      return;
+    }
+    
+    const inactiveSessions = await Session.find({ active: 'false' }).sort({ startTime : 'asc'});
+
+    if (activeSessions.length + inactiveSessions.length < 10) {
+      let allSessions = activeSessions.concat(inactiveSessions);
+      res.status(200).json({
+        message: `Successfully retrieved all displayed sessions on the home page.`,
+        success: true,
+        result: allSessions,
+      });
+      return;
+    }
+
+    let allSessions = activeSessions.concat(inactiveSessions.slice(0, 10 - activeSessions.length));
+    res.status(200).json({
+      message: `Successfully retrieved all displayed sessions on the home page.`,
+      success: true,
+      result: allSessions,
+    });
+    return;
+  }),
+);
+
 router.get(
   '/:sessionId',
   errorWrap(async (req, res) => {
@@ -118,5 +154,7 @@ router.delete(
     });
   }),
 );
+
+
 
 module.exports = router;

@@ -27,10 +27,7 @@ function SessionForm(props) {
   const [timeout, setTimeout] = useState();
 
   const processFormAndSubmit = async () => {
-    setCreatorID('jaskdlfioawh');
-    setCourse(courseCode + courseNumber + courseSuffix);
-    setAttendeeArray(attendees.split(','));
-
+    processMisc();
     processTime();
 
     const sessionData = {
@@ -46,6 +43,12 @@ function SessionForm(props) {
     console.log(sessionData);
     await addSession(sessionData);
   };
+
+  const processMisc = () => {
+    setCreatorID('jaskdlfioawh');
+    setCourse(courseCode + courseNumber + courseSuffix);
+    setAttendeeArray(attendees.split(','));
+  }
 
   const processTime = () => {
     const defaultTimeout = 43200;

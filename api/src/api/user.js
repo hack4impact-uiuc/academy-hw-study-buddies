@@ -1,8 +1,68 @@
 const express = require('express');
 const router = express.Router();
 const { errorWrap } = require('../middleware');
+const { getMemberInfo } = require('../utils/apiWrapper');
 
 const User = require('../models/user');
+
+/*
+  Extracts memberDbId from user cookie
+*/
+const getUserId = (req) => {
+  if (req.session && req.session.passport && req.session.passport.user) {
+    return req.session.passport.user;
+  }
+  return false;
+};
+
+/*
+  Uses browser cookie to log in user
+  Registers new user in DB if user not found
+*/
+router.get(
+  '/',
+  errorWrap(async (req, res) => {
+    const memberDbId = getUserId(req);
+    let user = await User.findOne({ memberDbId: memberDbId });
+    if (!user) {
+      user = await User.create({
+        memberDbId,
+        classes: [],
+      });
+    }
+    const memberInfoResult = await getMemberInfo(memberDbId);
+    const memberInfo = memberInfoResult.data.result;
+    const filteredMemberInfo = {
+      firstName: memberInfo.firstName,
+      lastName: memberInfo.lastName,
+    };
+    user = {
+      _id: user._doc._id,
+      memberDbId: user._doc.memberDbId,
+      ...filteredMemberInfo,
+      classes: user._doc.classes,
+    };
+    res.status(200).json({
+      message: 'Successfully retrieved user',
+      success: true,
+      result: user,
+    });
+    return;
+  }),
+);
+
+router.get(
+  '/all',
+  errorWrap(async (req, res) => {
+    const users = await User.find();
+    res.status(200).json({
+      message: 'Successfully retrieved all users',
+      success: true,
+      result: users,
+    });
+    return;
+  }),
+);
 
 router.post(
   '/',
@@ -16,19 +76,6 @@ router.post(
       });
       return;
     }
-  }),
-);
-
-router.get(
-  '/',
-  errorWrap(async (req, res) => {
-    const users = await User.find();
-    res.status(200).json({
-      message: 'Successfully retrieved all users',
-      success: true,
-      result: users,
-    });
-    return;
   }),
 );
 

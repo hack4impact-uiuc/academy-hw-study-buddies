@@ -4,8 +4,6 @@ import { Card } from 'semantic-ui-react';
 import DetailsModal from './DetailsModal';
 import 'semantic-ui-css/semantic.min.css';
 
-import '../css/SessionSummary.scss';
-
 function SessionSummary({ session }) {
   return (
     <Card centered className="sessionCard">

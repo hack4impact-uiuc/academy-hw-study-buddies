@@ -1,5 +1,5 @@
 import React from 'react';
-import ClassCard from '../components/ClassPageCard'
+import ClassPageCard from '../components/ClassPageCard'
 
 function Classes() {
   const classes_members = {
@@ -13,7 +13,7 @@ function Classes() {
       <h1>Classes Page</h1>
       <h1>
         {Object.keys(classes_members).map((key, i) =>
-          <ClassCard course={key} classesMembers={classes_members.key} key={i}/>
+          <ClassPageCard course={key} classMembers={classes_members[key]} key={i}/>
         )} 
       </h1>
     </>

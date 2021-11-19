@@ -21,9 +21,6 @@
 
 .ui.button {
   font-family: Tommy;
-  padding: 5px 27px;
-  margin-left: 280px;
-  transition: all 0.3s ease !important;
 }
 
 .homeHeader {
@@ -38,9 +35,20 @@
   padding: 20px !important;
 }
 
-#join-btn {
+#join-button {
+  font-family: Tommy;
   padding: 5px 27px;
   margin-left: 280px;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    transition: all 0.3s ease !important;
+  }
+}
+
+#endsesh-button {
+  padding: 5px 20px;
+  margin: 0px 0px 0px 0px;
   transition: all 0.3s ease !important;
 
   &:hover {

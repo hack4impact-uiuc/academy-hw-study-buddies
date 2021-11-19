@@ -1,19 +1,97 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Form, Input, TextArea, Radio } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
 
+import 'semantic-ui-css/semantic.min.css';
+import { addSession } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
   const { button } = props;
-  const [open, setOpen] = React.useState(false);
-  const [isLater, setIsLater] = React.useState(false);
-  const [courseCode, setCourseCode] = React.useState('');
-  const [courseNumber, setCourseNumber] = React.useState();
-  const [courseSuffix, setCourseSuffix] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [attendees, setAttendees] = React.useState([]);
-  const [notes, setNotes] = React.useState('');
+  const [open, setOpen] = useState(false);
+  const [isLater, setIsLater] = useState(false);
+  const [courseCode, setCourseCode] = useState('');
+  const [courseNumber, setCourseNumber] = useState();
+  const [courseSuffix, setCourseSuffix] = useState('');
+  const [location, setLocation] = useState('');
+  const [attendees, setAttendees] = useState('');
+  const [notes, setNotes] = useState('');
+  const [date, setDate] = useState();
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
+  const [endTimeDefined, setEndTimeDefined] = useState(false);
+
+  const [creatorID, setCreatorID] = useState('');
+  const [course, setCourse] = useState('');
+  const [attendeeArray, setAttendeeArray] = useState([]);
+  const [startSeconds, setStartSeconds] = useState();
+  const [timeout, setTimeout] = useState();
+
+  const processFormAndSubmit = async () => {
+    setCreatorID('jaskdlfioawh');
+    setCourse(courseCode + courseNumber + courseSuffix);
+    setAttendeeArray(attendees.split(','));
+
+    processTime();
+
+    const sessionData = {
+      creator: creatorID,
+      class: course,
+      location: location,
+      attendees: attendeeArray,
+      notes: notes,
+      active: !isLater,
+      startTime: startSeconds,
+      timeout: timeout,
+    };
+    console.log(sessionData);
+    await addSession(sessionData);
+  };
+
+  const processTime = () => {
+    const defaultTimeout = 43200;
+    const millisecondsInDay = 86400000;
+    const active = !isLater;
+    const processedStartDate = active ? 0 : date.split('-'); //2021-11-17
+    const processedStartTime = active ? 0 : startTime.split(':');
+    const laterStart = active
+      ? 0
+      : new Date(
+          parseInt(processedStartDate[0]),
+          parseInt(processedStartDate[1]),
+          parseInt(processedStartDate[2]),
+          parseInt(processedStartTime[0]),
+          parseInt(processedStartTime[1]),
+          0,
+          0,
+        );
+    const processedStart = active ? new Date() : laterStart;
+    const startSeconds = processedStart.getTime() / 1000;
+
+    const processedEndTime = endTimeDefined ? endTime.split(':') : 0;
+    const end = endTimeDefined
+      ? new Date(
+          processedStart.getFullYear(),
+          processedStart.getMonth(),
+          processedStart.getDate(),
+          processedEndTime[0],
+          processedEndTime[1],
+          0,
+          0,
+        )
+      : 0;
+    const endSeconds = endTimeDefined ? end.getTime() / 1000 : 0;
+    const timeoutTry = endTimeDefined
+      ? endSeconds - startSeconds
+      : defaultTimeout;
+    const timeout =
+      timeoutTry < 0
+        ? new Date(end.getTime() + millisecondsInDay).getTime() / 1000 -
+          startSeconds
+        : timeoutTry;
+
+    setStartSeconds(startSeconds);
+    setTimeout(timeout);
+  };
 
   return (
     <Modal
@@ -31,7 +109,10 @@ function SessionForm(props) {
               placeholder="Course code"
               control={Input}
               value={courseCode}
-              onChange={(e, { courseCode }) => setCourseCode(courseCode)}
+              onChange={(e) => {
+                setCourseCode(e.target.value);
+                console.log(courseCode);
+              }}
             />
             <Form.Field
               required
@@ -39,14 +120,20 @@ function SessionForm(props) {
               placeholder="Course number"
               control={Input}
               value={courseNumber}
-              onChange={(e, { courseNumber }) => setCourseNumber(courseNumber)}
+              onChange={(e) => {
+                setCourseNumber(e.target.value);
+                console.log(courseNumber);
+              }}
             />
             <Form.Field
               label="Course Suffix"
               placeholder="Course suffix"
               control={Input}
               value={courseSuffix}
-              onChange={(e, { courseSuffix }) => setCourseSuffix(courseSuffix)}
+              onChange={(e) => {
+                setCourseSuffix(e.target.value);
+                console.log(courseSuffix);
+              }}
             />
             <Form.Field
               required
@@ -54,7 +141,10 @@ function SessionForm(props) {
               placeholder="Location"
               control={Input}
               value={location}
-              onChange={(e, { location }) => setLocation(location)}
+              onChange={(e) => {
+                setLocation(e.target.value);
+                console.log(location);
+              }}
             />
           </Form.Group>
           <Form.Group required inline>
@@ -82,6 +172,11 @@ function SessionForm(props) {
               label="Date of Session"
               type="date"
               control={Input}
+              value={date}
+              onChange={(e) => {
+                setDate(e.target.value);
+                console.log(date);
+              }}
             />
             <Form.Field
               width={6}
@@ -90,13 +185,22 @@ function SessionForm(props) {
               label="Start Time"
               type="time"
               control={Input}
+              value={startTime}
+              onChange={(e) => {
+                setStartTime(e.target.value);
+                console.log(startTime);
+              }}
             />
             <Form.Field
               width={6}
-              required
               label="End Time"
               type="time"
               control={Input}
+              value={endTime}
+              onChange={(e) => {
+                setEndTime(e.target.value);
+                setEndTimeDefined(true);
+              }}
             />
           </Form.Group>
           <Form.Field
@@ -104,18 +208,22 @@ function SessionForm(props) {
             placeholder="List the other attendees"
             control={Input}
             value={attendees}
-            onChange={(e, { attendees }) =>
-              setAttendees(attendees.split(/\s+/))
-            }
+            onChange={(e) => {
+              setAttendees(e.target.value);
+              console.log(attendees);
+            }}
           />
           <Form.TextArea
             label="Notes"
             placeholder="Additional notes"
             control={TextArea}
             value={notes}
-            onChange={(e, { notes }) => setNotes(notes)}
+            onChange={(e) => {
+              setNotes(e.target.value);
+              console.log(notes);
+            }}
           />
-          <Form.Button onClick="addSession">Submit</Form.Button>
+          <Form.Button onClick={processFormAndSubmit}>Submit</Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

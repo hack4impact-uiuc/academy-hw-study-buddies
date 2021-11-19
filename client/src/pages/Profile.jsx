@@ -83,13 +83,16 @@ function Profile({user}) {
       ))}
       
       {/* {user.classes && <p>{user.classes[0]}</p>} */}
-      
-      {user.classes && user.classes.map((userClass, j) => (
-        user.classes && <ClassCard classCardText={userClass} key={j} />
-      ))}
+      <center>
+        {user.classes && user.classes.map((userClass, j) => (
+          user.classes && <ClassCard classCardText={userClass} key={j} />
+        ))}
+      </center>
+      <p></p>
       {/* {user.classes && <ClassCard classCardText={user.classes[0]} />} */}
       <ClassForm
               button={<button className="small ui button" id="add-class-btn">Add class</button>}
+              user={user}
       /> 
     </>
   );

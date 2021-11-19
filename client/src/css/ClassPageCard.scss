@@ -1,0 +1,13 @@
+.classesPageCard {
+    flex: none;
+    width: 175px !important;
+  
+    .cardContainer {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  
+    .class-text {
+      font-size: 200%;
+    }
+  }

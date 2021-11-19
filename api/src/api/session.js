@@ -43,8 +43,10 @@ router.get(
       });
       return;
     }
-    
-    const inactiveSessions = await Session.find({ active: 'false' }).sort({ startTime : 'asc'});
+
+    const inactiveSessions = await Session.find({ active: 'false' }).sort({
+      startTime: 'asc',
+    });
 
     if (activeSessions.length + inactiveSessions.length < 10) {
       let allSessions = activeSessions.concat(inactiveSessions);
@@ -56,7 +58,9 @@ router.get(
       return;
     }
 
-    let allSessions = activeSessions.concat(inactiveSessions.slice(0, 10 - activeSessions.length));
+    let allSessions = activeSessions.concat(
+      inactiveSessions.slice(0, 10 - activeSessions.length),
+    );
     res.status(200).json({
       message: `Successfully retrieved all displayed sessions on the home page.`,
       success: true,
@@ -154,7 +158,5 @@ router.delete(
     });
   }),
 );
-
-
 
 module.exports = router;

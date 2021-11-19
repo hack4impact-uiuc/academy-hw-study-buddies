@@ -2,7 +2,16 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_VERCEL_URL
   ? `https://${process.env.REACT_APP_VERCEL_URL}/api`
-  : 'http://localhost:9000/api';
+  : 'http://localhost:9001/api';
+
+
+export const getUserInfo = () => {
+  const requestString = `http://localhost:9001/api/user`;
+  return axios.get(requestString, { withCredentials: true }).catch(error => ({
+    type: 'USER_INFO_FAIL',
+    error,
+  }));
+};
 
 /**
  * Returns a sample API response to demonstrate a working backend

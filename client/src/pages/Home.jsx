@@ -1,25 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import SessionSummary from '../components/SessionSummary';
+// import SessionSummary from '../components/SessionSummary';
 // import HomeHeader from '../components/HomeHeader';
 import { getSampleResponse } from '../utils/apiWrapper';
 
 import '../css/Home.scss';
 
-function Home() {
-  const sessions = [
-    {
-      creator: 'Aaron Alexander',
-      class: 'CS 124',
-      location: 'Grainger Engineering Library',
-    },
-    {
-      creator: 'Aaron Alexander',
-      class: 'CS 124',
-      location: 'Grainger Engineering Library',
-    },
-  ];
-  const creator = 'Name Last';
+function Home({user}) {
   const [text, setText] = useState([]);
 
   useEffect(() => {
@@ -29,17 +16,19 @@ function Home() {
         setText(resp.data.result);
       }
     };
+    console.log("user: ", user);
 
     populateText();
-  }, []);
+  }, [user]);
+
   return (
     <>
-      <h2 className="homeHeader">Welcome, {creator}</h2>
-      <h1>Studying Activity</h1>
+      {/* <h2 className="homeHeader">Welcome, {creator}</h2> */}
+      <h1>Studying activity for {user.firstName} {user.lastName} </h1>
       <p></p>
-      {sessions.map((session, i) => (
+      {/* {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />
-      ))}
+      ))} */}
       <p>
         {text.length > 0
           ? `You have successfully fetched ${text.length} documents!`

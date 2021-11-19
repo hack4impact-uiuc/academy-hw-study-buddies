@@ -4,6 +4,10 @@
 const mongoose = require('mongoose');
 
 const User = new mongoose.Schema({
+  memberDbId: {
+    type: String,
+    default: null,
+  },
   classes: {
     type: [String],
     default: null,

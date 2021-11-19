@@ -45,30 +45,20 @@ export const getUserById = (userId) => {
     }));
 };
 
-function Profile() {
-
-
-  const userId = "618df3376c0bc6046ea8382f";
-
-  const [user, setUser] = useState([]);
+function Profile({user}) {
 
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
-    const populateSessionsAndUser = async () => {
-      const resp = await getAttendingSessions(userId);
+    const populateSessions = async () => {
+      const resp = await getAttendingSessions(user._id);
       if (!resp.error) {
         console.log(resp.data.result);
         setSessions(resp.data.result);
       }
-      const userResp = await getUserById(userId);
-      if (!userResp.error) {
-        console.log(userResp.data.result);
-        setUser(userResp.data.result);
-      }
     };
 
-    populateSessionsAndUser();
+    populateSessions();
   }, []);
 
   // const sessions = [
@@ -85,7 +75,7 @@ function Profile() {
   // ];
     return (
     <>
-      <h2>{userId}</h2>
+      <h2>{user._id}</h2>
       <h1>My Sessions</h1>
       <p></p>
       {sessions.map((session, i) => (

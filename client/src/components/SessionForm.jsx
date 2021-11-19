@@ -91,7 +91,7 @@ function SessionForm(props) {
         ? new Date(end.getTime() + millisecondsInDay).getTime() / 1000 -
           startSeconds
         : timeoutTry;
-
+    console.log(startSeconds);
     setStartSeconds(startSeconds);
     setTimeout(timeout);
   };

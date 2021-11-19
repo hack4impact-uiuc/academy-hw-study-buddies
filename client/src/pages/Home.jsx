@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { Button } from 'semantic-ui-react';
 
@@ -5,10 +6,15 @@ import SessionSummary from '../components/SessionSummary';
 import SessionForm from '../components/SessionForm';
 // import HomeHeader from '../components/HomeHeader';
 import { getSampleResponse } from '../utils/apiWrapper';
+=======
+import React from 'react';
+
+import SessionSummary from '../components/SessionSummary';
+>>>>>>> 84d947c3706983be4b32644adc043552834941f9
 
 import '../css/Home.scss';
 
-function Home() {
+function Home({ user }) {
   const sessions = [
     {
       creator: 'Aaron Alexander',
@@ -21,9 +27,8 @@ function Home() {
       location: 'Grainger Engineering Library',
     },
   ];
-  const creator = 'Name Last';
-  const [text, setText] = useState([]);
 
+<<<<<<< HEAD
   useEffect(() => {
     const populateText = async () => {
       const resp = await getSampleResponse();
@@ -35,14 +40,17 @@ function Home() {
     populateText();
   }, []);
 
+=======
+>>>>>>> 84d947c3706983be4b32644adc043552834941f9
   return (
     <>
-      <h2 className="homeHeader">Welcome, {creator}</h2>
-      <h1>Studying Activity</h1>
-      <p></p>
+      <h1>
+        Studying activity for {user.firstName} {user.lastName}{' '}
+      </h1>
       {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />
       ))}
+<<<<<<< HEAD
       <SessionForm button={<Button type="default">+</Button>} />
 
       <p>
@@ -50,6 +58,8 @@ function Home() {
           ? `You have successfully fetched ${text.length} documents!`
           : 'You did not run local API!'}
       </p>
+=======
+>>>>>>> 84d947c3706983be4b32644adc043552834941f9
     </>
   );
 }

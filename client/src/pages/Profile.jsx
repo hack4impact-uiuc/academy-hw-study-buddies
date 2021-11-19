@@ -1,9 +1,14 @@
 import React from 'react';
 
-function Profile() {
+import ClassCard from '../components/ClassCard';
+
+function Profile({ user }) {
   return (
     <>
-      <h1>Profile Page</h1>
+      <h1>
+        Profile Page for {user.firstName} {user.lastName}
+      </h1>
+      <ClassCard classCardText={'CS125'} />
     </>
   );
 }

@@ -8,10 +8,12 @@ const SERVICE_URL =
 
 const getMemberInfo = (memberDbId) => {
   const requestString = `${SERVICE_URL}/members/${memberDbId}`;
-  return axios.post(requestString, { secret: process.env.SESSION_SECRET }).catch(error => ({
-    type: 'MEMBER_INFO_FAIL',
-    error,
-  }));
+  return axios
+    .post(requestString, { secret: process.env.SESSION_SECRET })
+    .catch((error) => ({
+      type: 'MEMBER_INFO_FAIL',
+      error,
+    }));
 };
 
 module.exports = {

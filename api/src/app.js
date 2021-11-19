@@ -14,7 +14,7 @@ const app = express();
 
 // HTTPS, CORS, bodyParser
 app.use(helmet());
-if (environment != 'production') {
+if (environment !== 'production') {
   // For authentication to work on CORS, we must specify a non-wildcard origin
   // and allow credentials (cookies)
   app.use(cors({ origin: /localhost:\d{4}/, credentials: true }));
@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ limit: '2.1mb', extended: false }));
 const sessionConfig = {
   secret: process.env.SESSION_SECRET,
 };
-if (environment == 'production') {
+if (environment === 'production') {
   app.set('trust proxy', 1);
   sessionConfig.secure = true;
 }

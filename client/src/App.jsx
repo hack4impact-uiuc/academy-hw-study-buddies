@@ -12,31 +12,42 @@ import 'semantic-ui-css/semantic.min.css';
 import './styles/styles.scss';
 
 const App = () => {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const fetchUserInfo = async () => {
-            const resp = await getUserInfo();
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const resp = await getUserInfo();
 
-            if (resp.status === 200) {
-                setUser(resp.data.result);
-            }
-        };
+      if (resp.status === 200) {
+        setUser(resp.data.result);
+      }
+    };
 
-        fetchUserInfo();
-    },
-    [setUser]);
+    fetchUserInfo();
+  }, [setUser]);
 
-    return (
-        <Router>
-            <NavBar />
-            <Routes>
-                <Route exact path="/" element={user ? <Home user={user} /> : <Login setUser={setUser} />}></Route>
-                <Route exact path="/profile" element={user ? <Profile user={user}/> : <Login setUser={setUser} />}></Route>
-                <Route exact path="/classes" element={user ? <Classes user={user}/> : <Login setUser={setUser} />}></Route>
-            </Routes>
-        </Router>
-    )
+  return (
+    <Router>
+      <NavBar />
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={user ? <Home user={user} /> : <Login setUser={setUser} />}
+        ></Route>
+        <Route
+          exact
+          path="/profile"
+          element={user ? <Profile user={user} /> : <Login setUser={setUser} />}
+        ></Route>
+        <Route
+          exact
+          path="/classes"
+          element={user ? <Classes user={user} /> : <Login setUser={setUser} />}
+        ></Route>
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;

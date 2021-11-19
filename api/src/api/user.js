@@ -23,25 +23,25 @@ router.get(
   '/',
   errorWrap(async (req, res) => {
     const memberDbId = getUserId(req);
-    let user = await User.findOne({memberDbId: memberDbId});
+    let user = await User.findOne({ memberDbId: memberDbId });
     if (!user) {
       user = await User.create({
         memberDbId,
-        classes: []
+        classes: [],
       });
     }
     const memberInfoResult = await getMemberInfo(memberDbId);
     const memberInfo = memberInfoResult.data.result;
     const filteredMemberInfo = {
       firstName: memberInfo.firstName,
-      lastName: memberInfo.lastName
+      lastName: memberInfo.lastName,
     };
     user = {
       _id: user._doc._id,
       memberDbId: user._doc.memberDbId,
       ...filteredMemberInfo,
       classes: user._doc.classes,
-    }
+    };
     res.status(200).json({
       message: 'Successfully retrieved user',
       success: true,

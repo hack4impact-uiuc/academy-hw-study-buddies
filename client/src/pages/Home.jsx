@@ -6,7 +6,7 @@ import { getSampleResponse } from '../utils/apiWrapper';
 
 import '../css/Home.scss';
 
-function Home({user}) {
+function Home({ user }) {
   const [text, setText] = useState([]);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function Home({user}) {
         setText(resp.data.result);
       }
     };
-    console.log("user: ", user);
+    console.log('user: ', user);
 
     populateText();
   }, [user]);
@@ -24,7 +24,9 @@ function Home({user}) {
   return (
     <>
       {/* <h2 className="homeHeader">Welcome, {creator}</h2> */}
-      <h1>Studying activity for {user.firstName} {user.lastName} </h1>
+      <h1>
+        Studying activity for {user.firstName} {user.lastName}{' '}
+      </h1>
       <p></p>
       {/* {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />

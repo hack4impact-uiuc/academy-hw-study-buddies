@@ -1,13 +1,14 @@
-.classesPageCard {
-    flex: none;
-    width: 175px !important;
-  
-    .cardContainer {
-      display: flex;
-      justify-content: space-evenly;
-    }
-  
-    .class-text {
-      font-size: 200%;
-    }
-  }
+.card-container {
+  margin: auto;
+  width: 90%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.class-cards {
+  width: 23% !important;
+  margin: 1% !important;
+  border-radius: 15px !important;
+  text-align: left;
+}

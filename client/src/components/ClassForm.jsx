@@ -8,11 +8,11 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_VERCEL_URL
   ? `https://${process.env.REACT_APP_VERCEL_URL}/api`
-  : 'http://localhost:9000/api';
+  : 'http://localhost:9001/api';
 
 // import { editUserClasses } from '../utils/apiWrapper';
-export const putUserClass = (body) => {
-  const requestString = `${BASE_URL}/user/:userID`;
+export const putUserClass = (body, userId) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
   return axios
     .put(requestString, body, {
       headers: {
@@ -41,7 +41,7 @@ export const getUserById = (userId) => {
 
 
 function ClassForm(props) {
-  const {button, user} = props;
+  const {button, user, setClasses} = props;
   const [open, setOpen] = React.useState(false);
   const [courseCode, setCourseCode] = React.useState("");
   const [courseNumber, setCourseNumber] = React.useState("");
@@ -65,13 +65,18 @@ function ClassForm(props) {
       memberDbId: user.memberDbId,
       classes: [...user.classes, classComplete]
     }
-    putUserClass(updatedUser)
+    console.log(updatedUser.classes)
+    putUserClass(updatedUser, user._id)
+    setClasses(updatedUser.classes)
+    console.log(user._id)
+    console.log(user.classes)
   }
 
   // handleSubmit onSubmit={this.handleSubmit()}
   return (
     <Modal
       onClose={() => setOpen(false)}
+      onSubmit={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
       trigger={button}
@@ -100,7 +105,7 @@ function ClassForm(props) {
               onChange={(e) => setCourseSuffix(e.target.value)}
             />
           </Form.Group>
-          <Form.Button content = 'Submit'/>
+          <Form.Button onClick={handleSubmit} content = 'Submit' />
         </Form>
       </Modal.Content>
     </Modal>

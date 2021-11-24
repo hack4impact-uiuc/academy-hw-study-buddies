@@ -11,7 +11,7 @@ import ClassCard from '../components/ClassCard';
 
 const BASE_URL = process.env.REACT_APP_VERCEL_URL
   ? `https://${process.env.REACT_APP_VERCEL_URL}/api`
-  : 'http://localhost:9000/api';
+  : 'http://localhost:9001/api';
 
 /**
  * Returns a sample API response to demonstrate a working backend
@@ -48,18 +48,20 @@ export const getUserById = (userId) => {
 function Profile({user}) {
 
   const [sessions, setSessions] = useState([]);
+  const [classes, setClasses] = useState([]);
 
   useEffect(() => {
-    const populateSessions = async () => {
+    const populateSessionsAndClasses = async () => {
       const resp = await getAttendingSessions(user._id);
       if (!resp.error) {
         console.log(resp.data.result);
         setSessions(resp.data.result);
       }
+      setClasses(user.classes)
     };
 
-    populateSessions();
-  }, []);
+    populateSessionsAndClasses();
+  }, [user._id]);
 
   // const sessions = [
   //   {
@@ -83,9 +85,10 @@ function Profile({user}) {
       ))}
       
       {/* {user.classes && <p>{user.classes[0]}</p>} */}
+      <h1>My Classes</h1>
       <center>
-        {user.classes && user.classes.map((userClass, j) => (
-          user.classes && <ClassCard classCardText={userClass} key={j} />
+        {classes && classes.map((userClass, j) => (
+          classes && <ClassCard classCardText={userClass} key={j} />
         ))}
       </center>
       <p></p>
@@ -93,6 +96,7 @@ function Profile({user}) {
       <ClassForm
               button={<button className="small ui button" id="add-class-btn">Add class</button>}
               user={user}
+              setClasses = {setClasses}
       /> 
     </>
   );

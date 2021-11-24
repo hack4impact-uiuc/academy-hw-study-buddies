@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import SessionSummary from '../components/SessionSummary';
-import { getSampleResponse } from '../utils/apiWrapper';
 import '../css/Home.scss';
 
-function Home() {
+function Home({ user }) {
   const sessions = [
     {
       creator: 'Aaron Alexander',
@@ -23,32 +22,15 @@ function Home() {
       time: 'January 1, 1970 | 00:00 GMT',
     },
   ];
-  const creator = 'Name Last';
-  const [text, setText] = useState([]);
 
-  useEffect(() => {
-    const populateText = async () => {
-      const resp = await getSampleResponse();
-      if (!resp.error) {
-        setText(resp.data.result);
-      }
-    };
-
-    populateText();
-  }, []);
   return (
     <>
-      <h2 className="homeHeader">Welcome, {creator}</h2>
-      <h1>Studying Activity</h1>
-      <p></p>
+      <h1>
+        Studying activity for {user.firstName} {user.lastName}{' '}
+      </h1>
       {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />
       ))}
-      <p>
-        {text.length > 0
-          ? `You have successfully fetched ${text.length} documents!`
-          : 'You did not run local API!'}
-      </p>
     </>
   );
 }

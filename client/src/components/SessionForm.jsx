@@ -20,37 +20,11 @@ function SessionForm(props) {
   const [endTime, setEndTime] = useState();
   const [endTimeDefined, setEndTimeDefined] = useState(false);
 
-  const [creatorID, setCreatorID] = useState('');
-  const [course, setCourse] = useState('');
-  const [attendeeArray, setAttendeeArray] = useState([]);
-  const [startSeconds, setStartSeconds] = useState();
-  const [timeout, setTimeout] = useState();
-
   const processFormAndSubmit = async () => {
-    processMisc();
-    processTime();
+    const creatorID = 'jaskdlfioawh';
+    const course = courseCode + courseNumber + courseSuffix;
+    const attendeeArray = attendees.split(',');
 
-    const sessionData = {
-      creator: creatorID,
-      class: course,
-      location: location,
-      attendees: attendeeArray,
-      notes: notes,
-      active: !isLater,
-      startTime: startSeconds,
-      timeout: timeout,
-    };
-    console.log(sessionData);
-    await addSession(sessionData);
-  };
-
-  const processMisc = () => {
-    setCreatorID('jaskdlfioawh');
-    setCourse(courseCode + courseNumber + courseSuffix);
-    setAttendeeArray(attendees.split(','));
-  }
-
-  const processTime = () => {
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
     const active = !isLater;
@@ -92,8 +66,19 @@ function SessionForm(props) {
           startSeconds
         : timeoutTry;
     console.log(startSeconds);
-    setStartSeconds(startSeconds);
-    setTimeout(timeout);
+
+    const sessionData = {
+      creator: creatorID,
+      class: course,
+      location: location,
+      attendees: attendeeArray,
+      notes: notes,
+      active: !isLater,
+      startTime: startSeconds,
+      timeout: timeout,
+    };
+    console.log(sessionData);
+    await addSession(sessionData);
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
 
-import { buildURI } from '../utils/apiHelpers'; 
+import { buildURI } from '../utils/apiHelpers';
 import { getUserInfo } from '../utils/apiWrapper';
 
 const LOGIN_SUCCESS_QUERY_PARAM = 'success';

@@ -1,6 +1,8 @@
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 
 import SessionSummary from '../components/SessionSummary';
+import SessionForm from '../components/SessionForm';
 
 import '../css/Home.scss';
 
@@ -26,6 +28,7 @@ function Home({ user }) {
       {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />
       ))}
+       <SessionForm button={<Button type="default">+</Button>} />
     </>
   );
 }

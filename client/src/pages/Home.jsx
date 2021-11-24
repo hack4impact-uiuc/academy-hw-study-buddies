@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SessionSummary from '../components/SessionSummary';
-
+// import { getSampleResponse } from '../utils/apiWrapper';
 import '../css/Home.scss';
 
 function Home({ user }) {
@@ -10,11 +10,17 @@ function Home({ user }) {
       creator: 'Aaron Alexander',
       class: 'CS 124',
       location: 'Grainger Engineering Library',
+      attendees: ['Ellie', ', ', 'Danielle', ', ', 'Grace'],
+      notes: 'hey bestie',
+      time: 'January 1, 1970 | 00:00 GMT',
     },
     {
       creator: 'Aaron Alexander',
       class: 'CS 124',
       location: 'Grainger Engineering Library',
+      attendees: ['Anthony', ', ', 'Jessica', ', ', 'Ashwin'],
+      notes: 'hey hey hey',
+      time: 'January 1, 1970 | 00:00 GMT',
     },
   ];
 
@@ -29,5 +35,4 @@ function Home({ user }) {
     </>
   );
 }
-
 export default Home;

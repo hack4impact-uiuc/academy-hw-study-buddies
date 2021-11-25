@@ -35,7 +35,9 @@ router.get(
   '/displayed',
   errorWrap(async (req, res) => {
     let activeSessions = await Session.find({ active: 'true' });
-    if (activeSessions.length >= 10) {
+    let max = 10;
+    //if there are >= max active sessions, all will be displayed
+    if (activeSessions.length >= max) {
       res.status(200).json({
         message: `Successfully retrieved all displayed sessions on the home page.`,
         success: true,
@@ -48,7 +50,8 @@ router.get(
       startTime: 'asc',
     });
 
-    if (activeSessions.length + inactiveSessions.length < 10) {
+    // if the sum of active and inactive sessions is less than the max, all (inactive and active) will be displayed
+    if (activeSessions.length + inactiveSessions.length < max) {
       let allSessions = activeSessions.concat(inactiveSessions);
       res.status(200).json({
         message: `Successfully retrieved all displayed sessions on the home page.`,
@@ -58,8 +61,10 @@ router.get(
       return;
     }
 
+    //Else, if there are <max active sessions,
+    //inactive sessions will populate until there are max sessions on the home page in ascending start time order
     let allSessions = activeSessions.concat(
-      inactiveSessions.slice(0, 10 - activeSessions.length),
+      inactiveSessions.slice(0, max - activeSessions.length),
     );
     res.status(200).json({
       message: `Successfully retrieved all displayed sessions on the home page.`,

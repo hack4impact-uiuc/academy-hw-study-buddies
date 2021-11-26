@@ -28,7 +28,10 @@ function Home({ user }) {
       {sessions.map((session, i) => (
         <SessionSummary session={session} key={i} />
       ))}
-      <SessionForm button={<Button type="default">+</Button>} id={user.memberDbId} />
+      <SessionForm
+        button={<Button type="default">+</Button>}
+        id={user.memberDbId}
+      />
     </>
   );
 }

@@ -6,7 +6,7 @@ import { addSession } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
-  const { button } = props;
+  const { button, id } = props;
   const [open, setOpen] = useState(false);
   const [isLater, setIsLater] = useState(false);
   const [courseCode, setCourseCode] = useState('');
@@ -21,7 +21,6 @@ function SessionForm(props) {
   const [endTimeDefined, setEndTimeDefined] = useState(false);
 
   const processFormAndSubmit = async () => {
-    const creatorID = 'jaskdlfioawh';
     const course = courseCode + courseNumber + courseSuffix;
     const attendeeArray = attendees.split(',');
 
@@ -65,10 +64,9 @@ function SessionForm(props) {
         ? new Date(end.getTime() + millisecondsInDay).getTime() / 1000 -
           startSeconds
         : timeoutTry;
-    console.log(startSeconds);
 
     const sessionData = {
-      creator: creatorID,
+      creator: id,
       class: course,
       location: location,
       attendees: attendeeArray,

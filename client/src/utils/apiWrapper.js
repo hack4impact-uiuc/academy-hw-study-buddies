@@ -61,6 +61,20 @@ export const addSession = (body) => {
     }));
 };
 
+export const editSession = (body) => {
+  const putSession = `${BASE_URL}/session`;
+  return axios
+    .put(putSession, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'PUT_SESSION_FAIL',
+      error,
+    }));
+};
+
 //calling backend endpoint to edit user class in profile
 export const editUserClasses = (body) => {
   const requestString = `${BASE_URL}/user/:userID`;

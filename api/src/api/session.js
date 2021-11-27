@@ -30,14 +30,14 @@ router.get(
   }),
 );
 
-//get all displayed sessions on the home page
+// Get all displayed sessions on the home page
 router.get(
   '/displayed',
   errorWrap(async (req, res) => {
     let activeSessions = await Session.find({ active: 'true' });
-    let max = 10;
-    //if there are >= max active sessions, all will be displayed
-    if (activeSessions.length >= max) {
+    const maxDisplayed = 20;
+    // If there are >= maximum displayed active sessions, all will be displayed
+    if (activeSessions.length >= maxDisplayed) {
       res.status(200).json({
         message: `Successfully retrieved all displayed sessions on the home page.`,
         success: true,
@@ -50,8 +50,8 @@ router.get(
       startTime: 'asc',
     });
 
-    // if the sum of active and inactive sessions is less than the max, all (inactive and active) will be displayed
-    if (activeSessions.length + inactiveSessions.length < max) {
+    // If the sum of active and inactive sessions is less than the maxiimum displayed sessions, all (inactive and active) will be displayed
+    if (activeSessions.length + inactiveSessions.length < maxDisplayed) {
       let allSessions = activeSessions.concat(inactiveSessions);
       res.status(200).json({
         message: `Successfully retrieved all displayed sessions on the home page.`,
@@ -61,10 +61,10 @@ router.get(
       return;
     }
 
-    //Else, if there are <max active sessions,
-    //inactive sessions will populate until there are max sessions on the home page in ascending start time order
+    // Else, if there are <maximum displayed active sessions,
+    // Inactive sessions will populate until there are maximum displayed sessions on the home page in ascending start time order
     let allSessions = activeSessions.concat(
-      inactiveSessions.slice(0, max - activeSessions.length),
+      inactiveSessions.slice(0, maxDisplayed - activeSessions.length),
     );
     res.status(200).json({
       message: `Successfully retrieved all displayed sessions on the home page.`,

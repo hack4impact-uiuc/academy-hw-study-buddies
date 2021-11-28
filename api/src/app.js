@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ limit: '2.1mb', extended: false }));
 
 // Session support, needed for authentication
 const sessionConfig = {
-  secret: process.env.SESSION_SECRET ? process.env.SESSION_SECRET : "fake secret",
+  secret: process.env.SESSION_SECRET,
 };
 if (environment === 'production') {
   app.set('trust proxy', 1);

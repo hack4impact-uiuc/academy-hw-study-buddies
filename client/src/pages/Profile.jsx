@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getAttendingSessions } from '../utils/apiWrapper';
 
 import 'semantic-ui-css/semantic.min.css';
 import '../css/Profile.scss';
@@ -7,43 +7,11 @@ import SessionSummary from '../components/SessionSummary';
 import ClassForm from '../components/ClassForm.jsx';
 import ClassCard from '../components/ClassCard';
 
-
-
-const BASE_URL = process.env.REACT_APP_VERCEL_URL
-  ? `https://${process.env.REACT_APP_VERCEL_URL}/api`
-  : 'http://localhost:9001/api';
-
 /**
  * Returns a sample API response to demonstrate a working backend
  * Returns GET_SAMPLE_FAIL upon failure
  */
-export const getAttendingSessions = (userId) => {
-  const requestString = `${BASE_URL}/session/attending/${userId}`;
-  return axios
-    .get(requestString, {
-      headers: {
-        'Content-Type': 'application/JSON',
-      },
-    })
-    .catch((error) => ({
-      type: 'GET_SAMPLE_FAIL',
-      error,
-    }));
-};
 
-export const getUserById = (userId) => {
-  const requestString = `${BASE_URL}/user/${userId}`;
-  return axios
-    .get(requestString, {
-      headers: {
-        'Content-Type': 'application/JSON',
-      },
-    })
-    .catch((error) => ({
-      type: 'GET_SAMPLE_FAIL',
-      error,
-    }));
-};
 
 function Profile({user}) {
 
@@ -86,11 +54,11 @@ function Profile({user}) {
       
       {/* {user.classes && <p>{user.classes[0]}</p>} */}
       <h1>My Classes</h1>
-      <center>
-        {classes && classes.map((userClass, j) => (
+      <div className = "classes-display">
+          {classes && classes.map((userClass, j) => (
           classes && <ClassCard classCardText={userClass} key={j} />
-        ))}
-      </center>
+        ))} 
+      </div>
       <p></p>
       {/* {user.classes && <ClassCard classCardText={user.classes[0]} />} */}
       <ClassForm

@@ -66,10 +66,14 @@ function ClassForm(props) {
       classes: [...user.classes, classComplete]
     }
     console.log(updatedUser.classes)
+    
     putUserClass(updatedUser, user._id)
     setClasses(updatedUser.classes)
     console.log(user._id)
     console.log(user.classes)
+    // setCourseCode("")
+    // setCourseNumber("")
+    // setCourseSuffix("")
   }
 
   // handleSubmit onSubmit={this.handleSubmit()}

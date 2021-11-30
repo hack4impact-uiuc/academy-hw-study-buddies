@@ -31,6 +31,42 @@ export const getSampleResponse = () => {
 };
 
 /**
+ * Returns attending sessions of user
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
+export const getAttendingSessions = (userId) => {
+  const requestString = `${BASE_URL}/session/attending/${userId}`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+/**
+ * Returns user by id
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
+export const getUserById = (userId) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+/**
  * Executes a sample POST request
  * Returns POST_SAMPLE_FAIL upon failure
  */

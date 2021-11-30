@@ -27,8 +27,9 @@ function Home({ user }) {
         Welcome Back, {user.firstName} {user.lastName}
       </h1>
 
+      <h1 className="studying-heading">STUDYING ACTIVITY</h1>
+
       <div className="studying-activity-container">
-        <h1>STUDYING ACTIVITY</h1>
         {sessions.map((session, i) => (
           <SessionSummary session={session} key={i} />
         ))}
@@ -46,15 +47,15 @@ function Home({ user }) {
         className="homeimg-sitting"
         src={HomeImgSitting}
         alt="HomeImgSitting"
-      ></img>
-      <img
-        className="homeimg-laying"
-        src={HomeImgLaying}
-        alt="HomeImgLaying"
-      ></img>
+      />
+
+      <img className="homeimg-laying" src={HomeImgLaying} alt="HomeImgLaying" />
+
       <div className="academy-msg">
         <b>
-          Made with love from the Fa2021 Academy Team <br /> Hack4Impact 2021
+          Made with love from the Fa2021 Academy Team
+          <br />
+          Hack4Impact UIUC 2021
         </b>
       </div>
     </>

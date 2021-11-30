@@ -2,10 +2,19 @@
 
 .navbar {
   background-color: $accent !important;
+  font-family: Tommy !important;
 
   .nav-item {
-    color: $light !important;
+    color: $primary !important;
     font-weight: bold !important;
     text-shadow: none !important;
+
+    .active.item {
+      background-color: palegreen !important;
+    }
   }
+}
+
+.ui.menu .active.item {
+  background-color: $light !important;
 }

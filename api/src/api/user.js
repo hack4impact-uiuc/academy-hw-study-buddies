@@ -144,3 +144,16 @@ router.delete(
 );
 
 module.exports = router;
+
+router.get(
+  '/all',
+  errorWrap(async (req, res) => {
+    const users = await User.find();
+    res.status(200).json({
+      message: 'Successfully retrieved all users',
+      success: true,
+      result: users,
+    });
+    return;
+  }),
+);

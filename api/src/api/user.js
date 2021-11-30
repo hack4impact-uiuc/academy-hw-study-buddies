@@ -150,7 +150,7 @@ router.get(
   errorWrap(async (req, res) => {
     const users = await User.find();
     res.status(200).json({
-      message: 'Successfully retrieved all users',
+      message: 'Successfully retrieved all Users',
       success: true,
       result: users,
     });

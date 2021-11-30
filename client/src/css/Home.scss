@@ -51,3 +51,45 @@ h1 {
 #join-btn:hover {
   transition: all 0.3s ease !important;
 }
+
+.welcome-msg {
+  position: relative;
+  right: 12%;
+  margin: 50px 0px 50px 0px;
+  font-size: 40px;
+}
+
+.studying-activity-container {
+  position: relative;
+  background-color: red;
+  width: 40%;
+  margin: 0 auto;
+
+  .add-session-btn {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.homeimg-sitting {
+  position: relative;
+  right: 23%;
+  top: -250px;
+}
+
+.homeimg-laying {
+  position: relative;
+  left: 18%;
+  top: -380px;
+  width: 350px;
+  height: auto;
+}
+
+.academy-msg {
+  position: absolute;
+  left: 3%;
+  top: 90%;
+  font-size: 18px;
+  line-height: 23px;
+  text-align: left;
+}

@@ -35,7 +35,7 @@ router.get(
   '/displayed',
   errorWrap(async (req, res) => {
     let activeSessions = await Session.find({ active: 'true' });
-    const maxDisplayed = 20;
+    const maxDisplayed = 8;
     // If there are >= maximum displayed active sessions, all will be displayed
     if (activeSessions.length >= maxDisplayed) {
       res.status(200).json({
@@ -50,7 +50,7 @@ router.get(
       startTime: 'asc',
     });
 
-    // If the sum of active and inactive sessions is less than the maxiimum displayed sessions, all (inactive and active) will be displayed
+    // If the sum of active and inactive sessions is less than the maximum displayed sessions, all sessions (inactive and active) will be displayed
     if (activeSessions.length + inactiveSessions.length < maxDisplayed) {
       let allSessions = activeSessions.concat(inactiveSessions);
       res.status(200).json({

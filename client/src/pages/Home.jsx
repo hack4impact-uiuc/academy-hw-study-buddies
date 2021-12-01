@@ -48,9 +48,7 @@ function Home({ user }) {
         src={HomeImgSitting}
         alt="HomeImgSitting"
       />
-
       <img className="homeimg-laying" src={HomeImgLaying} alt="HomeImgLaying" />
-
       <div className="academy-msg">
         <b>
           Made with love from the Fa2021 Academy Team

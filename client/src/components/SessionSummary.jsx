@@ -11,6 +11,8 @@ function SessionSummary(props) {
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [startDate, setStartDate] = useState('January 1');
+  const [startTime, setStartTime] = useState('12:00 PM');
 
   useEffect(() => {
     setSessionAttendees(session.attendees);
@@ -20,6 +22,21 @@ function SessionSummary(props) {
     setIsAttending(sessionAttendees.includes(user._id));
     setIsActive(session.active);
   }, [user._id, sessionAttendees, session.active]);
+
+  useEffect(() => {
+    // Parse epoch startTime into a Date object
+    const parse = () => {
+      let date = new Date(0);
+      date.setUTCSeconds(session.startTime);
+      console.log(date);
+      setStartDate(date.toDateString());
+      setStartTime(date.toLocaleTimeString());
+    };
+
+    if (!isActive) {
+      parse();
+    }
+  }, [isActive, session.startTime]);
 
   const handleJoin = async () => {
     if (!sessionAttendees.includes(user._id)) {
@@ -57,8 +74,8 @@ function SessionSummary(props) {
           </Card.Header>
         ) : (
           <Card.Header>
-            {session.creator} will be studying {session.class} at
-            {session.location} at {session.startTime}
+            {session.creator} will be studying {session.class} at{' '}
+            {session.location} on {startDate} at {startTime}
           </Card.Header>
         )}
 

@@ -59,7 +59,7 @@ function SessionSummary(props) {
   };
 
   return (
-    <Card centered className="sessionCard">
+    <Card centered className={`sessionCard ${!isActive && 'upcoming'}`}>
       <Card.Content className="insideCard">
         {isActive ? (
           <Card.Header>
@@ -73,9 +73,9 @@ function SessionSummary(props) {
         )}
 
         <Button
+          className={'join-leave-btn'}
           size="small"
           onClick={handleJoinAndLeave}
-          id="join-btn"
           content={isAttending ? 'LEAVE' : 'JOIN'}
         />
       </Card.Content>

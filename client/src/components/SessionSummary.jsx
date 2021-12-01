@@ -10,33 +10,27 @@ function SessionSummary(props) {
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [startDate, setStartDate] = useState('January 1');
   const [startTime, setStartTime] = useState('12:00 PM');
 
   useEffect(() => {
     setSessionAttendees(session.attendees);
-  }, [user._id, session.attendees]);
-
-  useEffect(() => {
-    setIsAttending(sessionAttendees.includes(user._id));
+    setIsAttending(session.attendees.includes(user._id));
     setIsActive(session.active);
-  }, [user._id, sessionAttendees, session.active]);
 
-  useEffect(() => {
-    // Parse epoch startTime into a Date object
-    const parse = () => {
-      let date = new Date(0);
-      date.setUTCSeconds(session.startTime);
-      console.log(date);
-      setStartDate(date.toDateString());
-      setStartTime(date.toLocaleTimeString());
-    };
+    if (!session.active) {
+      const parseDate = (epochTime) => {
+        let date = new Date(0);
+        date.setUTCSeconds(epochTime);
 
-    if (!isActive) {
-      parse();
+        setStartDate(date.toDateString());
+        setStartTime(date.toLocaleTimeString());
+      };
+
+      parseDate(session.startTime);
     }
-  }, [isActive, session.startTime]);
+  }, [user._id, session]);
 
   const handleJoin = async () => {
     if (!sessionAttendees.includes(user._id)) {

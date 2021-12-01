@@ -3,7 +3,8 @@ import { Button } from 'semantic-ui-react';
 
 import SessionSummary from '../components/SessionSummary';
 import SessionForm from '../components/SessionForm';
-
+import HomeImgSitting from '../utils/images/homeimg-sitting.png';
+import HomeImgLaying from '../utils/images/homeimg-laying.png';
 import '../css/Home.scss';
 
 function Home({ user }) {
@@ -22,13 +23,39 @@ function Home({ user }) {
 
   return (
     <>
-      <h1>
-        Studying activity for {user.firstName} {user.lastName}{' '}
+      <h1 className="welcome-msg">
+        Welcome Back, {user.firstName} {user.lastName}
       </h1>
-      {sessions.map((session, i) => (
-        <SessionSummary session={session} key={i} />
-      ))}
-      <SessionForm button={<Button type="default">+</Button>} id={user._id} />
+
+      <h1 className="studying-heading">STUDYING ACTIVITY</h1>
+
+      <div className="studying-activity-container">
+        {sessions.map((session, i) => (
+          <SessionSummary session={session} key={i} />
+        ))}
+        <SessionForm
+          button={
+            <Button className="add-session-btn" type="default">
+              +
+            </Button>
+          }
+          id={user._id}
+        />
+      </div>
+
+      <img
+        className="homeimg-sitting"
+        src={HomeImgSitting}
+        alt="HomeImgSitting"
+      />
+      <img className="homeimg-laying" src={HomeImgLaying} alt="HomeImgLaying" />
+      <div className="academy-msg">
+        <b>
+          Made with love from the Fa2021 Academy Team
+          <br />
+          Hack4Impact UIUC 2021
+        </b>
+      </div>
     </>
   );
 }

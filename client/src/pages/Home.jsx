@@ -9,12 +9,14 @@ import '../css/Home.scss';
 function Home({ user }) {
   const sessions = [
     {
-      creator: 'Aaron Alexander',
-      class: 'CS 124',
+      creatorName: 'Grace Zhang',
+      creator: '619eb17cba373a435428d7d4',
+      class: 'CS 128',
       location: 'Grainger Engineering Library',
     },
     {
-      creator: 'Aaron Alexander',
+      creatorName: 'Aaron Alexander',
+      creator: '123456',
       class: 'CS 124',
       location: 'Grainger Engineering Library',
     },

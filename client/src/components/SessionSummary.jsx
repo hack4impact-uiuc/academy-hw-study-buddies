@@ -11,10 +11,10 @@ function SessionSummary( props ) {
     <Card centered className="sessionCard">
       <Card.Content className="insideCard">
         <Card.Header>
-          {session.creator} is studying {session.class} at {session.location}
+          {session.creatorName} is studying {session.class} at {session.location}
         </Card.Header>
         {
-          id === session.creator? <SessionForm button={<Button type="default">Edit</Button>}/>: <button className="small ui button" id="join-btn">
+          id === session.creator? <SessionForm button={<Button type="default" className="small ui button" id="edit-btn">EDIT</Button>}/>: <button className="small ui button" id="join-btn">
           JOIN
         </button>
         }

@@ -4,9 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import '../css/Home.scss';
 
 function EndSession() {
-   return (
-    <Button id="endsesh-button">END SESSION</Button>
-   );
+  return <Button id="endsesh-button">END SESSION</Button>;
 }
 
 export default EndSession;

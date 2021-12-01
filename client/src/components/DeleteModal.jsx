@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Modal, Header } from 'semantic-ui-react';
+
 import 'semantic-ui-css/semantic.min.css';
 import '../css/DeleteModal.scss';
 import EndSession from '../components/EndSession.jsx';
@@ -12,7 +13,7 @@ function DeleteModal({ session }) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger= {<EndSession />}
+      trigger={<EndSession />}
     >
       <Modal.Content>
         <Modal.Description>

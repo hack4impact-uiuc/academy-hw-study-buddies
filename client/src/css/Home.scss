@@ -1,30 +1,63 @@
 @import '../styles/colors.scss';
 
-.sessionCard {
-  box-shadow: none !important;
-  text-align: left !important;
-  width: 490px !important;
-  height: 100px !important;
-  margin-bottom: 20px !important;
-  border-radius: 15px !important;
-  transition: all 0.3s ease !important;
-  // box-shadow: 3px 3px 6px grey !important;
+.welcome-msg {
+  right: 12%;
+  margin: 50px 200px 50px 0px;
+  font-size: 40px;
 }
 
-.ui.card > .content > .header {
-  font-family: Tommy !important;
+.studying-heading {
+  margin-bottom: 40px;
 }
-.ui.card > .content,
-.ui.cards > .card > .content {
-  margin: -3em;
+
+.studying-activity-container {
+  position: relative;
+  width: 400px !important;
+  height: 100px !important;
+  text-align: center;
+  margin: 0 auto;
+
+  .add-session-btn {
+    background-color: $sessionAccent !important;
+    position: absolute;
+    right: 0;
+    border-radius: 0.8em;
+    color: black;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+      transition: all 0.3s ease !important;
+      background-color: $sessionBackground !important;
+      box-shadow: 1.5px 1.5px 3px grey !important;
+    }
+  }
+  #plus-icon {
+    padding-left: 0.5em;
+  }
 }
-.ui.card > .content > .header:not(.ui),
-.ui.cards > .card > .content > .header:not(.ui) {
-  margin-left: 3em;
+
+.homeimg-sitting {
+  position: absolute;
+  top: 33%;
+  left: 10%;
+  width: 400px;
+  height: auto;
 }
-.sessionCard:hover {
-  background-color: #b2caee !important;
-  box-shadow: 3px 3px 6px grey !important;
+
+.homeimg-laying {
+  position: absolute;
+  top: 15%;
+  right: 7%;
+}
+
+.academy-msg {
+  position: absolute;
+  color: $secondary;
+  left: 1.5%;
+  bottom: 2%;
+  font-size: 14px;
+  line-height: 23px;
+  text-align: left;
 }
 
 .ui.button {
@@ -44,10 +77,10 @@
 }
 
 #join-button {
-  font-family: Tommy;
   padding: 5px 27px;
   margin-left: 280px;
   transition: all 0.3s ease !important;
+  background-color: $sessionAccent;
 
   &:hover {
     transition: all 0.3s ease !important;
@@ -58,12 +91,9 @@
   padding: 5px 20px;
   margin: 0px 0px 0px 0px;
   transition: all 0.3s ease !important;
+  background-color: #c4c4c4;
 
   &:hover {
     transition: all 0.3s ease !important;
   }
-}
-
-.ui.header {
-  font-family: Tommy;
 }

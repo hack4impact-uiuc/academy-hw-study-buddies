@@ -1,13 +1,11 @@
 import React from 'react';
-import { Card } from 'semantic-ui-react';
-
-import EndSession from '../components/EndSession.jsx';
-import DeleteSession from '../components/DeleteSession.jsx';
+import { /*Button,*/ Card } from 'semantic-ui-react';
 
 import DetailsModal from './DetailsModal';
 import DeleteModal from './DeleteModal';
 
 import 'semantic-ui-css/semantic.min.css';
+import '../css/SessionSummary.scss';
 
 function SessionSummary({ session }) {
   // const [shouldDisplayButton, setShouldDisplayButton] = useState(false);
@@ -35,7 +33,7 @@ function SessionSummary({ session }) {
       </Card.Content>
 
       {
-        session.creator === session.id && (session.isFutureSession ? <EndSession /> : <DeleteSession />) 
+        //session.creator === session.id && (session.isFutureSession ? <EndSession /> : <Button>No</Button>)
       }
     </Card>
   );

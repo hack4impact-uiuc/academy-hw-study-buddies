@@ -4,9 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import '../css/Home.scss';
 
 function DeleteSession() {
-   return (
-    <Button>DELETE SESSION</Button>
-   );
+  return <Button>DELETE SESSION</Button>;
 }
 
 export default DeleteSession;

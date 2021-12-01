@@ -11,7 +11,6 @@ export const getUserInfo = () => {
     error,
   }));
 };
-
 /**
  * Returns a sample API response to demonstrate a working backend
  * Returns GET_SAMPLE_FAIL upon failure
@@ -44,6 +43,34 @@ export const addSampleResponse = (body) => {
     })
     .catch((error) => ({
       type: 'POST_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+export const addSession = (body) => {
+  const postSession = `${BASE_URL}/session`;
+  return axios
+    .post(postSession, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'POST_SESSION_FAIL',
+      error,
+    }));
+};
+
+export const editSession = (body) => {
+  const putSession = `${BASE_URL}/session`;
+  return axios
+    .put(putSession, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'PUT_SESSION_FAIL',
       error,
     }));
 };

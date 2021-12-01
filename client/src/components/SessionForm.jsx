@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Input, TextArea, Radio } from 'semantic-ui-react';
+import { Modal, Form, Input, TextArea, Radio } from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { addSession } from '../utils/apiWrapper';
+import { addSession, editSession } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
-  const { button, id } = props;
+  const { button, id, isEdit, session } = props;
   const [open, setOpen] = useState(false);
   const [isLater, setIsLater] = useState(false);
   const [courseCode, setCourseCode] = useState('');
@@ -76,17 +76,65 @@ function SessionForm(props) {
       timeout: timeout,
     };
     console.log(sessionData);
-    await addSession(sessionData);
+    await isEdit? editSession(sessionData): addSession(sessionData);
+  };
+
+  const formSetup = () => {
+    const splitClass = session.class.split(/([0-9]+)/)
+    setCourseCode(splitClass[0])
+    setCourseNumber(splitClass[1])
+    if (splitClass.length > 2) {setCourseSuffix(splitClass[2]);}
+    setLocation(session.location)
+    setAttendees(session.attendees)
+    setNotes(session.notes)
+
+    setIsLater(!session.active)
+    const startSeconds = session.startTime;
+    
+    if (!session.active) {
+      const startDate = new Date(startSeconds * 1000)
+      const year = startDate.getFullYear()
+      const month = startDate.getMonth()
+      const day = startDate.getDate()
+
+      const processedMonth = month < 10? "0".concat(month): "".concat(month)
+      const processedDay = day < 10? "0".concat(day): "".concat(day)
+      
+      const processedDate = "".concat(year).concat("-").concat(processedMonth).concat("-").concat(processedDay)
+      setDate(processedDate)
+
+      const startHour = startDate.getHours()
+      const startMinute = startDate.getMinutes()
+
+      const processedStartHour = startHour < 10? "0".concat(startHour): "".concat(startHour)
+      const processedStartMinute = startMinute < 10? "0".concat(startMinute): "".concat(startMinute)
+      const processedStartTime = processedStartHour.concat(":").concat(processedStartMinute)
+      setStartTime(processedStartTime)
+    }
+
+    const endDate = new Date((startSeconds + session.timeout) * 1000)
+    const endHour = endDate.getHours()
+    const endMinute = endDate.getMinutes()
+
+    const processedEndHour = endHour < 10? "0".concat(endHour): "".concat(endHour)
+    const processedEndMinute = endMinute < 10? "0".concat(endMinute): "".concat(endMinute)
+    const processedEndTime = processedEndHour.concat(":").concat(processedEndMinute)
+    setEndTime(processedEndTime)
+
+    const defaultTimeout = 43200
+
+    if (session.timeout !== defaultTimeout) {
+      setEndTimeDefined(true)
+    }
   };
 
   return (
     <Modal
       onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onOpen={() => { setOpen(true); if (isEdit) {formSetup()}}}
       open={open}
       trigger={button}
     >
-      <Button onClick={()=>setCourseNumber(1)}> </Button>
       <Modal.Content form>
         <Form centered className="popup-form">
           <Form.Group inline>

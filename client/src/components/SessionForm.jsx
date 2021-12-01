@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Input, TextArea, Radio } from 'semantic-ui-react';
+import { Modal, Button, Form, Input, TextArea, Radio } from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
 import { addSession } from '../utils/apiWrapper';
@@ -86,6 +86,7 @@ function SessionForm(props) {
       open={open}
       trigger={button}
     >
+      <Button onClick={()=>setCourseNumber(1)}> </Button>
       <Modal.Content form>
         <Form centered className="popup-form">
           <Form.Group inline>
@@ -106,6 +107,7 @@ function SessionForm(props) {
               placeholder="Course number"
               control={Input}
               value={courseNumber}
+              
               onChange={(e) => {
                 setCourseNumber(e.target.value);
                 console.log(courseNumber);

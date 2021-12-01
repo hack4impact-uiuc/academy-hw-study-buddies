@@ -26,7 +26,7 @@ function Home({ user }) {
         Studying activity for {user.firstName} {user.lastName}{' '}
       </h1>
       {sessions.map((session, i) => (
-        <SessionSummary session={session} key={i} />
+        <SessionSummary session={session} id={user._id} key={i} />
       ))}
       <SessionForm button={<Button type="default">+</Button>} id={user._id} />
     </>

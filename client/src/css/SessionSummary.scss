@@ -10,6 +10,10 @@
   border-radius: 15px !important;
   transition: all 0.3s ease !important;
 
+  &.upcoming {
+    background-color: $sessionBackgroundUpcoming !important;
+  }
+
   &:hover {
     background-color: #b2caee !important;
     box-shadow: 3px 3px 6px grey !important;
@@ -20,7 +24,7 @@
     padding: 20px !important;
   }
 
-  #join-btn {
+  .join-leave-btn {
     background-color: $sessionAccent !important;
     padding: 5px 27px;
     margin-left: 280px;

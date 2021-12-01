@@ -30,21 +30,21 @@
 }
 
 .homeimg-sitting {
-  position: absolute;
+  position: fixed;
   top: 33%;
-  left: 10%;
+  left: 8%;
   width: 400px;
   height: auto;
 }
 
 .homeimg-laying {
-  position: absolute;
+  position: fixed;
   top: 15%;
   right: 7%;
 }
 
 .academy-msg {
-  position: absolute;
+  position: fixed;
   color: $secondary;
   left: 1.5%;
   bottom: 2%;

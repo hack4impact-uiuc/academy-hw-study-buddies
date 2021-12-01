@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from 'semantic-ui-react';
+import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
 import 'semantic-ui-css/semantic.min.css';
@@ -15,48 +15,47 @@ function SessionSummary(props) {
   const [startTime, setStartTime] = useState('12:00 PM');
 
   useEffect(() => {
+    setIsActive(session.active);
     setSessionAttendees(session.attendees);
     setIsAttending(session.attendees.includes(user._id));
-    setIsActive(session.active);
 
     if (!session.active) {
+      // Parse startTime from epoch time to Date object
       const parseDate = (epochTime) => {
         let date = new Date(0);
         date.setUTCSeconds(epochTime);
 
         setStartDate(date.toDateString());
-        setStartTime(date.toLocaleTimeString());
+        setStartTime(
+          date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        );
       };
 
       parseDate(session.startTime);
     }
   }, [user._id, session]);
 
-  const handleJoin = async () => {
-    if (!sessionAttendees.includes(user._id)) {
-      let updatedAttendees = sessionAttendees;
-      updatedAttendees.push(user._id);
-      setSessionAttendees(updatedAttendees);
-      setIsAttending(true);
-      const updatedSession = {
-        attendees: updatedAttendees,
-      };
-      await editSession(session._id, updatedSession);
-    }
-  };
+  const handleJoinAndLeave = async () => {
+    let updatedAttendees = sessionAttendees;
 
-  const handleLeave = async () => {
-    if (sessionAttendees.includes(user._id)) {
-      let updatedAttendees = sessionAttendees.filter(
+    if (!isAttending && !sessionAttendees.includes(user._id)) {
+      // Join session if user is not currently attending
+      updatedAttendees.push(user._id);
+    } else if (sessionAttendees.includes(user._id)) {
+      // Remove user from attendees array if currently attending
+      updatedAttendees = sessionAttendees.filter(
         (attendee) => attendee !== user._id,
       );
-      setSessionAttendees(updatedAttendees);
-      setIsAttending(false);
-      const updatedSession = {
-        attendees: updatedAttendees,
-      };
-      await editSession(session._id, updatedSession);
+    } else {
+      return;
     }
+
+    setSessionAttendees(updatedAttendees);
+    setIsAttending(!isAttending);
+    const updatedSession = {
+      attendees: updatedAttendees,
+    };
+    await editSession(session._id, updatedSession);
   };
 
   return (
@@ -73,23 +72,12 @@ function SessionSummary(props) {
           </Card.Header>
         )}
 
-        {isAttending ? (
-          <button
-            className="small ui button"
-            id="join-btn"
-            onClick={handleLeave}
-          >
-            LEAVE
-          </button>
-        ) : (
-          <button
-            className="small ui button"
-            id="join-btn"
-            onClick={handleJoin}
-          >
-            JOIN
-          </button>
-        )}
+        <Button
+          size="small"
+          onClick={handleJoinAndLeave}
+          id="join-btn"
+          content={isAttending ? 'LEAVE' : 'JOIN'}
+        />
       </Card.Content>
     </Card>
   );

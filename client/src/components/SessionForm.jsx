@@ -76,62 +76,83 @@ function SessionForm(props) {
       timeout: timeout,
     };
     console.log(sessionData);
-    await isEdit? editSession(sessionData): addSession(sessionData);
+    (await isEdit) ? editSession(sessionData) : addSession(sessionData);
   };
 
   const formSetup = () => {
-    const splitClass = session.class.split(/([0-9]+)/)
-    setCourseCode(splitClass[0])
-    setCourseNumber(splitClass[1])
-    if (splitClass.length > 2) {setCourseSuffix(splitClass[2]);}
-    setLocation(session.location)
-    setAttendees(session.attendees)
-    setNotes(session.notes)
+    const splitClass = session.class.split(/([0-9]+)/);
+    setCourseCode(splitClass[0]);
+    setCourseNumber(splitClass[1]);
+    if (splitClass.length > 2) {
+      setCourseSuffix(splitClass[2]);
+    }
+    setLocation(session.location);
+    console.log(session.attendees)
+    setAttendees(session.attendees.length > 0? session.attendees.join(','): session.attendees);
+    setNotes(session.notes);
 
-    setIsLater(!session.active)
+    setIsLater(!session.active);
     const startSeconds = session.startTime;
-    
+
     if (!session.active) {
-      const startDate = new Date(startSeconds * 1000)
-      const year = startDate.getFullYear()
-      const month = startDate.getMonth()
-      const day = startDate.getDate()
+      const startDate = new Date(startSeconds * 1000);
+      const year = startDate.getFullYear();
+      const month = startDate.getMonth();
+      const day = startDate.getDate();
 
-      const processedMonth = month < 10? "0".concat(month): "".concat(month)
-      const processedDay = day < 10? "0".concat(day): "".concat(day)
-      
-      const processedDate = "".concat(year).concat("-").concat(processedMonth).concat("-").concat(processedDay)
-      setDate(processedDate)
+      const processedMonth = month < 10 ? '0'.concat(month) : ''.concat(month);
+      const processedDay = day < 10 ? '0'.concat(day) : ''.concat(day);
 
-      const startHour = startDate.getHours()
-      const startMinute = startDate.getMinutes()
+      const processedDate = ''
+        .concat(year)
+        .concat('-')
+        .concat(processedMonth)
+        .concat('-')
+        .concat(processedDay);
+      setDate(processedDate);
 
-      const processedStartHour = startHour < 10? "0".concat(startHour): "".concat(startHour)
-      const processedStartMinute = startMinute < 10? "0".concat(startMinute): "".concat(startMinute)
-      const processedStartTime = processedStartHour.concat(":").concat(processedStartMinute)
-      setStartTime(processedStartTime)
+      const startHour = startDate.getHours();
+      const startMinute = startDate.getMinutes();
+
+      const processedStartHour =
+        startHour < 10 ? '0'.concat(startHour) : ''.concat(startHour);
+      const processedStartMinute =
+        startMinute < 10 ? '0'.concat(startMinute) : ''.concat(startMinute);
+      const processedStartTime = processedStartHour
+        .concat(':')
+        .concat(processedStartMinute);
+      setStartTime(processedStartTime);
     }
 
-    const endDate = new Date((startSeconds + session.timeout) * 1000)
-    const endHour = endDate.getHours()
-    const endMinute = endDate.getMinutes()
+    const endDate = new Date((startSeconds + session.timeout) * 1000);
+    const endHour = endDate.getHours();
+    const endMinute = endDate.getMinutes();
 
-    const processedEndHour = endHour < 10? "0".concat(endHour): "".concat(endHour)
-    const processedEndMinute = endMinute < 10? "0".concat(endMinute): "".concat(endMinute)
-    const processedEndTime = processedEndHour.concat(":").concat(processedEndMinute)
-    setEndTime(processedEndTime)
+    const processedEndHour =
+      endHour < 10 ? '0'.concat(endHour) : ''.concat(endHour);
+    const processedEndMinute =
+      endMinute < 10 ? '0'.concat(endMinute) : ''.concat(endMinute);
+    const processedEndTime = processedEndHour
+      .concat(':')
+      .concat(processedEndMinute);
+    setEndTime(processedEndTime);
 
-    const defaultTimeout = 43200
+    const defaultTimeout = 43200;
 
     if (session.timeout !== defaultTimeout) {
-      setEndTimeDefined(true)
+      setEndTimeDefined(true);
     }
   };
 
   return (
     <Modal
       onClose={() => setOpen(false)}
-      onOpen={() => { setOpen(true); if (isEdit) {formSetup()}}}
+      onOpen={() => {
+        setOpen(true);
+        if (isEdit) {
+          formSetup();
+        }
+      }}
       open={open}
       trigger={button}
     >
@@ -155,7 +176,6 @@ function SessionForm(props) {
               placeholder="Course number"
               control={Input}
               value={courseNumber}
-              
               onChange={(e) => {
                 setCourseNumber(e.target.value);
                 console.log(courseNumber);

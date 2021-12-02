@@ -48,7 +48,7 @@ export const addSampleResponse = (body) => {
 };
 
 export const addSession = (body) => {
-  const postSession = `${BASE_URL}/session`;
+  const postSession = `${BASE_URL}/session/`;
   return axios
     .post(postSession, body, {
       headers: {
@@ -61,8 +61,8 @@ export const addSession = (body) => {
     }));
 };
 
-export const editSession = (body) => {
-  const putSession = `${BASE_URL}/session`;
+export const editSession = (sessionId, body) => {
+  const putSession = `${BASE_URL}/session/${sessionId}`;
   return axios
     .put(putSession, body, {
       headers: {

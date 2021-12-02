@@ -9,23 +9,26 @@ import '../css/Home.scss';
 function Home({ user }) {
   const sessions = [
     {
-      creatorName: 'Grace Zhang',
       creator: '619eb17cba373a435428d7d4',
-      class: 'CS 128 AB',
-      location: 'Grainger Engineering Library',
-      attendees: ['someone', 'another person'],
-      notes: 'random notes',
+      class: 'CS128',
+      location: 'please work',
+      attendees: [''],
+      notes: '',
       active: true,
-      timeout: 43200
+      startTime: 1638487981.218,
+      timeout: 43200,
+      _id: '61a957adb1e1b243b06cf10a',
+      __v: 0,
     },
     {
       creatorName: 'Grace Zhang',
       creator: '619eb17cba373a435428d7d4',
       class: 'CS 173',
+      attendees: ['test', 'run'], 
       location: 'Grainger Engineering Library',
       active: false,
       startTime: Date.now() / 1000,
-      timeout: 64200
+      timeout: 64200,
     },
     {
       creatorName: 'Aaron Alexander',
@@ -43,7 +46,12 @@ function Home({ user }) {
       {sessions.map((session, i) => (
         <SessionSummary session={session} id={user._id} key={i} />
       ))}
-      <SessionForm button={<Button type="default">+</Button>} id={user._id} isEdit={false} session={null}/>
+      <SessionForm
+        button={<Button type="default">+</Button>}
+        id={user._id}
+        isEdit={false}
+        session={null}
+      />
     </>
   );
 }

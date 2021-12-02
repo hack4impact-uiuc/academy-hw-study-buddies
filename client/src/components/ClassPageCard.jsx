@@ -7,12 +7,12 @@ function ClassPageCard(props) {
   const { course, classMembers } = props;
   return (
     <>
-      <Card className="class-cards">
+      <Card className="class-page-card">
         <Card.Content>
           <Card.Header>{course}</Card.Header>
           <Card.Description>
-            {classMembers.map((name) => (
-              <p key={name}>{name}</p>
+            {classMembers.map((name, index) => (
+              <p key={index}>{name}</p>
             ))}
           </Card.Description>
         </Card.Content>

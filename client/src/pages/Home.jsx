@@ -1,35 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'semantic-ui-react';
 
 import SessionSummary from '../components/SessionSummary';
 import SessionForm from '../components/SessionForm';
 import HomeImgSitting from '../utils/images/homeimg-sitting.png';
 import HomeImgLaying from '../utils/images/homeimg-laying.png';
+import { getDisplayedSessions } from '../utils/apiWrapper.js';
 import '../css/Home.scss';
 
 function Home({ user }) {
-  const sessions = [
-    {
-      creator: 'Aaron Alexander',
-      id: 'Aaron Alexander',
-      class: 'CS 124',
-      location: 'Grainger Engineering Library',
-      attendees: ['Ellie', ', ', 'Danielle', ', ', 'Grace'],
-      notes: 'hey bestie',
-      time: 'January 1, 1970 | 00:00 GMT',
-      isFutureSession: true,
-    },
-    {
-      creator: 'Aaron Alexander',
-      id: 'Aaron Alexander',
-      class: 'CS 124',
-      location: 'Grainger Engineering Library',
-      attendees: ['Anthony', ', ', 'Jessica', ', ', 'Ashwin'],
-      notes: 'hey hey hey',
-      time: 'January 1, 1970 | 00:00 GMT',
-      isFutureSession: false,
-    },
-  ];
+  const [sessions, setSessions] = useState([]);
+
+  useEffect(() => {
+    const populateSessions = async () => {
+      const resp = await getDisplayedSessions();
+      if (!resp.error) {
+        setSessions(resp.data.result);
+      }
+    };
+
+    populateSessions();
+  }, []);
 
   return (
     <>
@@ -41,7 +32,7 @@ function Home({ user }) {
 
       <div className="studying-activity-container">
         {sessions.map((session, i) => (
-          <SessionSummary session={session} key={i} />
+          <SessionSummary user={user} session={session} key={i} />
         ))}
         <SessionForm
           button={

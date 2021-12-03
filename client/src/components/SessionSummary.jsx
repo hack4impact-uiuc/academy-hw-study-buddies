@@ -43,7 +43,7 @@ function SessionSummary(props) {
 
     if (!isAttending && !sessionAttendees.includes(user._id)) {
       // Join session if user is not currently attending
-      updatedAttendees.push(user._id);
+      updatedAttendees = [...sessionAttendees, user._id];
     } else if (sessionAttendees.includes(user._id)) {
       // Remove user from attendees array if currently attending
       updatedAttendees = sessionAttendees.filter(

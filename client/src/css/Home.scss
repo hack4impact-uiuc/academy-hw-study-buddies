@@ -36,6 +36,49 @@
   width: 400px;
   height: auto;
 }
+.sessionCard:hover {
+  background-color: #b2caee !important;
+  box-shadow: 3px 3px 6px grey !important;
+}
+
+.ui.button {
+  font-family: Tommy;
+  padding: 5px 27px;
+  margin-left: 280px;
+  transition: all 0.3s ease !important;
+}
+
+.homeHeader {
+  margin: 50px 0px 50px 100px;
+  font-size: 80px;
+  text-align: left;
+  font-family: Tommy;
+}
+
+.insideCard {
+  margin-top: 5px !important;
+  padding: 20px !important;
+}
+
+#join-btn {
+  padding: 5px 27px;
+  margin-left: 280px;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    transition: all 0.3s ease !important;
+  }
+}
+
+#edit-btn {
+  padding: 5px 27px;
+  margin-left: 280px;
+  transition: all 0.3s ease !important;
+  font-family: Tommy !important;
+}
+#join-btn:hover {
+  transition: all 0.3s ease !important;
+}
 
 .homeimg-laying {
   position: fixed;
@@ -68,4 +111,7 @@
   display: flex;
   width: auto;
   justify-content: right;
+  
+.ui.header {
+  font-family: Tommy;
 }

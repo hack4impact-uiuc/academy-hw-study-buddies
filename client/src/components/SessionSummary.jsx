@@ -85,7 +85,6 @@ function SessionSummary(props) {
               session={session}
             />
           )}
-
           <Button
             id={'join-leave-btn'}
             size="small"

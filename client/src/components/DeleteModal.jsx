@@ -33,13 +33,13 @@ function DeleteModal({ isActive, creator, id }) {
           <Header>{creator},</Header>
           <p id="form-text">
             Are you sure you want to {isActive ? 'end' : 'cancel'} this session?
-            <Button
-              className="join-session-button"
-              onClick={() => setOpen(false)}
-            >
-              {isActive ? 'END SESSION' : 'CANCEL SESSION'}
-            </Button>
           </p>
+          <Button
+            className="join-session-button"
+            onClick={() => setOpen(false)}
+          >
+            {isActive ? 'END SESSION' : 'CANCEL SESSION'}
+          </Button>
         </Modal.Description>
       </Modal.Content>
     </Modal>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
+
 import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
 

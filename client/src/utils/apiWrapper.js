@@ -65,6 +65,25 @@ export const getUserById = (userId) => {
     }));
 };
 
+
+/**
+ * Updates user classes
+ * Returns PUT_CLASS_FAIL upon failure
+ */
+export const putUserClass = (body, userId) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
+  return axios
+    .put(requestString, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'PUT_CLASS_FAIL',
+      error,
+    }));
+};
+
 /**
  * Executes a sample POST request
  * Returns POST_SAMPLE_FAIL upon failure

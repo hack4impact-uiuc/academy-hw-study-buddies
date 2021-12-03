@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Modal, Header } from 'semantic-ui-react';
+
+import SessionSummary from './SessionSummary';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/DetailsModal.scss';
 
-function DetailsModal({ session }) {
+function DetailsModal(props) {
+  const { session } = props;
   const [open, setOpen] = useState(false);
   return (
     <Modal
@@ -11,7 +14,8 @@ function DetailsModal({ session }) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button className="join-leave-button">JOIN</Button>}
+      trigger={<SessionSummary {...props} />}
+      // trigger={<Button className="join-leave-button">DETAILS</Button>}
     >
       <Modal.Content>
         <Modal.Description>

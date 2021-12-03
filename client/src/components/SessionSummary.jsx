@@ -79,8 +79,6 @@ function SessionSummary(props) {
           </Card.Header>
         )}
 
-        {/* <DetailsModal {...props} /> */}
-
         <Button
           className="join-leave-btn"
           size="small"

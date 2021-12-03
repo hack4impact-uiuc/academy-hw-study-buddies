@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Header } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/DetailsModal.scss';
 
 function DetailsModal({ session }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <Modal
       className="modal-container"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button className="join-button">JOIN</Button>}
+      trigger={<Button className="join-leave-button">JOIN</Button>}
     >
       <Modal.Content>
         <Modal.Description>

@@ -6,26 +6,25 @@ import SessionSummary from '../components/SessionSummary';
 import ClassForm from '../components/ClassForm.jsx';
 import ClassCard from '../components/ClassCard';
 
-function Profile({user}) {
-
+function Profile({ user }) {
   const [sessions, setSessions] = useState([]);
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
     const populateSessionsAndClasses = async () => {
-      console.log(user)
+      console.log(user);
       const resp = await getAttendingSessions(user._id);
       if (!resp.error) {
         console.log(resp.data.result);
         setSessions(resp.data.result);
       }
-      setClasses(user.classes)
+      setClasses(user.classes);
     };
 
     populateSessionsAndClasses();
   }, [user._id]);
 
-    return (
+  return (
     <>
       <h2>Welcome to your Profile Page, {user.firstName}</h2>
 
@@ -34,20 +33,26 @@ function Profile({user}) {
       {sessions.map((session, i) => (
         <SessionSummary user={user} session={session} key={i} />
       ))}
-      
+
       <h1>My Classes</h1>
-      <div className = "classes-display">
-          {classes && classes.map((userClass, j) => (
-          classes && <ClassCard classCardText={userClass} key={j} />
-        ))} 
+      <div className="classes-display">
+        {classes &&
+          classes.map(
+            (userClass, j) =>
+              classes && <ClassCard classCardText={userClass} key={j} />,
+          )}
       </div>
       <p></p>
-      
+
       <ClassForm
-              button={<button className="small ui button" id="add-class-btn">Add class</button>}
-              user={user}
-              setClasses = {setClasses}
-      /> 
+        button={
+          <button className="small ui button" id="add-class-btn">
+            Add class
+          </button>
+        }
+        user={user}
+        setClasses={setClasses}
+      />
     </>
   );
 }

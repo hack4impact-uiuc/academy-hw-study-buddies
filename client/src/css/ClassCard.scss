@@ -1,18 +1,27 @@
+@import '../styles/colors.scss';
+
 .class-card {
   flex: none;
   width: 175px !important;
-  margin: 10px !important;
+  box-shadow: none !important;
+  border-radius: 15px !important;
+
   .card-content-container {
-    display: flex;
-    justify-content: space-evenly;
+    display: flex !important;
+    justify-content: space-between !important;
   }
 
   .delete-button {
-    height: 25px;
-    width: 25px;
+    height: 25px !important;
+    width: 50px !important;
+    font-family: Tommy !important;
+    padding: 0px;
+    margin-right: -20%;
   }
 
   .class-text {
-    font-size: 200%;
+    transition: all 0.3s ease !important;
+    font-family: Tommy !important;
+    font-size: 150%;
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'semantic-ui-react';
 
-// import { editUserClasses } from '../utils/apiWrapper';
+import { editUserClasses } from '../utils/apiWrapper';
 import '../css/ClassCard.scss';
 
 function ClassCard(props) {
@@ -16,10 +16,9 @@ function ClassCard(props) {
           basic
           color="red"
           className="delete-button"
-          // onClick={()=>editUserClasses}
+          onClick={() => editUserClasses}
         >
-          {' '}
-          X{' '}
+          X
         </Button>
       </Card.Content>
     </Card>

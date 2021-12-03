@@ -65,7 +65,6 @@ export const getUserById = (userId) => {
     }));
 };
 
-
 /**
  * Updates user classes
  * Returns PUT_CLASS_FAIL upon failure

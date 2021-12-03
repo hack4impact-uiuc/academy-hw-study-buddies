@@ -48,7 +48,7 @@ export const addSampleResponse = (body) => {
 };
 
 export const addSession = (body) => {
-  const postSession = `${BASE_URL}/session/`;
+  const postSession = `${BASE_URL}/session`;
   return axios
     .post(postSession, body, {
       headers: {
@@ -75,9 +75,9 @@ export const editSession = (sessionId, body) => {
     }));
 };
 
-//calling backend endpoint to edit user class in profile
-export const editUserClasses = (body) => {
-  const requestString = `${BASE_URL}/user/:userID`;
+// Calling backend endpoint to edit user class in profile
+export const editUserClasses = (userId, body) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
   return axios
     .put(requestString, body, {
       headers: {
@@ -86,6 +86,20 @@ export const editUserClasses = (body) => {
     })
     .catch((error) => ({
       type: 'PUT_CLASS_FAIL',
+      error,
+    }));
+};
+
+export const getDisplayedSessions = () => {
+  const requestString = `${BASE_URL}/session/displayed`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
       error,
     }));
 };

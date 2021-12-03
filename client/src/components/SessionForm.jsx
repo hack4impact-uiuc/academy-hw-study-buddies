@@ -22,7 +22,7 @@ function SessionForm(props) {
 
   const processFormAndSubmit = async () => {
     const course = courseCode + courseNumber + courseSuffix;
-    const attendeeArray = attendees.split(',');
+    const attendeeArray = attendees.length > 0 ? attendees.split(',') : [''];
 
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
@@ -76,7 +76,9 @@ function SessionForm(props) {
       timeout: timeout,
     };
     console.log(sessionData);
-    (await isEdit) ? editSession(session._id, sessionData) : addSession(sessionData);
+    (await isEdit)
+      ? editSession(session._id, sessionData)
+      : addSession(sessionData);
   };
 
   const formSetup = () => {
@@ -87,8 +89,12 @@ function SessionForm(props) {
       setCourseSuffix(splitClass[2]);
     }
     setLocation(session.location);
-    console.log(session.attendees)
-    setAttendees(session.attendees.length > 0? session.attendees.join(','): session.attendees);
+    console.log(session.attendees);
+    setAttendees(
+      session.attendees.length > 0
+        ? session.attendees.join(',')
+        : session.attendees,
+    );
     setNotes(session.notes);
 
     setIsLater(!session.active);

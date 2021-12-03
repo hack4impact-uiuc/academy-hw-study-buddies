@@ -90,6 +90,21 @@ export const editUserClasses = (userId, body) => {
     }));
 };
 
+export const getUserClasses = () => {
+  const requestString = `${BASE_URL}/user/classes`;
+  console.log(requestString);
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
 export const getDisplayedSessions = () => {
   const requestString = `${BASE_URL}/session/displayed`;
   return axios

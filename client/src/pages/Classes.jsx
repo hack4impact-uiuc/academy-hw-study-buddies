@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ClassPageCard from '../components/ClassPageCard';
+import { getUserClasses } from '../utils/apiWrapper.js';
 
 function Classes() {
-  const classes_members = {
-    cs124: ['aaron', 'anthony', 'danielle', 'grace'],
-    cs128: ['albert', 'anthony', 'ellie', 'eesha'],
-    ece110: ['anthony', 'ashwin', 'danielle'],
-    ece120: ['albert', 'anthony'],
-    ece329: ['albert', 'anthony'],
-    ece429: ['albert', 'anthony'],
-    ece210: ['anthony', 'ashwin', 'danielle'],
-  };
+  const [classesMembers, setClassesMembers] = useState({});
+
+  useEffect(() => {
+    const populateUsers = async () => {
+      const resp = await getUserClasses();
+      if (!resp.error) {
+        const classes_members = {};
+        resp.data.result.forEach((element) => {
+          element.classes.forEach((course) => {
+            if (course in classes_members) {
+              classes_members[course].push(element._id);
+            } else {
+              classes_members[course] = [element._id];
+            }
+          });
+        });
+        setClassesMembers(classes_members);
+      }
+    };
+
+    populateUsers();
+  }, []);
+
   return (
     <>
       <h1>Classes Page</h1>
@@ -20,10 +35,10 @@ function Classes() {
         this semester.
       </h2>
       <div className="card-container">
-        {Object.keys(classes_members).map((key, i) => (
+        {Object.keys(classesMembers).map((key, i) => (
           <ClassPageCard
             course={key}
-            classMembers={classes_members[key]}
+            classMembers={classesMembers[key]}
             key={i}
           />
         ))}

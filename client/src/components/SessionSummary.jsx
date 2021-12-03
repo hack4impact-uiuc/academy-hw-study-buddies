@@ -1,5 +1,7 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react';
+import '../css/SessionSummary.scss'
+import DetailsModal from './DetailsModal';
 import 'semantic-ui-css/semantic.min.css';
 
 function SessionSummary({ session }) {
@@ -9,9 +11,7 @@ function SessionSummary({ session }) {
         <Card.Header>
           {session.creator} is studying {session.class} at {session.location}
         </Card.Header>
-        <button className="small ui button" id="join-btn">
-          JOIN
-        </button>
+        <DetailsModal session={session} />
       </Card.Content>
     </Card>
   );

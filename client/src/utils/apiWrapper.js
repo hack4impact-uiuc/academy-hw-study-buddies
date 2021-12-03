@@ -11,7 +11,6 @@ export const getUserInfo = () => {
     error,
   }));
 };
-
 /**
  * Returns a sample API response to demonstrate a working backend
  * Returns GET_SAMPLE_FAIL upon failure
@@ -48,9 +47,37 @@ export const addSampleResponse = (body) => {
     }));
 };
 
-//calling backend endpoint to edit user class in profile
-export const editUserClasses = (body) => {
-  const requestString = `${BASE_URL}/user/:userID`;
+export const addSession = (body) => {
+  const postSession = `${BASE_URL}/session`;
+  return axios
+    .post(postSession, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'POST_SESSION_FAIL',
+      error,
+    }));
+};
+
+export const editSession = (sessionId, body) => {
+  const putSession = `${BASE_URL}/session/${sessionId}`;
+  return axios
+    .put(putSession, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'PUT_SESSION_FAIL',
+      error,
+    }));
+};
+
+// Calling backend endpoint to edit user class in profile
+export const editUserClasses = (userId, body) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
   return axios
     .put(requestString, body, {
       headers: {
@@ -65,6 +92,20 @@ export const editUserClasses = (body) => {
 
 export const getUserClasses = () => {
   const requestString = `${BASE_URL}/classes`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+export const getDisplayedSessions = () => {
+  const requestString = `${BASE_URL}/session/displayed`;
   return axios
     .get(requestString, {
       headers: {

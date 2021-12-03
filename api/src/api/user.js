@@ -79,6 +79,20 @@ router.post(
   }),
 );
 
+// all user classes 
+router.get(
+  '/classes', //changed 
+  errorWrap(async (req, res) => {
+    const users = await User.find({}).select({classes:1});
+    res.status(200).json({
+      message: 'Successfully retrieved all users',
+      success: true,
+      result: users,
+    });
+    return;
+  }),
+);
+
 router.get(
   '/:userId',
   errorWrap(async (req, res) => {
@@ -143,17 +157,31 @@ router.delete(
   }),
 );
 
-module.exports = router;
-
 router.get(
-  '/all',
+  '/classes',
   errorWrap(async (req, res) => {
-    const users = await User.find();
+    const users = await User.find(User.classes);
     res.status(200).json({
-      message: 'Successfully retrieved all Users',
+      message: 'Successfully retrieved all users',
       success: true,
       result: users,
     });
     return;
   }),
 );
+
+/*
+firstPart = {
+  783259789243: [cs128, cs124],
+  783259789243: [cs225, cs124],
+  ...
+}
+
+secondPart = {
+  cs124: [783259789243, 783259789243],
+  cs128: [783259789243],
+  cs225: [783259789243]
+}
+*/
+
+module.exports = router;

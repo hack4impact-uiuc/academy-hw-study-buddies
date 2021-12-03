@@ -76,7 +76,7 @@ function SessionSummary(props) {
           {user._id === session.creator && (
             <SessionForm
               button={
-                <Button type="default" id="edit-btn">
+                <Button id="edit-btn">
                   EDIT
                 </Button>
               }
@@ -91,6 +91,7 @@ function SessionSummary(props) {
             onClick={handleJoinAndLeave}
             content={isAttending ? 'LEAVE' : 'JOIN'}
           />
+          
         </div>
       </Card.Content>
     </Card>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
+
 import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
 
@@ -73,7 +74,7 @@ function SessionSummary(props) {
         )}
 
         <Button
-          className={'join-leave-btn'}
+          className="join-leave-btn"
           size="small"
           onClick={handleJoinAndLeave}
           content={isAttending ? 'LEAVE' : 'JOIN'}

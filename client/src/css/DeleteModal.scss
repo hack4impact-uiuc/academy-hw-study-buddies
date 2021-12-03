@@ -1,20 +1,19 @@
 @import '../styles/colors.scss';
 
-.ui.modal {
+#modal-container {
   background-color: #c5cad4 !important;
-  width: 500px;
 
   .ui.header {
     font-size: 30px;
     padding: 10px 0px 0px 10px;
   }
   #form-text {
-    padding: 0px 0px 0px 10px;
+    padding: 20px 0px 0px 10px;
+    font-size: 20px;
     color: black !important;
   }
   .join-session-button {
-    font-family: Tommy;
-    margin: 10px 0px 0px 320px;
+    margin: 10px 0px 0px 710px;
     padding: 10px 10px 10px 10px;
     background-color: #575a89 !important;
     color: #ffffff !important;
@@ -29,9 +28,9 @@
   padding-left: 25px;
   padding-bottom: 30px;
 }
-.ui.modal > :last-child {
-  border-bottom-left-radius: 100px;
-  border-bottom-right-radius: 100px;
-  border-top-left-radius: 100px;
-  border-top-right-radius: 100px;
-}
+// .ui.modal > :last-child {
+//   border-bottom-left-radius: 100px;
+//   border-bottom-right-radius: 100px;
+//   border-top-left-radius: 100px;
+//   border-top-right-radius: 100px;
+// }

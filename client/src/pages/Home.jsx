@@ -37,7 +37,7 @@ function Home({ user }) {
         <SessionForm
           button={
             <Button className="add-session-btn" type="default">
-              +
+              <i className="plus icon" id="plus-icon"></i>
             </Button>
           }
           id={user._id}

@@ -1,10 +1,14 @@
+@import '../styles/colors.scss';
+
 .class-card {
   flex: none;
   width: 175px !important;
+  box-shadow: none !important;
+  border-radius: 15px !important;
 
   .card-content-container {
-    display: flex;
-    justify-content: space-evenly;
+    display: flex !important;
+    justify-content: space-between !important;
   }
 
   .delete-button {
@@ -16,6 +20,8 @@
   }
 
   .class-text {
-    font-size: 200%;
+    transition: all 0.3s ease !important;
+    font-family: Tommy !important;
+    font-size: 150%;
   }
 }

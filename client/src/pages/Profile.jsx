@@ -1,5 +1,9 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { getAttendingSessions } from '../utils/apiWrapper';
+import 'semantic-ui-css/semantic.min.css';
+import '../css/Profile.scss';
+import SessionSummary from '../components/SessionSummary';
+import ClassForm from '../components/ClassForm.jsx';
 import ClassCard from '../components/ClassCard';
 
 /**
@@ -24,28 +28,16 @@ function Profile({ user }) {
     populateSessionsAndClasses();
   }, [user._id]);
 
-  // const sessions = [
-  //   {
-  //     creator: 'Aaron Alexander',
-  //     class: 'CS 124',
-  //     location: 'Grainger Engineering Library',
-  //   },
-  //   {
-  //     creator: 'Aaron Alexander',
-  //     class: 'CS 124',
-  //     location: 'Grainger Engineering Library',
-  //   },
-  // ];
   return (
     <>
-      <h2>{user._id}</h2>
+      <h2>Welcome to your Profile Page, {user.firstName}</h2>
+
       <h1>My Sessions</h1>
       <p></p>
       {sessions.map((session, i) => (
-        <SessionSummary session={session} key={i} />
+        <SessionSummary user={user} session={session} key={i} />
       ))}
 
-      {/* {user.classes && <p>{user.classes[0]}</p>} */}
       <h1>My Classes</h1>
       <div className="classes-display">
         {classes &&
@@ -55,7 +47,6 @@ function Profile({ user }) {
           )}
       </div>
       <p></p>
-      {/* {user.classes && <ClassCard classCardText={user.classes[0]} />} */}
       <ClassForm
         button={
           <button className="small ui button" id="add-class-btn">

@@ -30,6 +30,51 @@ router.get(
   }),
 );
 
+// Get all displayed sessions on the home page
+router.get(
+  '/displayed',
+  errorWrap(async (req, res) => {
+    let activeSessions = await Session.find({ active: 'true' });
+    const maxDisplayed = 8;
+    // If there are >= maximum displayed active sessions, all will be displayed
+    if (activeSessions.length >= maxDisplayed) {
+      res.status(200).json({
+        message: `Successfully retrieved all displayed sessions on the home page.`,
+        success: true,
+        result: activeSessions,
+      });
+      return;
+    }
+
+    const inactiveSessions = await Session.find({ active: 'false' }).sort({
+      startTime: 'asc',
+    });
+
+    // If the sum of active and inactive sessions is less than the maximum displayed sessions, all sessions (inactive and active) will be displayed
+    if (activeSessions.length + inactiveSessions.length < maxDisplayed) {
+      let allSessions = activeSessions.concat(inactiveSessions);
+      res.status(200).json({
+        message: `Successfully retrieved all displayed sessions on the home page.`,
+        success: true,
+        result: allSessions,
+      });
+      return;
+    }
+
+    // Else, if there are <maximum displayed active sessions,
+    // Inactive sessions will populate until there are maximum displayed sessions on the home page in ascending start time order
+    let allSessions = activeSessions.concat(
+      inactiveSessions.slice(0, maxDisplayed - activeSessions.length),
+    );
+    res.status(200).json({
+      message: `Successfully retrieved all displayed sessions on the home page.`,
+      success: true,
+      result: allSessions,
+    });
+    return;
+  }),
+);
+
 router.get(
   '/:sessionId',
   errorWrap(async (req, res) => {

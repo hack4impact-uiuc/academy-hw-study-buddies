@@ -30,6 +30,60 @@ export const getSampleResponse = () => {
 };
 
 /**
+ * Returns attending sessions of user
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
+export const getAttendingSessions = (userId) => {
+  const requestString = `${BASE_URL}/session/attending/${userId}`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+/**
+ * Returns user by id
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
+export const getUserById = (userId) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+/**
+ * Updates user classes
+ * Returns PUT_CLASS_FAIL upon failure
+ */
+export const putUserClass = (body, userId) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
+  return axios
+    .put(requestString, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'PUT_CLASS_FAIL',
+      error,
+    }));
+};
+
+/**
  * Executes a sample POST request
  * Returns POST_SAMPLE_FAIL upon failure
  */
@@ -61,8 +115,8 @@ export const addSession = (body) => {
     }));
 };
 
-export const editSession = (body) => {
-  const putSession = `${BASE_URL}/session`;
+export const editSession = (sessionId, body) => {
+  const putSession = `${BASE_URL}/session/${sessionId}`;
   return axios
     .put(putSession, body, {
       headers: {
@@ -75,9 +129,9 @@ export const editSession = (body) => {
     }));
 };
 
-//calling backend endpoint to edit user class in profile
-export const editUserClasses = (body) => {
-  const requestString = `${BASE_URL}/user/:userID`;
+// Calling backend endpoint to edit user class in profile
+export const editUserClasses = (userId, body) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
   return axios
     .put(requestString, body, {
       headers: {
@@ -86,6 +140,20 @@ export const editUserClasses = (body) => {
     })
     .catch((error) => ({
       type: 'PUT_CLASS_FAIL',
+      error,
+    }));
+};
+
+export const getDisplayedSessions = () => {
+  const requestString = `${BASE_URL}/session/displayed`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
       error,
     }));
 };

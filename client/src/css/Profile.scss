@@ -1,0 +1,22 @@
+@import '../styles/colors.scss';
+
+#add-class-btn {
+  padding: 5px 27px;
+  transition: all 0.3s ease !important;
+  font-family: Tommy !important;
+}
+
+#add-class-btn:hover {
+  transition: all 0.3s ease !important;
+}
+
+.classes-display {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  flex-wrap: wrap;
+  padding-right: 200px;
+  padding-left: 200px;
+}

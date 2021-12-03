@@ -1,0 +1,42 @@
+@import '../styles/colors.scss';
+
+.sessionCard {
+  background-color: $sessionBackground !important;
+  box-shadow: none !important;
+  text-align: left !important;
+  width: 400px !important;
+  height: 100px !important;
+  margin-bottom: 20px !important;
+  border-radius: 15px !important;
+  transition: all 0.3s ease !important;
+
+  &.upcoming {
+    background-color: $sessionBackgroundUpcoming !important;
+  }
+
+  &:hover {
+    background-color: #b2caee !important;
+    box-shadow: 3px 3px 6px grey !important;
+  }
+
+  .insideCard {
+    margin-top: 5px !important;
+    padding: 20px !important;
+  }
+
+  .join-leave-btn {
+    background-color: $sessionAccent !important;
+    padding: 5px 27px;
+    margin-left: 280px;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+      background-color: $sessionBackground !important;
+      transition: all 0.3s ease !important;
+    }
+  }
+}
+
+.ui.card > .content > .header {
+  font-family: Tommy !important;
+}

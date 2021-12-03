@@ -1,53 +1,54 @@
 @import '../styles/colors.scss';
 
-.sessionCard {
-  box-shadow: none !important;
-  text-align: left !important;
+.welcome-msg {
+  right: 12%;
+  margin: 50px 200px 50px 0px;
+  font-size: 40px;
+}
+
+.studying-heading {
+  margin-bottom: 40px;
+}
+
+.studying-activity-container {
+  position: relative;
   width: 400px !important;
   height: 100px !important;
-  margin-bottom: 20px !important;
-  border-radius: 15px !important;
-  transition: all 0.3s ease !important;
-  // box-shadow: 3px 3px 6px grey !important;
+  text-align: center;
+  margin: 0 auto;
+
+  .add-session-btn {
+    background-color: $sessionAccent !important;
+    position: absolute;
+    right: 0;
+
+    &:hover {
+      background-color: $sessionBackground !important;
+      box-shadow: 1.5px 1.5px 3px grey !important;
+    }
+  }
 }
 
-.ui.card > .content > .header {
-  font-family: Tommy !important;
-}
-.sessionCard:hover {
-  transition: all 0.3s ease;
-  background-color: #b2caee !important;
-  box-shadow: 3px 3px 6px grey !important;
+.homeimg-sitting {
+  position: fixed;
+  top: 33%;
+  left: 8%;
+  width: 400px;
+  height: auto;
 }
 
-.homeHeader {
-  margin-top: 50px;
-  margin-left: 100px;
-  margin-bottom: 50px;
-  font-size: 80px;
+.homeimg-laying {
+  position: fixed;
+  top: 15%;
+  right: 7%;
+}
+
+.academy-msg {
+  position: fixed;
+  color: $secondary;
+  left: 1.5%;
+  bottom: 2%;
+  font-size: 14px;
+  line-height: 23px;
   text-align: left;
-  font-family: Tommy;
-}
-h1 {
-  font-family: Tommy;
-}
-.insideCard {
-  margin-top: 5px !important;
-  padding: 20px !important;
-  font-family: Tommy !important;
-}
-#join-btn {
-  padding: 5px 27px;
-  margin-left: 280px;
-  transition: all 0.3s ease !important;
-  font-family: Tommy !important;
-}
-#edit-btn {
-  padding: 5px 27px;
-  margin-left: 280px;
-  transition: all 0.3s ease !important;
-  font-family: Tommy !important;
-}
-#join-btn:hover {
-  transition: all 0.3s ease !important;
 }

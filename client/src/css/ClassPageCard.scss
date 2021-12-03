@@ -1,0 +1,14 @@
+.card-container {
+  margin: auto;
+  width: 90%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.class-page-card {
+  width: 23% !important;
+  margin: 1% !important;
+  border-radius: 15px !important;
+  text-align: left;
+}

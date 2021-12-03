@@ -5,7 +5,9 @@
   src: local('Tommy'), url('../fonts/Tommy.ttf') format('truetype');
 }
 
-body {
+body,
+h1 {
+  font-family: 'Tommy' !important;
   background-color: $light;
   color: $primary;
   text-align: center;

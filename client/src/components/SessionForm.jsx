@@ -76,7 +76,7 @@ function SessionForm(props) {
       timeout: timeout,
     };
     console.log(sessionData);
-    (await isEdit) ? editSession(sessionData) : addSession(sessionData);
+    (await isEdit) ? editSession(session._id, sessionData) : addSession(sessionData);
   };
 
   const formSetup = () => {

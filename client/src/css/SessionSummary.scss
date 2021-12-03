@@ -35,6 +35,17 @@
       transition: all 0.3s ease !important;
     }
   }
+  .end-delete-btn {
+    background-color: $sessionAccent !important;
+    padding: 5px 20px;
+    margin-left: 230px;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+      background-color: $sessionBackground !important;
+      transition: all 0.3s ease !important;
+    }
+  }
 }
 
 .ui.card > .content > .header {

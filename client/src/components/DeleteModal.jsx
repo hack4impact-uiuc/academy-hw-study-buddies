@@ -1,30 +1,43 @@
 import React from 'react';
 import { Button, Modal, Header } from 'semantic-ui-react';
 
+import { deleteSession } from '../utils/apiWrapper.js';
+
 import 'semantic-ui-css/semantic.min.css';
 import '../css/DeleteModal.scss';
-import EndSession from '../components/EndSession.jsx';
 
-function DeleteModal({ session }) {
+function DeleteModal({ isActive, creator, id }) {
   const [open, setOpen] = React.useState(false);
+
+  const handleEndAndDelete = async () => {
+    const response = await deleteSession(id);
+    console.log(response);
+  };
+
   return (
     <Modal
-      className="modal-container"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<EndSession />}
+      trigger={
+        <Button
+          className={'join-leave-btn'}
+          size="small"
+          onClick={handleEndAndDelete}
+          content={isActive ? 'END' : 'CANCEL'}
+        />
+      }
     >
-      <Modal.Content>
+      <Modal.Content id="modal-container">
         <Modal.Description>
-          <Header>{session.creator},</Header>
+          <Header>{creator},</Header>
           <p id="form-text">
-            Are you sure you want to end this session?
+            Are you sure you want to {isActive ? 'end' : 'cancel'} this session?
             <Button
               className="join-session-button"
               onClick={() => setOpen(false)}
             >
-              END SESSION
+              {isActive ? 'END SESSION' : 'CANCEL SESSION'}
             </Button>
           </p>
         </Modal.Description>

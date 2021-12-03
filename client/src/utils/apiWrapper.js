@@ -62,3 +62,17 @@ export const editUserClasses = (body) => {
       error,
     }));
 };
+
+export const getUserClasses = () => {
+  const requestString = `${BASE_URL}/classes`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};

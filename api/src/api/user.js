@@ -157,18 +157,18 @@ router.delete(
   }),
 );
 
-router.get(
-  '/classes',
-  errorWrap(async (req, res) => {
-    const users = await User.find(User.classes);
-    res.status(200).json({
-      message: 'Successfully retrieved all users',
-      success: true,
-      result: users,
-    });
-    return;
-  }),
-);
+// router.get(
+//   '/classes',
+//   errorWrap(async (req, res) => {
+//     const users = await User.find(User.classes);
+//     res.status(200).json({
+//       message: 'Successfully retrieved all users',
+//       success: true,
+//       result: users,
+//     });
+//     return;
+//   }),
+// );
 
 /*
 firstPart = {

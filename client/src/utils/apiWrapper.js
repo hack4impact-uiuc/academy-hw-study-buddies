@@ -111,9 +111,9 @@ export const editSession = (body) => {
     }));
 };
 
-//calling backend endpoint to edit user class in profile
-export const editUserClasses = (body) => {
-  const requestString = `${BASE_URL}/user/:userID`;
+// Calling backend endpoint to edit user class in profile
+export const editUserClasses = (userId, body) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
   return axios
     .put(requestString, body, {
       headers: {

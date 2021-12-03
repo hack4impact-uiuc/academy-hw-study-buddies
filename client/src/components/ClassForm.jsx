@@ -1,9 +1,7 @@
 import React from 'react';
 import { Modal, Form} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-
 import '../css/ClassForm.scss';
-
 import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_VERCEL_URL

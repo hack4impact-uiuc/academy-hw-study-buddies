@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getAttendingSessions } from '../utils/apiWrapper';
 
+import { getAttendingSessions } from '../utils/apiWrapper';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/Profile.scss';
 import SessionSummary from '../components/SessionSummary';

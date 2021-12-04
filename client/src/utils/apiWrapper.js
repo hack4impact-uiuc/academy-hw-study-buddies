@@ -129,21 +129,6 @@ export const editSession = (sessionId, body) => {
     }));
 };
 
-// Calling backend endpoint to edit user class in profile
-export const editUserClasses = (userId, body) => {
-  const requestString = `${BASE_URL}/user/${userId}`;
-  return axios
-    .put(requestString, body, {
-      headers: {
-        'Content-Type': 'application/JSON',
-      },
-    })
-    .catch((error) => ({
-      type: 'PUT_CLASS_FAIL',
-      error,
-    }));
-};
-
 export const getDisplayedSessions = () => {
   const requestString = `${BASE_URL}/session/displayed`;
   return axios

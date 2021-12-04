@@ -10,8 +10,7 @@ function DeleteModal({ isActive, creator, id }) {
   const [open, setOpen] = React.useState(false);
 
   const handleEndAndDelete = async () => {
-    const response = await deleteSession(id);
-    console.log(response);
+    await deleteSession(id);
   };
 
   return (

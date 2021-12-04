@@ -25,15 +25,13 @@ function SessionForm(props) {
     const validCourseCode = courseCode.length > 0;
     const validCourseNumber = courseNumber.length > 0;
     const validLocation = location.length > 0;
-    const validStartTime = !(isLater && startTime === null);
 
     if (
       (isLater && !startTime) ||
       (isLater && !date) ||
       !validCourseCode ||
       !validCourseNumber ||
-      !validLocation ||
-      !validStartTime
+      !validLocation
     ) {
       throw 'Form is incomplete';
     }

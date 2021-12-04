@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, TextArea, Radio, Dropdown } from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { addSession, getAllUsers } from '../utils/apiWrapper';
+import { addSession, editSession, getAllUsers } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
-  const { button, id } = props;
+  const { button, id, isEdit, session, setSessions, setSession, sessions } =
+    props;
   const [open, setOpen] = useState(false);
   const [isLater, setIsLater] = useState(false);
   const [courseCode, setCourseCode] = useState('');
@@ -38,6 +39,20 @@ function SessionForm(props) {
   }, [])
 
   const processFormAndSubmit = async () => {
+    const validCourseCode = courseCode.length > 0;
+    const validCourseNumber = courseNumber.length > 0;
+    const validLocation = location.length > 0;
+
+    if (
+      (isLater && !startTime) ||
+      (isLater && !date) ||
+      !validCourseCode ||
+      !validCourseNumber ||
+      !validLocation
+    ) {
+      throw 'Form is incomplete';
+    }
+
     const course = courseCode + courseNumber + courseSuffix;
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
@@ -91,13 +106,94 @@ function SessionForm(props) {
       timeout: timeout,
     };
     console.log(sessionData);
-    await addSession(sessionData);
+
+    if (isEdit) {
+      await editSession(session._id, sessionData);
+      setSession({ ...sessionData, _id: session._id });
+    } else {
+      const updatedSession = await addSession(sessionData);
+      console.log(updatedSession);
+      setSessions([...sessions, updatedSession.data.result]);
+    }
+  };
+
+  const formSetup = () => {
+    const splitClass = session.class.split(/([0-9]+)/);
+    setCourseCode(splitClass[0]);
+    setCourseNumber(splitClass[1]);
+    if (splitClass.length > 2) {
+      setCourseSuffix(splitClass[2]);
+    }
+    setLocation(session.location);
+    setAttendees(
+      session.attendees.length > 0
+        ? session.attendees.join(',')
+        : session.attendees,
+    );
+    setNotes(session.notes);
+
+    setIsLater(!session.active);
+    const startSeconds = session.startTime;
+
+    if (!session.active) {
+      const startDate = new Date(startSeconds * 1000);
+      const year = startDate.getFullYear();
+      const month = startDate.getMonth();
+      const day = startDate.getDate();
+
+      const processedMonth = month < 10 ? '0'.concat(month) : ''.concat(month);
+      const processedDay = day < 10 ? '0'.concat(day) : ''.concat(day);
+
+      const processedDate = ''
+        .concat(year)
+        .concat('-')
+        .concat(processedMonth)
+        .concat('-')
+        .concat(processedDay);
+      setDate(processedDate);
+
+      const startHour = startDate.getHours();
+      const startMinute = startDate.getMinutes();
+
+      const processedStartHour =
+        startHour < 10 ? '0'.concat(startHour) : ''.concat(startHour);
+      const processedStartMinute =
+        startMinute < 10 ? '0'.concat(startMinute) : ''.concat(startMinute);
+      const processedStartTime = processedStartHour
+        .concat(':')
+        .concat(processedStartMinute);
+      setStartTime(processedStartTime);
+    }
+
+    const endDate = new Date((startSeconds + session.timeout) * 1000);
+    const endHour = endDate.getHours();
+    const endMinute = endDate.getMinutes();
+
+    const processedEndHour =
+      endHour < 10 ? '0'.concat(endHour) : ''.concat(endHour);
+    const processedEndMinute =
+      endMinute < 10 ? '0'.concat(endMinute) : ''.concat(endMinute);
+    const processedEndTime = processedEndHour
+      .concat(':')
+      .concat(processedEndMinute);
+    setEndTime(processedEndTime);
+
+    const defaultTimeout = 43200;
+
+    if (session.timeout !== defaultTimeout) {
+      setEndTimeDefined(true);
+    }
   };
 
   return (
     <Modal
       onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onOpen={() => {
+        setOpen(true);
+        if (isEdit) {
+          formSetup();
+        }
+      }}
       open={open}
       trigger={button}
     >
@@ -226,7 +322,6 @@ function SessionForm(props) {
             value={notes}
             onChange={(e) => {
               setNotes(e.target.value);
-              console.log(notes);
             }}
           />
           <Form.Button onClick={processFormAndSubmit}>Submit</Form.Button>

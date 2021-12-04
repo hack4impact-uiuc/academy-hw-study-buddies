@@ -52,3 +52,22 @@
   line-height: 23px;
   text-align: left;
 }
+
+#edit-btn {
+  transition: all 0.3s ease !important;
+  font-family: Tommy !important;
+}
+
+#join-leave-btn {
+  transition: all 0.3s ease !important;
+  font-family: Tommy !important;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ui.header {
+  font-family: Tommy;
+}

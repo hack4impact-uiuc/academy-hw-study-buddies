@@ -32,25 +32,33 @@ router.get(
     }
     const memberInfoResult = await getMemberInfo(memberDbId);
     const memberInfo = memberInfoResult.data.result;
-    console.log("memberInfo:", memberInfo);
-    let expandedUser = {firstName: memberInfo.firstName, lastName: memberInfo.lastName, memberDbId: user._doc.memberDbId, classes: user._doc.classes};
-    console.log("expandedUser:", expandedUser);
+    console.log('memberInfo:', memberInfo);
+    let expandedUser = {
+      firstName: memberInfo.firstName,
+      lastName: memberInfo.lastName,
+      memberDbId: user._doc.memberDbId,
+      classes: user._doc.classes,
+    };
+    console.log('expandedUser:', expandedUser);
     if (!user.firstName || !user.lastName) {
       const updatedUser = await User.findByIdAndUpdate(
         user._doc._id,
-        expandedUser, function (err, docs) {
-          if (err){
-            console.log(err)
+        expandedUser,
+        function (err, docs) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('Updated User : ', docs);
           }
-          else{
-              console.log("Updated User : ", docs);
-          }
-        }
+        },
       );
       if (!updatedUser) {
-        console.log("findByIdAndUpdate failed:", user._doc.userId, expandedUser);
-      }
-      else {
+        console.log(
+          'findByIdAndUpdate failed:',
+          user._doc.userId,
+          expandedUser,
+        );
+      } else {
         console.log("Should've worked");
       }
     }

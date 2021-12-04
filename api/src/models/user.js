@@ -6,11 +6,11 @@ const mongoose = require('mongoose');
 const User = new mongoose.Schema({
   firstName: {
     type: String,
-    default: null
+    default: null,
   },
   lastName: {
     type: String,
-    default: null
+    default: null,
   },
   memberDbId: {
     type: String,

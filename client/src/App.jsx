@@ -38,7 +38,13 @@ const App = () => {
         <Route
           exact
           path="/profile"
-          element={user ? <Profile user={user} /> : <Login setUser={setUser} />}
+          element={
+            user ? (
+              <Profile user={user} setUser={setUser} />
+            ) : (
+              <Login setUser={setUser} />
+            )
+          }
         ></Route>
         <Route
           exact

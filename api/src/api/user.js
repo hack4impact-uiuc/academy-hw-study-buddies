@@ -90,6 +90,24 @@ router.post(
   }),
 );
 
+// all user classes
+router.get(
+  '/classes', //changed
+  errorWrap(async (req, res) => {
+    const users = await User.find({}).select({
+      firstName: 1,
+      lastName: 1,
+      classes: 1,
+    });
+    res.status(200).json({
+      message: 'Successfully retrieved all user classes',
+      success: true,
+      result: users,
+    });
+    return;
+  }),
+);
+
 router.get(
   '/:userId',
   errorWrap(async (req, res) => {

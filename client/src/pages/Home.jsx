@@ -43,8 +43,8 @@ function Home(props) {
         ))}
         <SessionForm
           button={
-            <Button id="add-session-btn" type="default">
-              +
+            <Button className="add-session-btn" type="default">
+              <i className="plus icon" id="plus-icon"></i>
             </Button>
           }
           id={user._id}
@@ -52,8 +52,12 @@ function Home(props) {
           sessions={sessions}
           setSessions={setSessions}
         />
+        <br />
+        <br />
+        <br />
       </div>
-
+      <br />
+      <br />
       <img
         className="homeimg-sitting"
         src={HomeImgSitting}

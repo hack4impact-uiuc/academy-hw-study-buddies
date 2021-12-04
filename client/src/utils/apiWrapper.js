@@ -43,6 +43,60 @@ export const getSampleResponse = () => {
 };
 
 /**
+ * Returns user by id
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
+export const getUserById = (userId) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+/**
+ * Returns attending sessions of user
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
+export const getAttendingSessions = (userId) => {
+  const requestString = `${BASE_URL}/session/attending/${userId}`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+/**
+ * Updates user classes
+ * Returns PUT_CLASS_FAIL upon failure
+ */
+export const putUserClass = (body, userId) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
+  return axios
+    .put(requestString, body, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'PUT_CLASS_FAIL',
+      error,
+    }));
+};
+
+/**
  * Executes a sample POST request
  * Returns POST_SAMPLE_FAIL upon failure
  */
@@ -103,6 +157,21 @@ export const editUserClasses = (userId, body) => {
     }));
 };
 
+export const getUserClasses = () => {
+  const requestString = `${BASE_URL}/user/classes`;
+  console.log(requestString);
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
 export const getDisplayedSessions = () => {
   const requestString = `${BASE_URL}/session/displayed`;
   return axios
@@ -113,6 +182,20 @@ export const getDisplayedSessions = () => {
     })
     .catch((error) => ({
       type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+export const deleteSession = (sessionId) => {
+  const requestString = `${BASE_URL}/session/${sessionId}`;
+  return axios
+    .delete(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'DELETE_SESSION_FAIL',
       error,
     }));
 };

@@ -32,20 +32,31 @@ router.get(
     }
     const memberInfoResult = await getMemberInfo(memberDbId);
     const memberInfo = memberInfoResult.data.result;
-    const filteredMemberInfo = {
+    console.log('memberInfo:', memberInfo);
+    let expandedUser = {
       firstName: memberInfo.firstName,
       lastName: memberInfo.lastName,
-    };
-    user = {
-      _id: user._doc._id,
       memberDbId: user._doc.memberDbId,
-      ...filteredMemberInfo,
       classes: user._doc.classes,
     };
+    if (!user.firstName || !user.lastName) {
+      const updatedUser = await User.findByIdAndUpdate(
+        user._doc._id,
+        expandedUser,
+      );
+      if (!updatedUser) {
+        res.status(404).json({
+          message: 'User not found, update unsuccessful',
+          success: false,
+        });
+        return;
+      }
+    }
+    expandedUser = { _id: user._doc._id, ...expandedUser };
     res.status(200).json({
       message: 'Successfully retrieved user',
       success: true,
-      result: user,
+      result: expandedUser,
     });
     return;
   }),

@@ -2,22 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
+// import DetailsModal from './DetailsModal.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
+import DeleteModal from '../components/DeleteModal.jsx';
 
 function SessionSummary(props) {
-  const { user, session } = props;
+  const { user, session, ...rest } = props;
+  // const { user, session } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [startDate, setStartDate] = useState('January 1');
   const [startTime, setStartTime] = useState('12:00 PM');
+  const [isCreator, setCreator] = useState(true);
 
   useEffect(() => {
     setIsActive(session.active);
     setSessionAttendees(session.attendees);
     setIsAttending(session.attendees.includes(user._id));
+    setCreator(session.creator === user._id);
 
     if (!session.active) {
       // Parse startTime from epoch time to Date object
@@ -40,7 +45,7 @@ function SessionSummary(props) {
 
     if (!isAttending && !sessionAttendees.includes(user._id)) {
       // Join session if user is not currently attending
-      updatedAttendees.push(user._id);
+      updatedAttendees = [...sessionAttendees, user._id];
     } else if (sessionAttendees.includes(user._id)) {
       // Remove user from attendees array if currently attending
       updatedAttendees = sessionAttendees.filter(
@@ -59,7 +64,11 @@ function SessionSummary(props) {
   };
 
   return (
-    <Card centered className={`sessionCard ${!isActive && 'upcoming'}`}>
+    <Card
+      centered
+      className={`sessionCard ${!isActive && 'upcoming'}`}
+      {...rest}
+    >
       <Card.Content className="insideCard">
         {isActive ? (
           <Card.Header>
@@ -72,12 +81,23 @@ function SessionSummary(props) {
           </Card.Header>
         )}
 
-        <Button
-          className="join-leave-btn"
-          size="small"
-          onClick={handleJoinAndLeave}
-          content={isAttending ? 'LEAVE' : 'JOIN'}
-        />
+        {isCreator ? (
+          <DeleteModal
+            isActive={isActive}
+            creator={session.creator}
+            id={session._id}
+          />
+        ) : (
+          <Button
+            className="join-leave-btn"
+            size="small"
+            onClick={(event) => {
+              event.stopPropagation();
+              handleJoinAndLeave(event);
+            }}
+            content={isAttending ? 'LEAVE' : 'JOIN'}
+          />
+        )}
       </Card.Content>
     </Card>
   );

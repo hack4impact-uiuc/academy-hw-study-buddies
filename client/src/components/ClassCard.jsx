@@ -17,10 +17,9 @@ function ClassCard(props) {
           basic
           color="red"
           className="delete-button"
-          onClick={editUserClasses}
+          onClick={() => editUserClasses}
         >
-          {' '}
-          X{' '}
+          X
         </Button>
       </Card.Content>
     </Card>

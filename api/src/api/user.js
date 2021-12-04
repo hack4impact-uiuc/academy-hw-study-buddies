@@ -39,7 +39,6 @@ router.get(
       memberDbId: user._doc.memberDbId,
       classes: user._doc.classes,
     };
-    console.log('expandedUser:', expandedUser);
     if (!user.firstName || !user.lastName) {
       const updatedUser = await User.findByIdAndUpdate(
         user._doc._id,
@@ -52,16 +51,8 @@ router.get(
           }
         },
       );
-      if (!updatedUser) {
-        console.log(
-          'findByIdAndUpdate failed:',
-          user._doc.userId,
-          expandedUser,
-        );
-      } else {
-        console.log("Should've worked");
-      }
     }
+    expandedUser = {_id: user._doc._id, ...expandedUser}
     res.status(200).json({
       message: 'Successfully retrieved user',
       success: true,

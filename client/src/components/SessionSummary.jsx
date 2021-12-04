@@ -9,7 +9,6 @@ import DeleteModal from '../components/DeleteModal.jsx';
 
 function SessionSummary(props) {
   const { user, session, ...rest } = props;
-  // const { user, session } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
@@ -38,7 +37,7 @@ function SessionSummary(props) {
 
       parseDate(session.startTime);
     }
-  }, [user._id, session]);
+  }, [user, session]);
 
   const handleJoinAndLeave = async () => {
     let updatedAttendees = sessionAttendees;

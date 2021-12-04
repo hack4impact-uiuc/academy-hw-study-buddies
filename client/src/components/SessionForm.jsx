@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Modal, Form, Input, TextArea, Radio } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react';
+import { Modal, Form, Input, TextArea, Radio, Dropdown } from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { addSession } from '../utils/apiWrapper';
+import { addSession, getAllUsers } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
@@ -13,17 +13,32 @@ function SessionForm(props) {
   const [courseNumber, setCourseNumber] = useState();
   const [courseSuffix, setCourseSuffix] = useState('');
   const [location, setLocation] = useState('');
-  const [attendees, setAttendees] = useState('');
+  const [attendees, setAttendees] = useState([]);
   const [notes, setNotes] = useState('');
   const [date, setDate] = useState();
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [endTimeDefined, setEndTimeDefined] = useState(false);
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    async function populateUsers() {
+      const allUsers = await getAllUsers();
+      if (allUsers && allUsers.data.result.length > 0) {
+        let finalUsers = [];
+        allUsers.data.result.map((user) => {
+          if (user.firstName && user.lastName) {
+            finalUsers.push({key: user._id, value: user._id, text: `${user.firstName} ${user.lastName}`})
+          }
+        })
+        setUsers(finalUsers);
+      }
+    }
+    populateUsers();
+  }, [])
 
   const processFormAndSubmit = async () => {
     const course = courseCode + courseNumber + courseSuffix;
-    const attendeeArray = attendees.split(',');
-
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
     const active = !isLater;
@@ -69,7 +84,7 @@ function SessionForm(props) {
       creator: id,
       class: course,
       location: location,
-      attendees: attendeeArray,
+      attendees,
       notes: notes,
       active: !isLater,
       startTime: startSeconds,
@@ -189,16 +204,21 @@ function SessionForm(props) {
               }}
             />
           </Form.Group>
-          <Form.Field
-            label="Attendees"
-            placeholder="List the other attendees"
-            control={Input}
-            value={attendees}
-            onChange={(e) => {
-              setAttendees(e.target.value);
-              console.log(attendees);
-            }}
-          />
+          <Form.Group inline style={{display: "flex", flexDirection: "column", textAlign: "left"}}>
+            <p style={{textAlign: "left"}}>Invite</p>
+            <Dropdown
+              placeholder="List the other attendees"
+              fluid
+              multiple
+              search
+              selection
+              options={users}
+              onChange={(e, data) => {
+                  setAttendees(data.value)
+                }}
+              value={attendees}
+            />
+          </Form.Group>
           <Form.TextArea
             label="Notes"
             placeholder="Additional notes"

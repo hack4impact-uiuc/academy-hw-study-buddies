@@ -54,7 +54,7 @@ router.get(
 router.get(
   '/all',
   errorWrap(async (req, res) => {
-    const users = await User.find();
+    const users = await User.find().select({_id: 1, firstName: 1, lastName: 1});
     res.status(200).json({
       message: 'Successfully retrieved all users',
       success: true,

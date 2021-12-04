@@ -10,7 +10,7 @@ function DetailsModal(props) {
   const [open, setOpen] = useState(false);
   return (
     <Modal
-      className="modal-container"
+      className="details-modal"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}

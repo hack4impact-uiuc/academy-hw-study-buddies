@@ -21,11 +21,18 @@
     background-color: $sessionAccent !important;
     position: absolute;
     right: 0;
+    border-radius: 0.8em;
+    color: black;
+    transition: all 0.3s ease !important;
 
     &:hover {
+      transition: all 0.3s ease !important;
       background-color: $sessionBackground !important;
       box-shadow: 1.5px 1.5px 3px grey !important;
     }
+  }
+  #plus-icon {
+    padding-left: 0.5em;
   }
 }
 
@@ -51,4 +58,42 @@
   font-size: 14px;
   line-height: 23px;
   text-align: left;
+}
+
+.ui.button {
+  font-family: Tommy;
+}
+
+.homeHeader {
+  margin: 50px 0px 50px 100px;
+  font-size: 80px;
+  text-align: left;
+  font-family: Tommy;
+}
+
+.insideCard {
+  margin-top: 5px !important;
+  padding: 20px !important;
+}
+
+#join-button {
+  padding: 5px 27px;
+  margin-left: 280px;
+  transition: all 0.3s ease !important;
+  background-color: $sessionAccent;
+
+  &:hover {
+    transition: all 0.3s ease !important;
+  }
+}
+
+#endsesh-button {
+  padding: 5px 20px;
+  margin: 0px 0px 0px 0px;
+  transition: all 0.3s ease !important;
+  background-color: #c4c4c4;
+
+  &:hover {
+    transition: all 0.3s ease !important;
+  }
 }

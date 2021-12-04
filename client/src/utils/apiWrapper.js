@@ -157,3 +157,17 @@ export const getDisplayedSessions = () => {
       error,
     }));
 };
+
+export const deleteSession = (sessionId) => {
+  const requestString = `${BASE_URL}/session/${sessionId}`;
+  return axios
+    .delete(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'DELETE_SESSION_FAIL',
+      error,
+    }));
+};

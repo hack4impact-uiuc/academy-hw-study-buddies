@@ -85,6 +85,7 @@ function SessionForm(props) {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={button}
+      className="session-form-modal"
     >
       <Modal.Content form>
         <Form centered className="popup-form">
@@ -209,7 +210,9 @@ function SessionForm(props) {
               console.log(notes);
             }}
           />
-          <Form.Button onClick={processFormAndSubmit}>Submit</Form.Button>
+          <Form.Button id="button-submit" onClick={processFormAndSubmit}>
+            Submit
+          </Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

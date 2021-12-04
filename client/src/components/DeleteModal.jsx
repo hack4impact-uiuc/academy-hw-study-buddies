@@ -23,7 +23,9 @@ function DeleteModal({ isActive, creator, id }) {
         <Button
           className={'join-leave-btn'}
           size="small"
-          onClick={handleEndAndDelete}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
           content={isActive ? 'END' : 'CANCEL'}
         />
       }
@@ -36,7 +38,11 @@ function DeleteModal({ isActive, creator, id }) {
           </p>
           <Button
             className="join-session-button"
-            onClick={() => setOpen(false)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(false);
+              handleEndAndDelete();
+            }}
           >
             {isActive ? 'END SESSION' : 'CANCEL SESSION'}
           </Button>

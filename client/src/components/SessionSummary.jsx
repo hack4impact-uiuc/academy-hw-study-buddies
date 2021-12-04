@@ -23,12 +23,6 @@ function SessionSummary(props) {
     setSessionAttendees(session.attendees);
     setIsAttending(session.attendees.includes(user._id));
     setCreator(session.creator === user._id);
-    console.log(
-      'Session: ',
-      session,
-      '\n isCreator: ',
-      session.creator === user._id,
-    );
 
     if (!session.active) {
       // Parse startTime from epoch time to Date object

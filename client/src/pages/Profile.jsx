@@ -44,7 +44,14 @@ function Profile({ user }) {
         {classes &&
           classes.map(
             (userClass, j) =>
-              classes && <ClassCard classCardText={userClass} key={j} />,
+              classes && (
+                <ClassCard
+                  classCardText={userClass}
+                  key={j}
+                  setClasses={setClasses}
+                  user={user}
+                />
+              ),
           )}
       </div>
       <p></p>

@@ -21,6 +21,14 @@ function SessionForm(props) {
   const [endTimeDefined, setEndTimeDefined] = useState(false);
 
   const processFormAndSubmit = async () => {
+    const validCourseCode = courseCode.length > 0;
+    const validCourseNumber = courseNumber !== null && Number.isInteger(courseNumber);
+    const validLocation = location.length > 0;
+    const validStartTime = !isLater || startTime !== null;
+    if (!validCourseCode || !validCourseNumber || !validLocation || !validStartTime) {
+      throw "Form isn't filled out";
+    }
+
     const course = courseCode + courseNumber + courseSuffix;
     const attendeeArray = attendees.length > 0 ? attendees.split(',') : [''];
 

@@ -103,7 +103,7 @@ router.post(
 router.get(
   '/classes', //changed
   errorWrap(async (req, res) => {
-    const users = await User.find({}).select({ classes: 1 });
+    const users = await User.find({}).select({ firstName: 1, lastName: 1, classes: 1 });
     res.status(200).json({
       message: 'Successfully retrieved all users',
       success: true,

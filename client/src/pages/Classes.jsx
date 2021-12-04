@@ -14,9 +14,9 @@ function Classes() {
         resp.data.result.forEach((element) => {
           element.classes.forEach((course) => {
             if (course in classes_members) {
-              classes_members[course].push(element._id);
+              classes_members[course].push(`${element.firstName} ${element.lastName}`);
             } else {
-              classes_members[course] = [element._id];
+              classes_members[course] = [`${element.firstName} ${element.lastName}`];
             }
           });
         });

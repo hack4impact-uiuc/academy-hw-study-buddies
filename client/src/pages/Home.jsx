@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'semantic-ui-react';
 
-import SessionSummary from '../components/SessionSummary';
+// import SessionSummary from '../components/SessionSummary';
 import SessionForm from '../components/SessionForm';
 import HomeImgSitting from '../utils/images/homeimg-sitting.png';
 import HomeImgLaying from '../utils/images/homeimg-laying.png';
 import { getDisplayedSessions } from '../utils/apiWrapper.js';
+import DetailsModal from '../components/DetailsModal';
 import '../css/Home.scss';
 
-function Home({ user }) {
+function Home(props) {
+  const { user } = props;
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ function Home({ user }) {
 
       <div className="studying-activity-container">
         {sessions.map((session, i) => (
-          <SessionSummary user={user} session={session} key={i} />
+          <DetailsModal key={i} user={user} session={session} {...props} />
         ))}
         <SessionForm
           button={
@@ -60,5 +62,4 @@ function Home({ user }) {
     </>
   );
 }
-
 export default Home;

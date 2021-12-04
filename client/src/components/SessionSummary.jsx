@@ -7,7 +7,7 @@ import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
 
 function SessionSummary(props) {
-  const { user, session, ...rest } = props;
+  const { user, session, setSession, ...rest } = props;
   // const { user, session } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
@@ -85,6 +85,7 @@ function SessionSummary(props) {
               id={session.creator}
               isEdit={isEdit}
               session={session}
+              setSession={setSession}
             />
           )}
           <Button

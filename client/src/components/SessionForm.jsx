@@ -6,7 +6,8 @@ import { addSession, editSession } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
-  const { button, id, isEdit, session } = props;
+  const { button, id, isEdit, session, setSessions, setSession, sessions } =
+    props;
   const [open, setOpen] = useState(false);
   const [isLater, setIsLater] = useState(false);
   const [courseCode, setCourseCode] = useState('');
@@ -92,9 +93,15 @@ function SessionForm(props) {
       timeout: timeout,
     };
     console.log(sessionData);
-    (await isEdit)
-      ? editSession(session._id, sessionData)
-      : addSession(sessionData);
+
+    if (isEdit) {
+      await editSession(session._id, sessionData);
+      setSession({ ...sessionData, _id: session._id });
+    } else {
+      const updatedSession = await addSession(sessionData);
+      console.log(updatedSession);
+      setSessions([...sessions, updatedSession.data.result]);
+    }
   };
 
   const formSetup = () => {

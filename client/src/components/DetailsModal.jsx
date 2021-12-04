@@ -1,17 +1,20 @@
-import React from 'react';
-import { Button, Modal, Header } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Modal, Header } from 'semantic-ui-react';
+
+import SessionSummary from './SessionSummary';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/DetailsModal.scss';
 
-function DetailsModal({ session }) {
-  const [open, setOpen] = React.useState(false);
+function DetailsModal(props) {
+  const { session } = props;
+  const [open, setOpen] = useState(false);
   return (
     <Modal
       className="modal-container"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button id="join-button">JOIN</Button>}
+      trigger={<SessionSummary {...props} />}
     >
       <Modal.Content>
         <Modal.Description>
@@ -33,12 +36,6 @@ function DetailsModal({ session }) {
                 <i>{session.notes}</i>
               </p>
             </div>
-            <Button
-              className="join-session-button"
-              onClick={() => setOpen(false)}
-            >
-              JOIN SESSION
-            </Button>
           </p>
         </Modal.Description>
       </Modal.Content>

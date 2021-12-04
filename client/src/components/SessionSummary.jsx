@@ -3,13 +3,15 @@ import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
 
+// import DetailsModal from './DetailsModal.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
 
 import DeleteModal from '../components/DeleteModal.jsx';
 
 function SessionSummary(props) {
-  const { user, session } = props;
+  const { user, session, ...rest } = props;
+  // const { user, session } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
@@ -51,7 +53,7 @@ function SessionSummary(props) {
 
     if (!isAttending && !sessionAttendees.includes(user._id)) {
       // Join session if user is not currently attending
-      updatedAttendees.push(user._id);
+      updatedAttendees = [...sessionAttendees, user._id];
     } else if (sessionAttendees.includes(user._id)) {
       // Remove user from attendees array if currently attending
       updatedAttendees = sessionAttendees.filter(
@@ -70,7 +72,11 @@ function SessionSummary(props) {
   };
 
   return (
-    <Card centered className={`sessionCard ${!isActive && 'upcoming'}`}>
+    <Card
+      centered
+      className={`sessionCard ${!isActive && 'upcoming'}`}
+      {...rest}
+    >
       <Card.Content className="insideCard">
         {isActive ? (
           <Card.Header>
@@ -91,11 +97,14 @@ function SessionSummary(props) {
           />
         ) : (
           <Button
-            className={'join-leave-btn'}
-            size="small"
-            onClick={handleJoinAndLeave}
-            content={isAttending ? 'LEAVE' : 'JOIN'}
-          />
+          className="join-leave-btn"
+          size="small"
+          onClick={(event) => {
+            event.stopPropagation();
+            handleJoinAndLeave(event);
+          }}
+          content={isAttending ? 'LEAVE' : 'JOIN'}
+        />
         )}
       </Card.Content>
     </Card>

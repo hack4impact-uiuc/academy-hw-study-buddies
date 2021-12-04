@@ -10,6 +10,11 @@
   .card-content-container {
     display: flex !important;
     justify-content: space-between !important;
+
+    .class-text {
+      font-family: Tommy !important;
+      font-size: 150%;
+    }
   }
 
   .delete-button {
@@ -18,10 +23,5 @@
     font-family: Tommy !important;
     padding: 0px !important;
   }
-
-  .class-text {
-    transition: all 0.3s ease !important;
-    font-family: Tommy !important;
-    font-size: 150%;
-  }
 }
+

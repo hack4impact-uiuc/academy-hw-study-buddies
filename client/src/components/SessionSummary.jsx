@@ -17,7 +17,6 @@ function SessionSummary(props) {
   const [startTime, setStartTime] = useState('12:00 PM');
 
   useEffect(() => {
-    console.log(user);
     setIsActive(session.active);
     setSessionAttendees(session.attendees);
     setIsAttending(session.attendees.includes(user._id));
@@ -36,7 +35,7 @@ function SessionSummary(props) {
 
       parseDate(session.startTime);
     }
-  }, [user._id, session]);
+  }, [user, session]);
 
   const handleJoinAndLeave = async () => {
     let updatedAttendees = sessionAttendees;

@@ -34,7 +34,7 @@ function SessionForm(props) {
       !validLocation ||
       !validStartTime
     ) {
-      throw "Form isn't filled out";
+      throw "Form is incomplete";
     }
 
     const course = courseCode + courseNumber + courseSuffix;

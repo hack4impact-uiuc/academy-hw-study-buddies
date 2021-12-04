@@ -15,6 +15,7 @@ function SessionSummary(props) {
   const [isActive, setIsActive] = useState(true);
   const [startDate, setStartDate] = useState('January 1');
   const [startTime, setStartTime] = useState('12:00 PM');
+  const isEdit = true;
 
   useEffect(() => {
     setIsActive(session.active);
@@ -82,7 +83,7 @@ function SessionSummary(props) {
             <SessionForm
               button={<Button id="edit-btn">EDIT</Button>}
               id={session.creator}
-              isEdit={true}
+              isEdit={isEdit}
               session={session}
             />
           )}

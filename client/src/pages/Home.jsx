@@ -43,6 +43,7 @@ function Home(props) {
             </Button>
           }
           id={user._id}
+          isEdit={false}
         />
       </div>
 

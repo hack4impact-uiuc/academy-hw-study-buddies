@@ -36,7 +36,7 @@ function Home({ user }) {
         ))}
         <SessionForm
           button={
-            <Button className="add-session-btn" type="default">
+            <Button id="add-session-btn" type="default">
               +
             </Button>
           }

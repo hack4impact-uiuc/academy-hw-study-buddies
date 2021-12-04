@@ -7,7 +7,8 @@ import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
 
 function SessionSummary(props) {
-  const { user, session } = props;
+  const { user, session, ...rest } = props;
+  // const { user, session } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
@@ -16,6 +17,7 @@ function SessionSummary(props) {
   const [startTime, setStartTime] = useState('12:00 PM');
 
   useEffect(() => {
+    console.log(user);
     setIsActive(session.active);
     setSessionAttendees(session.attendees);
     setIsAttending(session.attendees.includes(user._id));
@@ -41,7 +43,7 @@ function SessionSummary(props) {
 
     if (!isAttending && !sessionAttendees.includes(user._id)) {
       // Join session if user is not currently attending
-      updatedAttendees.push(user._id);
+      updatedAttendees = [...sessionAttendees, user._id];
     } else if (sessionAttendees.includes(user._id)) {
       // Remove user from attendees array if currently attending
       updatedAttendees = sessionAttendees.filter(
@@ -60,7 +62,11 @@ function SessionSummary(props) {
   };
 
   return (
-    <Card centered className={`sessionCard ${!isActive && 'upcoming'}`}>
+    <Card
+      centered
+      className={`sessionCard ${!isActive && 'upcoming'}`}
+      {...rest}
+    >
       <Card.Content className="insideCard">
         {isActive ? (
           <Card.Header>
@@ -82,9 +88,12 @@ function SessionSummary(props) {
             />
           )}
           <Button
-            id={'join-leave-btn'}
+            id="join-leave-btn"
             size="small"
-            onClick={handleJoinAndLeave}
+            onClick={(event) => {
+              event.stopPropagation();
+              handleJoinAndLeave(event);
+            }}
             content={isAttending ? 'LEAVE' : 'JOIN'}
           />
         </div>

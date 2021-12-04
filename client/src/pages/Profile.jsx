@@ -1,14 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { getAttendingSessions } from '../utils/apiWrapper';
+import DetailsModal from '../components/DetailsModal';
+import ClassForm from '../components/ClassForm.jsx';
 import ClassCard from '../components/ClassCard';
+import 'semantic-ui-css/semantic.min.css';
+import '../css/Profile.scss';
 
-function Profile({ user }) {
+function Profile(props) {
+  const { user, setUser } = props;
+  const [sessions, setSessions] = useState([]);
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    const populateSessionsAndClasses = async () => {
+      const resp = await getAttendingSessions(user._id);
+      if (!resp.error) {
+        setSessions(resp.data.result);
+      }
+      setClasses(user.classes);
+    };
+
+    populateSessionsAndClasses();
+  }, [user]);
+
   return (
     <>
-      <h1>
-        Profile Page for {user.firstName} {user.lastName}
-      </h1>
-      <ClassCard classCardText={'CS125'} />
+      <h2>Welcome to your Profile Page, {user.firstName}</h2>
+
+      <h1>My Sessions</h1>
+      <p></p>
+      {sessions.map((session, i) => (
+        <DetailsModal key={i} user={user} session={session} {...props} />
+      ))}
+
+      <h1>My Classes</h1>
+      <div className="classes-display">
+        {classes &&
+          classes.map(
+            (userClass, i) =>
+              classes && <ClassCard classCardText={userClass} key={i} />,
+          )}
+      </div>
+      <p></p>
+
+      <ClassForm
+        button={
+          <button className="small ui button" id="add-class-btn">
+            Add class
+          </button>
+        }
+        user={user}
+        setUser={setUser}
+        setClasses={setClasses}
+      />
     </>
   );
 }

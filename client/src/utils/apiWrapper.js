@@ -48,24 +48,6 @@ export const getAttendingSessions = (userId) => {
 };
 
 /**
- * Returns user by id
- * Returns GET_SAMPLE_FAIL upon failure
- */
-export const getUserById = (userId) => {
-  const requestString = `${BASE_URL}/user/${userId}`;
-  return axios
-    .get(requestString, {
-      headers: {
-        'Content-Type': 'application/JSON',
-      },
-    })
-    .catch((error) => ({
-      type: 'GET_SAMPLE_FAIL',
-      error,
-    }));
-};
-
-/**
  * Updates user classes
  * Returns PUT_CLASS_FAIL upon failure
  */

@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
 import { getAttendingSessions } from '../utils/apiWrapper';
-import 'semantic-ui-css/semantic.min.css';
-import '../css/Profile.scss';
-import SessionSummary from '../components/SessionSummary';
+import DetailsModal from '../components/DetailsModal';
 import ClassForm from '../components/ClassForm.jsx';
 import ClassCard from '../components/ClassCard';
+import 'semantic-ui-css/semantic.min.css';
+import '../css/Profile.scss';
 
-function Profile({ user }) {
+function Profile(props) {
+  const { user } = props;
   const [sessions, setSessions] = useState([]);
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
     const populateSessionsAndClasses = async () => {
-      console.log(user);
       const resp = await getAttendingSessions(user._id);
       if (!resp.error) {
-        console.log(resp.data.result);
         setSessions(resp.data.result);
       }
       setClasses(user.classes);
@@ -32,15 +31,15 @@ function Profile({ user }) {
       <h1>My Sessions</h1>
       <p></p>
       {sessions.map((session, i) => (
-        <SessionSummary user={user} session={session} key={i} />
+        <DetailsModal key={i} user={user} session={session} {...props} />
       ))}
 
       <h1>My Classes</h1>
       <div className="classes-display">
         {classes &&
           classes.map(
-            (userClass, j) =>
-              classes && <ClassCard classCardText={userClass} key={j} />,
+            (userClass, i) =>
+              classes && <ClassCard classCardText={userClass} key={i} />,
           )}
       </div>
       <p></p>

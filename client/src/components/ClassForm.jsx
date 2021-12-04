@@ -13,16 +13,14 @@ function ClassForm(props) {
   const [courseSuffix, setCourseSuffix] = React.useState('');
 
   const handleSubmit = async () => {
-    console.log(courseCode, courseNumber, courseSuffix);
-    const classComplete = courseCode + courseNumber + courseSuffix;
+    const newClass = courseCode + courseNumber + courseSuffix;
     if (courseCode === '' || courseNumber === '') {
       return;
     }
     const updatedUser = {
       memberDbId: user.memberDbId,
-      classes: [...user.classes, classComplete],
+      classes: [...user.classes, newClass],
     };
-    console.log(updatedUser.classes);
 
     await putUserClass(updatedUser, user._id);
 
@@ -31,12 +29,11 @@ function ClassForm(props) {
     setCourseCode('');
     setCourseNumber('');
     setCourseSuffix('');
-    console.log(user._id);
-    console.log(user.classes);
   };
 
   return (
     <Modal
+      className="class-form"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
@@ -46,7 +43,7 @@ function ClassForm(props) {
         <Form
           size="small"
           centered
-          className="popup-form"
+          //className="class-form-popup-form"
           onSubmit={handleSubmit}
         >
           <Form.Group inline>

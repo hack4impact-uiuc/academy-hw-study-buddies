@@ -22,10 +22,18 @@ function SessionForm(props) {
 
   const processFormAndSubmit = async () => {
     const validCourseCode = courseCode.length > 0;
-    const validCourseNumber = courseNumber !== null && Number.isInteger(courseNumber);
+    const validCourseNumber = courseNumber.length > 0;
     const validLocation = location.length > 0;
-    const validStartTime = !isLater || startTime !== null;
-    if (!validCourseCode || !validCourseNumber || !validLocation || !validStartTime) {
+    const validStartTime = !(isLater && startTime === null);
+
+    if (
+      (isLater && !startTime) ||
+      (isLater && !date) ||
+      !validCourseCode ||
+      !validCourseNumber ||
+      !validLocation ||
+      !validStartTime
+    ) {
       throw "Form isn't filled out";
     }
 
@@ -97,7 +105,6 @@ function SessionForm(props) {
       setCourseSuffix(splitClass[2]);
     }
     setLocation(session.location);
-    console.log(session.attendees);
     setAttendees(
       session.attendees.length > 0
         ? session.attendees.join(',')
@@ -280,7 +287,6 @@ function SessionForm(props) {
             value={attendees}
             onChange={(e) => {
               setAttendees(e.target.value);
-              console.log(attendees);
             }}
           />
           <Form.TextArea
@@ -290,7 +296,6 @@ function SessionForm(props) {
             value={notes}
             onChange={(e) => {
               setNotes(e.target.value);
-              console.log(notes);
             }}
           />
           <Form.Button onClick={processFormAndSubmit}>Submit</Form.Button>

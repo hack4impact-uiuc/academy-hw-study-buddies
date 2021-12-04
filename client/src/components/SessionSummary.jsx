@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
-
 // import DetailsModal from './DetailsModal.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
-
 import DeleteModal from '../components/DeleteModal.jsx';
 
 function SessionSummary(props) {
@@ -97,14 +95,14 @@ function SessionSummary(props) {
           />
         ) : (
           <Button
-          className="join-leave-btn"
-          size="small"
-          onClick={(event) => {
-            event.stopPropagation();
-            handleJoinAndLeave(event);
-          }}
-          content={isAttending ? 'LEAVE' : 'JOIN'}
-        />
+            className="join-leave-btn"
+            size="small"
+            onClick={(event) => {
+              event.stopPropagation();
+              handleJoinAndLeave(event);
+            }}
+            content={isAttending ? 'LEAVE' : 'JOIN'}
+          />
         )}
       </Card.Content>
     </Card>

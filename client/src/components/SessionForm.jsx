@@ -210,7 +210,9 @@ function SessionForm(props) {
               console.log(notes);
             }}
           />
-          <Form.Button id="button-submit" onClick={processFormAndSubmit}>Submit</Form.Button>
+          <Form.Button id="button-submit" onClick={processFormAndSubmit}>
+            Submit
+          </Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

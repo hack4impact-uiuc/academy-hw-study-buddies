@@ -44,9 +44,12 @@ function Home(props) {
           }
           id={user._id}
         />
-        <br/><br/><br/>
+        <br />
+        <br />
+        <br />
       </div>
-<br/><br/>
+      <br />
+      <br />
       <img
         className="homeimg-sitting"
         src={HomeImgSitting}

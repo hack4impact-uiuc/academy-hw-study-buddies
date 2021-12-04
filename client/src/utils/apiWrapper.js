@@ -30,6 +30,24 @@ export const getSampleResponse = () => {
 };
 
 /**
+ * Returns user by id
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
+export const getUserById = (userId) => {
+  const requestString = `${BASE_URL}/user/${userId}`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+/**
  * Returns attending sessions of user
  * Returns GET_SAMPLE_FAIL upon failure
  */

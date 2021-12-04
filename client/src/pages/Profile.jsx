@@ -8,7 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 import '../css/Profile.scss';
 
 function Profile(props) {
-  const { user } = props;
+  const { user, setUser } = props;
   const [sessions, setSessions] = useState([]);
   const [classes, setClasses] = useState([]);
 
@@ -51,6 +51,7 @@ function Profile(props) {
           </button>
         }
         user={user}
+        setUser={setUser}
         setClasses={setClasses}
       />
     </>

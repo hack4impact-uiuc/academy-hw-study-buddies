@@ -6,7 +6,7 @@ import 'semantic-ui-css/semantic.min.css';
 import '../css/ClassForm.scss';
 
 function ClassForm(props) {
-  const { button, user, setClasses } = props;
+  const { button, user, setUser, setClasses } = props;
   const [open, setOpen] = React.useState(false);
   const [courseCode, setCourseCode] = React.useState('');
   const [courseNumber, setCourseNumber] = React.useState('');
@@ -17,13 +17,11 @@ function ClassForm(props) {
     if (courseCode === '' || courseNumber === '') {
       return;
     }
-    const updatedUser = {
-      memberDbId: user.memberDbId,
-      classes: [...user.classes, newClass],
-    };
+    const updatedUser = user;
+    updatedUser.classes = [...user.classes, newClass];
 
     await putUserClass(updatedUser, user._id);
-
+    setUser(updatedUser);
     setClasses(updatedUser.classes);
     setOpen(false);
     setCourseCode('');
@@ -40,12 +38,7 @@ function ClassForm(props) {
       trigger={button}
     >
       <Modal.Content form>
-        <Form
-          size="small"
-          centered
-          //className="class-form-popup-form"
-          onSubmit={handleSubmit}
-        >
+        <Form size="small" centered>
           <Form.Group inline>
             <Form.Input
               required

@@ -23,16 +23,12 @@ function SessionForm(props) {
   const [endTimeDefined, setEndTimeDefined] = useState(false);
 
   const processFormAndSubmit = async () => {
-    const validCourseCode = courseCode.length > 0;
-    const validCourseNumber = courseNumber.length > 0;
-    const validLocation = location.length > 0;
-
     if (
+      !courseCode ||
+      !courseNumber ||
+      !location ||
       (isLater && !startTime) ||
-      (isLater && !date) ||
-      !validCourseCode ||
-      !validCourseNumber ||
-      !validLocation
+      (isLater && !date)
     ) {
       throw 'Form is incomplete';
     }
@@ -49,7 +45,7 @@ function SessionForm(props) {
       ? 0
       : new Date(
           parseInt(processedStartDate[0]),
-          parseInt(processedStartDate[1]),
+          parseInt(processedStartDate[1] - 1),
           parseInt(processedStartDate[2]),
           parseInt(processedStartTime[0]),
           parseInt(processedStartTime[1]),
@@ -57,6 +53,7 @@ function SessionForm(props) {
           0,
         );
     const processedStart = active ? new Date() : laterStart;
+    console.log(processedStart.getMonth());
     const startSeconds = processedStart.getTime() / 1000;
 
     const processedEndTime = endTimeDefined ? endTime.split(':') : 0;
@@ -99,6 +96,7 @@ function SessionForm(props) {
       const updatedSession = await addSession(sessionData);
       setSessions([...sessions, updatedSession.data.result]);
     }
+    setOpen(false);
   };
 
   const formSetup = () => {
@@ -122,7 +120,7 @@ function SessionForm(props) {
     if (!session.active) {
       const startDate = new Date(startSeconds * 1000);
       const year = startDate.getFullYear();
-      const month = startDate.getMonth();
+      const month = startDate.getMonth() + 1;
       const day = startDate.getDate();
 
       const processedMonth = month < 10 ? '0'.concat(month) : ''.concat(month);

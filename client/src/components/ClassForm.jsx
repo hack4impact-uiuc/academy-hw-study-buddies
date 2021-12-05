@@ -3,7 +3,6 @@ import { Modal, Form } from 'semantic-ui-react';
 
 import { putUserClass } from '../utils/apiWrapper';
 import 'semantic-ui-css/semantic.min.css';
-import '../css/ClassForm.scss';
 
 function ClassForm(props) {
   const { button, user, setUser, setClasses } = props;
@@ -31,6 +30,7 @@ function ClassForm(props) {
 
   return (
     <Modal
+      size="small"
       className="class-form"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}

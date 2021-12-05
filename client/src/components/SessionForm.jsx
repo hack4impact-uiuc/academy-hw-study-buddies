@@ -6,8 +6,9 @@ import { addSession, editSession } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
-  const { button, id, isEdit, session, setSessions, setSession, sessions } =
+  const { button, id, isEditMode, session, setSessions, setSession, sessions } =
     props;
+
   const [open, setOpen] = useState(false);
   const [isLater, setIsLater] = useState(false);
   const [courseCode, setCourseCode] = useState('');
@@ -42,7 +43,7 @@ function SessionForm(props) {
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
     const active = !isLater;
-    const processedStartDate = active ? 0 : date.split('-'); //2021-11-17
+    const processedStartDate = active ? 0 : date.split('-');
     const processedStartTime = active ? 0 : startTime.split(':');
     const laterStart = active
       ? 0
@@ -90,14 +91,12 @@ function SessionForm(props) {
       startTime: startSeconds,
       timeout: timeout,
     };
-    console.log(sessionData);
 
-    if (isEdit) {
+    if (isEditMode) {
       await editSession(session._id, sessionData);
       setSession({ ...sessionData, _id: session._id });
     } else {
       const updatedSession = await addSession(sessionData);
-      console.log(updatedSession);
       setSessions([...sessions, updatedSession.data.result]);
     }
   };
@@ -175,12 +174,15 @@ function SessionForm(props) {
       onClose={() => setOpen(false)}
       onOpen={() => {
         setOpen(true);
-        if (isEdit) {
+        if (isEditMode) {
           formSetup();
         }
       }}
       open={open}
       trigger={button}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       <Modal.Content form>
         <Form centered className="popup-form">
@@ -193,7 +195,6 @@ function SessionForm(props) {
               value={courseCode}
               onChange={(e) => {
                 setCourseCode(e.target.value);
-                console.log(courseCode);
               }}
             />
             <Form.Field
@@ -204,7 +205,6 @@ function SessionForm(props) {
               value={courseNumber}
               onChange={(e) => {
                 setCourseNumber(e.target.value);
-                console.log(courseNumber);
               }}
             />
             <Form.Field
@@ -214,7 +214,6 @@ function SessionForm(props) {
               value={courseSuffix}
               onChange={(e) => {
                 setCourseSuffix(e.target.value);
-                console.log(courseSuffix);
               }}
             />
             <Form.Field
@@ -225,7 +224,6 @@ function SessionForm(props) {
               value={location}
               onChange={(e) => {
                 setLocation(e.target.value);
-                console.log(location);
               }}
             />
           </Form.Group>
@@ -257,7 +255,6 @@ function SessionForm(props) {
               value={date}
               onChange={(e) => {
                 setDate(e.target.value);
-                console.log(date);
               }}
             />
             <Form.Field
@@ -270,7 +267,6 @@ function SessionForm(props) {
               value={startTime}
               onChange={(e) => {
                 setStartTime(e.target.value);
-                console.log(startTime);
               }}
             />
             <Form.Field

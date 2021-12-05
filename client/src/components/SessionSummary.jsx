@@ -8,14 +8,13 @@ import '../css/SessionSummary.scss';
 
 function SessionSummary(props) {
   const { user, session, setSession, ...rest } = props;
-  // const { user, session } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [startDate, setStartDate] = useState('January 1');
   const [startTime, setStartTime] = useState('12:00 PM');
-  const isEdit = true;
+  const isEditMode = true;
 
   useEffect(() => {
     setIsActive(session.active);
@@ -78,18 +77,26 @@ function SessionSummary(props) {
             {session.location} on {startDate} at {startTime}
           </Card.Header>
         )}
-        <div className="buttons">
+        <div className="btn-container">
           {user._id === session.creator && (
             <SessionForm
-              button={<Button id="edit-btn">EDIT</Button>}
+              button={
+                <Button
+                  className="session-summary-btn"
+                  content="EDIT"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                />
+              }
               id={session.creator}
-              isEdit={isEdit}
+              isEditMode={isEditMode}
               session={session}
               setSession={setSession}
             />
           )}
           <Button
-            id="join-leave-btn"
+            className="session-summary-btn"
             size="small"
             onClick={(event) => {
               event.stopPropagation();

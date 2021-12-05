@@ -43,12 +43,12 @@ function Home(props) {
         ))}
         <SessionForm
           button={
-            <Button id="add-session-btn" type="default">
+            <Button className="add-session-btn" type="default">
               +
             </Button>
           }
           id={user._id}
-          isEdit={false}
+          isEditMode={false}
           sessions={sessions}
           setSessions={setSessions}
         />

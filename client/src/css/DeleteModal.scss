@@ -1,0 +1,29 @@
+@import '../styles/colors.scss';
+
+#modal-container {
+  background-color: #c5cad4 !important;
+
+  .ui.header {
+    font-size: 30px;
+    padding: 10px 0px 0px 10px;
+  }
+  #form-text {
+    padding: 20px 0px 0px 10px;
+    font-size: 20px;
+    color: black !important;
+  }
+  .join-session-button {
+    padding: 10px 10px 10px 10px;
+    background-color: #575a89 !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease !important;
+  }
+  .notes-bg {
+    margin-top: 5px;
+  }
+}
+.ui.modal > .content {
+  background: #c5cad4;
+  padding-left: 25px;
+  padding-bottom: 30px;
+}

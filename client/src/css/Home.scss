@@ -21,11 +21,18 @@
     background-color: $sessionAccent !important;
     position: absolute;
     right: 0;
+    border-radius: 0.8em;
+    color: black;
+    transition: all 0.3s ease !important;
 
     &:hover {
+      transition: all 0.3s ease !important;
       background-color: $sessionBackground !important;
       box-shadow: 1.5px 1.5px 3px grey !important;
     }
+  }
+  #plus-icon {
+    padding-left: 0.5em;
   }
 }
 
@@ -95,6 +102,13 @@
   text-align: left;
 }
 
-.ui.header {
-  font-family: Tommy;
+#endsesh-button {
+  padding: 5px 20px;
+  margin: 0px 0px 0px 0px;
+  transition: all 0.3s ease !important;
+  background-color: #c4c4c4;
+
+  &:hover {
+    transition: all 0.3s ease !important;
+  }
 }

@@ -16,23 +16,27 @@
 
   &:hover {
     background-color: #b2caee !important;
-    box-shadow: 3px 3px 6px grey !important;
+    // box-shadow: 3px 3px 6px grey !important;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px !important;
   }
 
   .insideCard {
     margin-top: 5px !important;
     padding: 20px !important;
-  }
 
-  .join-leave-btn {
-    background-color: $sessionAccent !important;
-    padding: 5px 27px;
-    margin-left: 280px;
-    transition: all 0.3s ease !important;
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
 
-    &:hover {
-      background-color: $sessionBackground !important;
-      transition: all 0.3s ease !important;
+      .session-summary-btn {
+        background-color: $sessionAccent !important;
+        padding: 5px 27px;
+        transition: all 0.3s ease !important;
+
+        &:hover {
+          background-color: $sessionBackground !important;
+        }
+      }
     }
   }
 }

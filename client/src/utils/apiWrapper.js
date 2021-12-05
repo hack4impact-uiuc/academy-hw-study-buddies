@@ -11,6 +11,21 @@ export const getUserInfo = () => {
     error,
   }));
 };
+
+export const getAllUsers = () => {
+  const requestString = `http://localhost:9001/api/user/all`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_ALL_USERS_FAIL',
+      error,
+    }));
+};
+
 /**
  * Returns a sample API response to demonstrate a working backend
  * Returns GET_SAMPLE_FAIL upon failure
@@ -46,7 +61,6 @@ export const getAttendingSessions = (userId) => {
       error,
     }));
 };
-
 /**
  * Returns user by id
  * Returns GET_SAMPLE_FAIL upon failure
@@ -144,6 +158,20 @@ export const editUserClasses = (userId, body) => {
     }));
 };
 
+export const getUserClasses = () => {
+  const requestString = `${BASE_URL}/user/classes`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
 export const getDisplayedSessions = () => {
   const requestString = `${BASE_URL}/session/displayed`;
   return axios
@@ -154,6 +182,20 @@ export const getDisplayedSessions = () => {
     })
     .catch((error) => ({
       type: 'GET_SAMPLE_FAIL',
+      error,
+    }));
+};
+
+export const deleteSession = (sessionId) => {
+  const requestString = `${BASE_URL}/session/${sessionId}`;
+  return axios
+    .delete(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'DELETE_SESSION_FAIL',
       error,
     }));
 };

@@ -2,22 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
+import SessionForm from '../components/SessionForm';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
+import DeleteModal from '../components/DeleteModal.jsx';
 
 function SessionSummary(props) {
-  const { user, session } = props;
+  const { user, session, setSession, sessions, setSessions, ...rest } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [startDate, setStartDate] = useState('January 1');
   const [startTime, setStartTime] = useState('12:00 PM');
+  const isEditMode = true;
+  const [isCreator, setCreator] = useState(true);
 
   useEffect(() => {
     setIsActive(session.active);
     setSessionAttendees(session.attendees);
-    setIsAttending(session.attendees.includes(user._id));
+    setIsAttending(
+      session.attendees.some((attendee) => attendee._id === user._id),
+    );
+    setCreator(session.creator._id === user._id);
 
     if (!session.active) {
       // Parse startTime from epoch time to Date object
@@ -33,21 +40,21 @@ function SessionSummary(props) {
 
       parseDate(session.startTime);
     }
-  }, [user._id, session]);
+  }, [user, session]);
 
   const handleJoinAndLeave = async () => {
+    console.log(sessionAttendees);
+    console.log(session);
     let updatedAttendees = sessionAttendees;
 
-    if (!isAttending && !sessionAttendees.includes(user._id)) {
+    if (!isAttending) {
       // Join session if user is not currently attending
-      updatedAttendees.push(user._id);
-    } else if (sessionAttendees.includes(user._id)) {
+      updatedAttendees = [...sessionAttendees, user];
+    } else {
       // Remove user from attendees array if currently attending
       updatedAttendees = sessionAttendees.filter(
-        (attendee) => attendee !== user._id,
+        (attendee) => attendee._id !== user._id,
       );
-    } else {
-      return;
     }
 
     setSessionAttendees(updatedAttendees);
@@ -55,29 +62,71 @@ function SessionSummary(props) {
     const updatedSession = {
       attendees: updatedAttendees,
     };
-    await editSession(session._id, updatedSession);
+    const finalSession = await editSession(session._id, updatedSession);
+    if (!finalSession.error) {
+      setSession(finalSession.data.result);
+    }
+    console.log(finalSession);
   };
 
   return (
-    <Card centered className={`sessionCard ${!isActive && 'upcoming'}`}>
+    <Card
+      centered
+      className={`sessionCard ${!isActive && 'upcoming'}`}
+      {...rest}
+    >
       <Card.Content className="insideCard">
         {isActive ? (
           <Card.Header>
-            {session.creator} is studying {session.class} at {session.location}
+            {session.creator.firstName} {session.creator.lastName} is studying{' '}
+            {session.class} at {session.location}
           </Card.Header>
         ) : (
           <Card.Header>
-            {session.creator} will be studying {session.class} at{' '}
-            {session.location} on {startDate} at {startTime}
+            {session.creator.firstName} {session.creator.lastName} will be
+            studying {session.class} at {session.location} on {startDate} at{' '}
+            {startTime}
           </Card.Header>
         )}
+        <div className="btn-container">
+          {isCreator && (
+            <SessionForm
+              button={
+                <Button
+                  className="session-summary-btn"
+                  content="EDIT"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                />
+              }
+              creator={session.creator}
+              isEditMode={isEditMode}
+              session={session}
+              setSession={setSession}
+            />
+          )}
 
-        <Button
-          className={'join-leave-btn'}
-          size="small"
-          onClick={handleJoinAndLeave}
-          content={isAttending ? 'LEAVE' : 'JOIN'}
-        />
+          {isCreator ? (
+            <DeleteModal
+              isActive={isActive}
+              creator={session.creator}
+              id={session._id}
+              sessions={sessions}
+              setSessions={setSessions}
+            />
+          ) : (
+            <Button
+              className="session-summary-btn"
+              size="small"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleJoinAndLeave(event);
+              }}
+              content={isAttending ? 'LEAVE' : 'JOIN'}
+            />
+          )}
+        </div>
       </Card.Content>
     </Card>
   );

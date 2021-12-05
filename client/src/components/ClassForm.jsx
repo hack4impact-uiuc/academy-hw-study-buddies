@@ -6,37 +6,33 @@ import 'semantic-ui-css/semantic.min.css';
 import '../css/ClassForm.scss';
 
 function ClassForm(props) {
-  const { button, user, setClasses } = props;
+  const { button, user, setUser, setClasses } = props;
   const [open, setOpen] = React.useState(false);
   const [courseCode, setCourseCode] = React.useState('');
   const [courseNumber, setCourseNumber] = React.useState('');
   const [courseSuffix, setCourseSuffix] = React.useState('');
 
   const handleSubmit = async () => {
-    console.log(courseCode, courseNumber, courseSuffix);
-    const classComplete = courseCode + courseNumber + courseSuffix;
+    const newClass = courseCode + courseNumber + courseSuffix;
     if (courseCode === '' || courseNumber === '') {
       return;
     }
-    const updatedUser = {
-      memberDbId: user.memberDbId,
-      classes: [...user.classes, classComplete],
-    };
-    console.log(updatedUser.classes);
+    const updatedUser = user;
+    updatedUser.classes = [...user.classes, newClass];
 
     await putUserClass(updatedUser, user._id);
-
+    setUser(updatedUser);
     setClasses(updatedUser.classes);
     setOpen(false);
     setCourseCode('');
     setCourseNumber('');
     setCourseSuffix('');
-    console.log(user._id);
-    console.log(user.classes);
   };
 
   return (
     <Modal
+      size="small"
+      className="class-form"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}

@@ -1,0 +1,19 @@
+@import '../styles/colors.scss';
+
+.details-modal {
+  background-color: #c5cad4 !important;
+
+  .ui.header {
+    font-size: 30px;
+    padding: 10px 0px 0px 10px;
+  }
+
+  #form-text {
+    padding: 0px 0px 0px 10px;
+    color: black !important;
+  }
+
+  .notes-bg {
+    margin-top: 5px;
+  }
+}

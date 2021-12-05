@@ -32,20 +32,31 @@ router.get(
     }
     const memberInfoResult = await getMemberInfo(memberDbId);
     const memberInfo = memberInfoResult.data.result;
-    const filteredMemberInfo = {
+    console.log('memberInfo:', memberInfo);
+    let expandedUser = {
       firstName: memberInfo.firstName,
       lastName: memberInfo.lastName,
-    };
-    user = {
-      _id: user._doc._id,
       memberDbId: user._doc.memberDbId,
-      ...filteredMemberInfo,
       classes: user._doc.classes,
     };
+    if (!user.firstName || !user.lastName) {
+      const updatedUser = await User.findByIdAndUpdate(
+        user._doc._id,
+        expandedUser,
+      );
+      if (!updatedUser) {
+        res.status(404).json({
+          message: 'User not found, update unsuccessful',
+          success: false,
+        });
+        return;
+      }
+    }
+    expandedUser = { _id: user._doc._id, ...expandedUser };
     res.status(200).json({
       message: 'Successfully retrieved user',
       success: true,
-      result: user,
+      result: expandedUser,
     });
     return;
   }),
@@ -54,7 +65,11 @@ router.get(
 router.get(
   '/all',
   errorWrap(async (req, res) => {
-    const users = await User.find();
+    const users = await User.find().select({
+      _id: 1,
+      firstName: 1,
+      lastName: 1,
+    });
     res.status(200).json({
       message: 'Successfully retrieved all users',
       success: true,
@@ -76,6 +91,24 @@ router.post(
       });
       return;
     }
+  }),
+);
+
+// all user classes
+router.get(
+  '/classes', //changed
+  errorWrap(async (req, res) => {
+    const users = await User.find({}).select({
+      firstName: 1,
+      lastName: 1,
+      classes: 1,
+    });
+    res.status(200).json({
+      message: 'Successfully retrieved all user classes',
+      success: true,
+      result: users,
+    });
+    return;
   }),
 );
 

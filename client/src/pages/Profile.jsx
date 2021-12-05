@@ -1,11 +1,28 @@
 import React, { useEffect, useState } from 'react';
 
 import { getAttendingSessions } from '../utils/apiWrapper';
-import 'semantic-ui-css/semantic.min.css';
-import '../css/Profile.scss';
-import SessionSummary from '../components/SessionSummary';
+import DetailsModal from '../components/DetailsModal';
 import ClassForm from '../components/ClassForm.jsx';
 import ClassCard from '../components/ClassCard';
+import 'semantic-ui-css/semantic.min.css';
+import '../css/Profile.scss';
+
+function Profile(props) {
+  const { user, setUser } = props;
+  const [sessions, setSessions] = useState([]);
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    const populateSessionsAndClasses = async () => {
+      const resp = await getAttendingSessions(user._id);
+      if (!resp.error) {
+        setSessions(resp.data.result);
+      }
+      setClasses(user.classes);
+    };
+
+    populateSessionsAndClasses();
+  }, [user]);
 
 /**
  * Returns a sample API response to demonstrate a working backend
@@ -36,7 +53,14 @@ function Profile({ user }) {
       <h1>My Sessions</h1>
       <p></p>
       {sessions.map((session, i) => (
-        <SessionSummary user={user} session={session} key={i} />
+        <DetailsModal
+          key={i}
+          user={user}
+          initialSession={session}
+          sessions={sessions}
+          setSessions={setSessions}
+          {...props}
+        />
       ))}
 
       <h1>My Classes</h1>
@@ -55,6 +79,7 @@ function Profile({ user }) {
           )}
       </div>
       <p></p>
+
       <ClassForm
         button={
           <button className="small ui button" id="add-class-btn">
@@ -62,6 +87,7 @@ function Profile({ user }) {
           </button>
         }
         user={user}
+        setUser={setUser}
         setClasses={setClasses}
       />
     </>

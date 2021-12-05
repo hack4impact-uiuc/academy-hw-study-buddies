@@ -1,39 +1,82 @@
 import React, { useState } from 'react';
-import { Modal, Form, Input, TextArea, Radio } from 'semantic-ui-react';
+import {
+  Modal,
+  Form,
+  Input,
+  TextArea,
+  Radio,
+  Dropdown,
+} from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { addSession } from '../utils/apiWrapper';
+import { addSession, editSession, getAllUsers } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
-  const { button, id } = props;
+  const {
+    button,
+    creator,
+    isEditMode,
+    session,
+    setSessions,
+    setSession,
+    sessions,
+  } = props;
+
   const [open, setOpen] = useState(false);
   const [isLater, setIsLater] = useState(false);
   const [courseCode, setCourseCode] = useState('');
   const [courseNumber, setCourseNumber] = useState();
   const [courseSuffix, setCourseSuffix] = useState('');
   const [location, setLocation] = useState('');
-  const [attendees, setAttendees] = useState('');
+  const [attendees, setAttendees] = useState([]);
   const [notes, setNotes] = useState('');
   const [date, setDate] = useState();
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [endTimeDefined, setEndTimeDefined] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  async function populateUsers() {
+    const allUsers = await getAllUsers();
+    if (allUsers && allUsers.data.result.length > 0) {
+      let finalUsers = [];
+      allUsers.data.result.map((user) => {
+        if (user.firstName && user.lastName && user._id !== creator._id) {
+          finalUsers.push({
+            key: user._id,
+            value: user._id,
+            text: `${user.firstName} ${user.lastName}`,
+          });
+        }
+      });
+      setUsers(finalUsers);
+    }
+  }
 
   const processFormAndSubmit = async () => {
-    const course = courseCode + courseNumber + courseSuffix;
-    const attendeeArray = attendees.split(',');
+    if (
+      !courseCode ||
+      !courseNumber ||
+      !location ||
+      (isLater && !startTime) ||
+      (isLater && !date)
+    ) {
+      throw 'Form is incomplete';
+    }
 
+    const course = courseCode + courseNumber + courseSuffix;
+    const attendeeArray = attendees;
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
     const active = !isLater;
-    const processedStartDate = active ? 0 : date.split('-'); //2021-11-17
+    const processedStartDate = active ? 0 : date.split('-');
     const processedStartTime = active ? 0 : startTime.split(':');
     const laterStart = active
       ? 0
       : new Date(
           parseInt(processedStartDate[0]),
-          parseInt(processedStartDate[1]),
+          parseInt(processedStartDate[1] - 1),
           parseInt(processedStartDate[2]),
           parseInt(processedStartTime[0]),
           parseInt(processedStartTime[1]),
@@ -66,27 +109,121 @@ function SessionForm(props) {
         : timeoutTry;
 
     const sessionData = {
-      creator: id,
+      creator: creator._id,
       class: course,
       location: location,
-      attendees: attendeeArray,
+      attendees: attendeeArray ? attendeeArray : [],
       notes: notes,
       active: !isLater,
       startTime: startSeconds,
       timeout: timeout,
     };
-    console.log(sessionData);
-    await addSession(sessionData);
+
+    if (isEditMode) {
+      const updatedSession = await editSession(session._id, sessionData);
+      setSession(updatedSession.data.result);
+    } else {
+      const updatedSession = await addSession(sessionData);
+      updatedSession.data.result['creator'] = creator;
+      if (sessionData.active) {
+        setSessions([...sessions, { ...updatedSession.data.result }]);
+      } else {
+        setSessions([...sessions, { ...updatedSession.data.result }]);
+      }
+    }
+    setOpen(false);
+  };
+
+  const formSetup = () => {
+    populateUsers();
+    const splitClass = session.class.split(/([0-9]+)/);
+    setCourseCode(splitClass[0]);
+    setCourseNumber(splitClass[1]);
+    if (splitClass.length > 2) {
+      setCourseSuffix(splitClass[2]);
+    }
+    setLocation(session.location);
+    let attendeeIDs = [];
+    session.attendees.map(
+      (attendee) => (attendeeIDs = [...attendeeIDs, attendee._id]),
+    );
+    setAttendees(attendeeIDs);
+    setNotes(session.notes);
+
+    setIsLater(!session.active);
+    const startSeconds = session.startTime;
+
+    if (!session.active) {
+      const startDate = new Date(startSeconds * 1000);
+      const year = startDate.getFullYear();
+      const month = startDate.getMonth() + 1;
+      const day = startDate.getDate();
+
+      const processedMonth = month < 10 ? '0'.concat(month) : ''.concat(month);
+      const processedDay = day < 10 ? '0'.concat(day) : ''.concat(day);
+
+      const processedDate = ''
+        .concat(year)
+        .concat('-')
+        .concat(processedMonth)
+        .concat('-')
+        .concat(processedDay);
+      setDate(processedDate);
+
+      const startHour = startDate.getHours();
+      const startMinute = startDate.getMinutes();
+
+      const processedStartHour =
+        startHour < 10 ? '0'.concat(startHour) : ''.concat(startHour);
+      const processedStartMinute =
+        startMinute < 10 ? '0'.concat(startMinute) : ''.concat(startMinute);
+      const processedStartTime = processedStartHour
+        .concat(':')
+        .concat(processedStartMinute);
+      setStartTime(processedStartTime);
+    }
+
+    const endDate = new Date((startSeconds + session.timeout) * 1000);
+    const endHour = endDate.getHours();
+    const endMinute = endDate.getMinutes();
+
+    const processedEndHour =
+      endHour < 10 ? '0'.concat(endHour) : ''.concat(endHour);
+    const processedEndMinute =
+      endMinute < 10 ? '0'.concat(endMinute) : ''.concat(endMinute);
+    const processedEndTime = processedEndHour
+      .concat(':')
+      .concat(processedEndMinute);
+    setEndTime(processedEndTime);
+
+    const defaultTimeout = 43200;
+
+    if (session.timeout !== defaultTimeout) {
+      setEndTimeDefined(true);
+    }
   };
 
   return (
     <Modal
+      size="large"
       onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onOpen={() => {
+        setOpen(true);
+        if (isEditMode) {
+          formSetup();
+        } else {
+          populateUsers();
+        }
+      }}
       open={open}
       trigger={button}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+      className="session-form-modal"
     >
       <Modal.Content form>
+        <div id="form-title">Studying? </div>
         <Form centered className="popup-form">
           <Form.Group inline>
             <Form.Field
@@ -97,7 +234,6 @@ function SessionForm(props) {
               value={courseCode}
               onChange={(e) => {
                 setCourseCode(e.target.value);
-                console.log(courseCode);
               }}
             />
             <Form.Field
@@ -108,7 +244,6 @@ function SessionForm(props) {
               value={courseNumber}
               onChange={(e) => {
                 setCourseNumber(e.target.value);
-                console.log(courseNumber);
               }}
             />
             <Form.Field
@@ -118,7 +253,6 @@ function SessionForm(props) {
               value={courseSuffix}
               onChange={(e) => {
                 setCourseSuffix(e.target.value);
-                console.log(courseSuffix);
               }}
             />
             <Form.Field
@@ -129,7 +263,6 @@ function SessionForm(props) {
               value={location}
               onChange={(e) => {
                 setLocation(e.target.value);
-                console.log(location);
               }}
             />
           </Form.Group>
@@ -161,7 +294,6 @@ function SessionForm(props) {
               value={date}
               onChange={(e) => {
                 setDate(e.target.value);
-                console.log(date);
               }}
             />
             <Form.Field
@@ -174,7 +306,6 @@ function SessionForm(props) {
               value={startTime}
               onChange={(e) => {
                 setStartTime(e.target.value);
-                console.log(startTime);
               }}
             />
             <Form.Field
@@ -189,27 +320,35 @@ function SessionForm(props) {
               }}
             />
           </Form.Group>
-          <Form.Field
-            label="Attendees"
-            placeholder="List the other attendees"
-            control={Input}
-            value={attendees}
-            onChange={(e) => {
-              setAttendees(e.target.value);
-              console.log(attendees);
-            }}
-          />
+          <p className="dropdown-label">Invite</p>
+          <Form.Group inline>
+            <Dropdown
+              placeholder="List the other attendees"
+              fluid
+              multiple
+              search
+              selection
+              options={users}
+              onChange={(e, data) => {
+                console.log(data.value);
+                setAttendees(data.value);
+              }}
+              value={attendees}
+            />
+          </Form.Group>
           <Form.TextArea
-            label="Notes"
-            placeholder="Additional notes"
+            label="Additional Notes"
+            placeholder="Studying for an exam? Quiet individual study? "
             control={TextArea}
             value={notes}
             onChange={(e) => {
               setNotes(e.target.value);
-              console.log(notes);
             }}
           />
-          <Form.Button onClick={processFormAndSubmit}>Submit</Form.Button>
+          <Form.Button
+            onClick={processFormAndSubmit}
+            content={isEditMode ? 'UPDATE' : 'CREATE'}
+          ></Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

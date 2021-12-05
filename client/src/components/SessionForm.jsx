@@ -211,6 +211,8 @@ function SessionForm(props) {
         setOpen(true);
         if (isEditMode) {
           formSetup();
+        } else {
+          populateUsers();
         }
       }}
       open={open}

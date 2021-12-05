@@ -15,6 +15,7 @@ function DeleteModal({ isActive, creator, id }) {
 
   return (
     <Modal
+      size="tiny"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
@@ -31,7 +32,7 @@ function DeleteModal({ isActive, creator, id }) {
     >
       <Modal.Content id="modal-container">
         <Modal.Description>
-          <Header>{creator},</Header>
+          <Header content={`${creator.firstName}, `} />
           <p id="form-text">
             Are you sure you want to {isActive ? 'end' : 'cancel'} this session?
           </p>

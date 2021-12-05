@@ -25,7 +25,7 @@ function DetailsModal(props) {
           <Header>
             Join {session.creator.firstName} {session.creator.lastName}
           </Header>
-          <p id="form-text">
+          <div id="form-text">
             Class: {session.class}
             <br />
             Location: {session.location}
@@ -45,7 +45,7 @@ function DetailsModal(props) {
                 <i>{session.notes}</i>
               </p>
             </div>
-          </p>
+          </div>
         </Modal.Description>
       </Modal.Content>
     </Modal>

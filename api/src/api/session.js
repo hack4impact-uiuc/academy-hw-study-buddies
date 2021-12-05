@@ -139,7 +139,7 @@ router.put(
       req.params.sessionId,
       req.body,
       { new: true, runValidators: true },
-    );
+    ).populate('creator', { firstName: 1, lastName: 1 });
 
     if (!updatedSession) {
       res.status(404).json({

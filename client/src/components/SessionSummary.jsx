@@ -83,7 +83,7 @@ function SessionSummary(props) {
           </Card.Header>
         )}
         <div className="btn-container">
-          {user._id === session.creator && (
+          {isCreator && (
             <SessionForm
               button={
                 <Button
@@ -94,7 +94,7 @@ function SessionSummary(props) {
                   }}
                 />
               }
-              id={session.creator}
+              creator={session.creator}
               isEditMode={isEditMode}
               session={session}
               setSession={setSession}

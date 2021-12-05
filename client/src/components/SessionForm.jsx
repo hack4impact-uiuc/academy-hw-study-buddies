@@ -183,8 +183,10 @@ function SessionForm(props) {
       onClick={(e) => {
         e.stopPropagation();
       }}
+      className="session-form-modal"
     >
       <Modal.Content form>
+        <div id="form-title">Studying? </div>
         <Form centered className="popup-form">
           <Form.Group inline>
             <Form.Field
@@ -291,15 +293,18 @@ function SessionForm(props) {
             }}
           />
           <Form.TextArea
-            label="Notes"
-            placeholder="Additional notes"
+            label="Additional Notes"
+            placeholder="Studying for an exam? Quiet individual study? "
             control={TextArea}
             value={notes}
             onChange={(e) => {
               setNotes(e.target.value);
             }}
           />
-          <Form.Button onClick={processFormAndSubmit}>Submit</Form.Button>
+          <Form.Button
+            onClick={processFormAndSubmit}
+            content={isEditMode ? 'UPDATE' : 'CREATE'}
+          ></Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

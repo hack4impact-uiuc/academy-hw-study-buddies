@@ -6,6 +6,7 @@ import '../css/ClassCard.scss';
 
 function ClassCard(props) {
   const { classCardText } = props;
+
   return (
     <Card className="class-card">
       <Card.Content className="card-content-container">
@@ -16,10 +17,9 @@ function ClassCard(props) {
           basic
           color="red"
           className="delete-button"
-          onClick={editUserClasses}
+          onClick={() => editUserClasses}
         >
-          {' '}
-          X{' '}
+          X
         </Button>
       </Card.Content>
     </Card>

@@ -20,7 +20,7 @@ function DeleteModal({ isActive, creator, id }) {
       open={open}
       trigger={
         <Button
-          className={'join-leave-btn'}
+          className={'session-summary-btn'}
           size="small"
           onClick={(e) => {
             e.stopPropagation();

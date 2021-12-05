@@ -23,16 +23,20 @@
   .insideCard {
     margin-top: 5px !important;
     padding: 20px !important;
-  }
 
-  .join-leave-btn {
-    background-color: $sessionAccent !important;
-    padding: 5px 27px;
-    margin-left: 280px;
-    transition: all 0.3s ease !important;
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
 
-    &:hover {
-      background-color: $sessionBackground !important;
+      .session-summary-btn {
+        background-color: $sessionAccent !important;
+        padding: 5px 27px;
+        transition: all 0.3s ease !important;
+
+        &:hover {
+          background-color: $sessionBackground !important;
+        }
+      }
     }
   }
 }

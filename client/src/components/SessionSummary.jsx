@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
-// import DetailsModal from './DetailsModal.jsx';
+import SessionForm from '../components/SessionForm';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
 import DeleteModal from '../components/DeleteModal.jsx';
 
 function SessionSummary(props) {
-  const { user, session, ...rest } = props;
-  // const { user, session } = props;
+  const { user, session, setSession, ...rest } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [startDate, setStartDate] = useState('January 1');
   const [startTime, setStartTime] = useState('12:00 PM');
+  const isEditMode = true;
   const [isCreator, setCreator] = useState(true);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function SessionSummary(props) {
 
       parseDate(session.startTime);
     }
-  }, [user._id, session]);
+  }, [user, session]);
 
   const handleJoinAndLeave = async () => {
     let updatedAttendees = sessionAttendees;
@@ -80,24 +80,43 @@ function SessionSummary(props) {
             {session.location} on {startDate} at {startTime}
           </Card.Header>
         )}
+        <div className="btn-container">
+          {user._id === session.creator && (
+            <SessionForm
+              button={
+                <Button
+                  className="session-summary-btn"
+                  content="EDIT"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                />
+              }
+              id={session.creator}
+              isEditMode={isEditMode}
+              session={session}
+              setSession={setSession}
+            />
+          )}
 
-        {isCreator ? (
-          <DeleteModal
-            isActive={isActive}
-            creator={session.creator}
-            id={session._id}
-          />
-        ) : (
-          <Button
-            className="join-leave-btn"
-            size="small"
-            onClick={(event) => {
-              event.stopPropagation();
-              handleJoinAndLeave(event);
-            }}
-            content={isAttending ? 'LEAVE' : 'JOIN'}
-          />
-        )}
+          {isCreator ? (
+            <DeleteModal
+              isActive={isActive}
+              creator={session.creator}
+              id={session._id}
+            />
+          ) : (
+            <Button
+              className="session-summary-btn"
+              size="small"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleJoinAndLeave(event);
+              }}
+              content={isAttending ? 'LEAVE' : 'JOIN'}
+            />
+          )}
+        </div>
       </Card.Content>
     </Card>
   );

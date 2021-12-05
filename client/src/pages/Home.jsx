@@ -34,7 +34,12 @@ function Home(props) {
 
       <div className="studying-activity-container">
         {sessions.map((session, i) => (
-          <DetailsModal key={i} user={user} session={session} {...props} />
+          <DetailsModal
+            key={i}
+            user={user}
+            initialSession={session}
+            {...props}
+          />
         ))}
         <SessionForm
           button={
@@ -43,6 +48,9 @@ function Home(props) {
             </Button>
           }
           id={user._id}
+          isEditMode={false}
+          sessions={sessions}
+          setSessions={setSessions}
         />
         <br />
         <br />

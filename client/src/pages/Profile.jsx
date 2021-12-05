@@ -31,7 +31,7 @@ function Profile(props) {
       <h1>My Sessions</h1>
       <p></p>
       {sessions.map((session, i) => (
-        <DetailsModal key={i} user={user} initialSession={session} {...props} />
+        <DetailsModal key={i} user={user} initialSession={session} sessions={sessions} setSessions={setSessions} {...props} />
       ))}
 
       <h1>My Classes</h1>

@@ -18,7 +18,9 @@ function DetailsModal(props) {
     >
       <Modal.Content>
         <Modal.Description>
-          <Header>Join {session.creator}</Header>
+          <Header>
+            Join {session.creator.firstName} {session.creator.lastName}
+          </Header>
           <p id="form-text">
             Class: {session.class}
             <br />
@@ -27,10 +29,13 @@ function DetailsModal(props) {
             <br />
             Time Started: {session.time}
             <br />
-            Attendees: {session.attendees}
+            Attendees:{' '}
+            {session.attendees
+              .map((attendee) => `${attendee.firstName} ${attendee.lastName}`)
+              .join(', ')}
             <br />
             <br />
-            Notes from {session.creator}:
+            Notes from {session.creator.firstName}:
             <div className="notes-bg">
               <p>
                 <i>{session.notes}</i>

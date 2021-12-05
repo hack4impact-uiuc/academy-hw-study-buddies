@@ -34,10 +34,14 @@ router.get(
 router.get(
   '/displayed',
   errorWrap(async (req, res) => {
-    let activeSessions = await Session.find({ active: 'true' });
-    const maxDisplayed = 8;
-    // If there are >= maximum displayed active sessions, all will be displayed
-    if (activeSessions.length >= maxDisplayed) {
+    let activeSessions = await Session.find({ active: 'true' })
+      .populate('creator', { firstName: 1, lastName: 1 })
+      .populate('attendees', { firstName: 1, lastName: 1 });
+
+    const MAX_DISPLAYED = 8;
+
+    // If the number of active sessions is greater than MAX_DISPLAYED, display all active sessions
+    if (activeSessions.length >= MAX_DISPLAYED) {
       res.status(200).json({
         message: `Successfully retrieved all displayed sessions on the home page.`,
         success: true,
@@ -46,12 +50,18 @@ router.get(
       return;
     }
 
-    const inactiveSessions = await Session.find({ active: 'false' }).sort({
-      startTime: 'asc',
-    });
+    const inactiveSessions = await Session.find({ active: 'false' })
+      .sort({
+        startTime: 'asc',
+      })
+      .populate('creator', { firstName: 1, lastName: 1 })
+      .populate('attendees', { firstName: 1, lastName: 1 });
 
-    // If the sum of active and inactive sessions is less than the maximum displayed sessions, all sessions (inactive and active) will be displayed
-    if (activeSessions.length + inactiveSessions.length < maxDisplayed) {
+    /**
+     * If the sum of active and inactive sessions is less than MAX_DISPLAYED,
+     * all sessions (inactive and active) will be displayed
+     */
+    if (activeSessions.length + inactiveSessions.length < MAX_DISPLAYED) {
       let allSessions = activeSessions.concat(inactiveSessions);
       res.status(200).json({
         message: `Successfully retrieved all displayed sessions on the home page.`,
@@ -61,10 +71,13 @@ router.get(
       return;
     }
 
-    // Else, if there are <maximum displayed active sessions,
-    // Inactive sessions will populate until there are maximum displayed sessions on the home page in ascending start time order
+    /**
+     * If there are less than MAX_DISPLAYED active sessions,
+     * inactive sessions will populate until there are MAX_DISPLAYED sessions
+     * and sorted in ascending start time order
+     */
     let allSessions = activeSessions.concat(
-      inactiveSessions.slice(0, maxDisplayed - activeSessions.length),
+      inactiveSessions.slice(0, MAX_DISPLAYED - activeSessions.length),
     );
     res.status(200).json({
       message: `Successfully retrieved all displayed sessions on the home page.`,
@@ -78,19 +91,22 @@ router.get(
 router.get(
   '/:sessionId',
   errorWrap(async (req, res) => {
-    const session = await Session.findById(req.params.sessionId);
+    const session = await Session.findById(req.params.sessionId)
+      .populate('creator')
+      .lean();
+
     if (!session) {
       res.status(404).json({
         success: false,
         message: 'Session not found with id',
       });
-    } else {
-      res.status(200).json({
-        success: true,
-        result: session,
-        message: 'Successfully retrieved session',
-      });
     }
+
+    res.status(200).json({
+      success: true,
+      result: { ...session },
+      message: 'Successfully retrieved session',
+    });
   }),
 );
 

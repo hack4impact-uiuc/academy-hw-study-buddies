@@ -11,6 +11,21 @@ export const getUserInfo = () => {
     error,
   }));
 };
+
+export const getAllUsers = () => {
+  const requestString = `http://localhost:9001/api/user/all`;
+  return axios
+    .get(requestString, {
+      headers: {
+        'Content-Type': 'application/JSON',
+      },
+    })
+    .catch((error) => ({
+      type: 'GET_ALL_USERS_FAIL',
+      error,
+    }));
+};
+
 /**
  * Returns a sample API response to demonstrate a working backend
  * Returns GET_SAMPLE_FAIL upon failure

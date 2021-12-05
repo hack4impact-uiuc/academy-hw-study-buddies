@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
-import { Modal, Form, Input, TextArea, Radio } from 'semantic-ui-react';
+import {
+  Modal,
+  Form,
+  Input,
+  TextArea,
+  Radio,
+  Dropdown,
+} from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { addSession, editSession } from '../utils/apiWrapper';
+import { addSession, editSession, getAllUsers } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
@@ -28,6 +35,24 @@ function SessionForm(props) {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [endTimeDefined, setEndTimeDefined] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  async function populateUsers() {
+    const allUsers = await getAllUsers();
+    if (allUsers && allUsers.data.result.length > 0) {
+      let finalUsers = [];
+      allUsers.data.result.map((user) => {
+        if (user.firstName && user.lastName && user._id !== creator._id) {
+          finalUsers.push({
+            key: user._id,
+            value: user,
+            text: `${user.firstName} ${user.lastName}`,
+          });
+        }
+      });
+      setUsers(finalUsers);
+    }
+  }
 
   const processFormAndSubmit = async () => {
     if (
@@ -42,7 +67,6 @@ function SessionForm(props) {
 
     const course = courseCode + courseNumber + courseSuffix;
     const attendeeArray = attendees;
-
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
     const active = !isLater;
@@ -107,6 +131,7 @@ function SessionForm(props) {
   };
 
   const formSetup = () => {
+    populateUsers();
     const splitClass = session.class.split(/([0-9]+)/);
     setCourseCode(splitClass[0]);
     setCourseNumber(splitClass[1]);
@@ -114,7 +139,15 @@ function SessionForm(props) {
       setCourseSuffix(splitClass[2]);
     }
     setLocation(session.location);
-    setAttendees(session.attendees);
+    // let initialAttendees = [];
+    // session.attendees.map((attendee) => {
+    //   initialAttendees = [...initialAttendees, {key: attendee._id, value: attendee, text: `${attendee.firstName} ${attendee.lastName}`}]
+    // })
+    // console.log(initialAttendees);
+    let initialAttendees = [];
+    initialAttendees = [...session.attendees];
+    initialAttendees.filter((attendee) => attendee._id !== creator._id);
+    setAttendees(initialAttendees);
     setNotes(session.notes);
 
     setIsLater(!session.active);
@@ -178,6 +211,8 @@ function SessionForm(props) {
         setOpen(true);
         if (isEditMode) {
           formSetup();
+        } else {
+          populateUsers();
         }
       }}
       open={open}
@@ -285,15 +320,29 @@ function SessionForm(props) {
               }}
             />
           </Form.Group>
-          <Form.Field
-            label="Attendees"
-            placeholder="List the other attendees"
-            control={Input}
-            value={attendees}
-            onChange={(e) => {
-              setAttendees(e.target.value);
+          <Form.Group
+            inline
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              textAlign: 'left',
             }}
-          />
+          >
+            <p style={{ textAlign: 'left' }}>Invite</p>
+            <Dropdown
+              placeholder="List the other attendees"
+              fluid
+              multiple
+              search
+              selection
+              options={users}
+              onChange={(e, data) => {
+                console.log(data.value);
+                setAttendees(data.value);
+              }}
+              value={attendees}
+            />
+          </Form.Group>
           <Form.TextArea
             label="Additional Notes"
             placeholder="Studying for an exam? Quiet individual study? "

@@ -14,8 +14,7 @@ function DeleteModal(props) {
   const handleEndAndDelete = async () => {
     const resp = await deleteSession(id);
     if (!resp.error) {
-      const updatedSessions = sessions.filter((curr) => curr._id !== id);
-      setSessions([...updatedSessions]);
+      setSessions([...sessions.filter((curr) => curr._id !== id)]);
       setOpen(false);
     }
   };

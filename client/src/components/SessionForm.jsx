@@ -45,7 +45,7 @@ function SessionForm(props) {
         if (user.firstName && user.lastName && user._id !== creator._id) {
           finalUsers.push({
             key: user._id,
-            value: user,
+            value: user._id,
             text: `${user.firstName} ${user.lastName}`,
           });
         }
@@ -120,12 +120,16 @@ function SessionForm(props) {
     };
 
     if (isEditMode) {
-      await editSession(session._id, sessionData);
-      setSession({ ...sessionData, _id: session._id, creator });
+      const updatedSession = await editSession(session._id, sessionData);
+      setSession(updatedSession.data.result);
     } else {
       const updatedSession = await addSession(sessionData);
       updatedSession.data.result['creator'] = creator;
-      setSessions([...sessions, updatedSession.data.result]);
+      if (sessionData.active) {
+        setSessions([...sessions, { ...updatedSession.data.result }]);
+      } else {
+        setSessions([...sessions, { ...updatedSession.data.result }]);
+      }
     }
     setOpen(false);
   };
@@ -139,15 +143,11 @@ function SessionForm(props) {
       setCourseSuffix(splitClass[2]);
     }
     setLocation(session.location);
-    // let initialAttendees = [];
-    // session.attendees.map((attendee) => {
-    //   initialAttendees = [...initialAttendees, {key: attendee._id, value: attendee, text: `${attendee.firstName} ${attendee.lastName}`}]
-    // })
-    // console.log(initialAttendees);
-    let initialAttendees = [];
-    initialAttendees = [...session.attendees];
-    initialAttendees.filter((attendee) => attendee._id !== creator._id);
-    setAttendees(initialAttendees);
+    let attendeeIDs = [];
+    session.attendees.map(
+      (attendee) => (attendeeIDs = [...attendeeIDs, attendee._id]),
+    );
+    setAttendees(attendeeIDs);
     setNotes(session.notes);
 
     setIsLater(!session.active);

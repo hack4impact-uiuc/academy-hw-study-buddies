@@ -6,8 +6,11 @@ const Session = require('../models/session');
 router.post(
   '/',
   errorWrap(async (req, res) => {
-    const newSession = await Session.create(req.body);
+    let newSession = await Session.create(req.body);
     if (newSession) {
+      newSession = await Session.findById(newSession._id)
+        .populate('creator', { firstName: 1, lastName: 1 })
+        .populate('attendees', { firstName: 1, lastName: 1 });
       res.status(200).json({
         message: 'Successfully created new session',
         success: true,
@@ -139,7 +142,7 @@ router.get(
 router.put(
   '/:sessionId',
   errorWrap(async (req, res) => {
-    const updatedSession = await Session.findByIdAndUpdate(
+    let updatedSession = await Session.findByIdAndUpdate(
       req.params.sessionId,
       req.body,
       { new: true, runValidators: true },
@@ -154,6 +157,10 @@ router.put(
       });
       return;
     }
+
+    updatedSession = await Session.findById(req.params.sessionId)
+      .populate('creator', { firstName: 1, lastName: 1 })
+      .populate('attendees', { firstName: 1, lastName: 1 });
 
     res.status(200).json({
       success: true,

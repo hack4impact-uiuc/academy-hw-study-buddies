@@ -75,12 +75,13 @@ function SessionForm(props) {
       startTime: startSeconds,
       timeout: timeout,
     };
-    console.log(sessionData);
+
     await addSession(sessionData);
   };
 
   return (
     <Modal
+      size="large"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}

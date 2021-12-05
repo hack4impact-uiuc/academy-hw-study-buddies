@@ -11,6 +11,7 @@ function DetailsModal(props) {
   return (
     <Modal
       className="details-modal"
+      size="tiny"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}

@@ -115,7 +115,11 @@ router.get(
   errorWrap(async (req, res) => {
     const attendingSessions = await Session.find({
       attendees: req.params.userId,
-    }).sort({ startTime: 1 });
+    })
+      .sort({ startTime: 1 })
+      .populate('creator', { firstName: 1, lastName: 1 })
+      .populate('attendees', { firstName: 1, lastName: 1 });
+
     if (!attendingSessions) {
       res.status(404).json({
         success: false,
@@ -123,12 +127,12 @@ router.get(
       });
       return;
     }
+
     res.status(200).json({
       success: true,
       message: 'Successfully retrieved sessions attended by user',
       result: attendingSessions,
     });
-    return;
   }),
 );
 

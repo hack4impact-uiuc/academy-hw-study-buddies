@@ -6,9 +6,11 @@ import 'semantic-ui-css/semantic.min.css';
 import '../css/DetailsModal.scss';
 
 function DetailsModal(props) {
-  const { initialSession, user } = props;
+  const { initialSession, user, sessions, setSessions } = props;
+
   const [session, setSession] = useState(initialSession);
   const [open, setOpen] = useState(false);
+
   return (
     <Modal
       className="details-modal"
@@ -17,7 +19,13 @@ function DetailsModal(props) {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={
-        <SessionSummary session={session} setSession={setSession} user={user} />
+        <SessionSummary
+          session={session}
+          setSession={setSession}
+          sessions={sessions}
+          setSessions={setSessions}
+          user={user}
+        />
       }
     >
       <Modal.Content>

@@ -38,6 +38,8 @@ function Home(props) {
             key={i}
             user={user}
             initialSession={session}
+            sessions={sessions}
+            setSessions={setSessions}
             {...props}
           />
         ))}

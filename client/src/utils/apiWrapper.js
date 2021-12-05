@@ -146,7 +146,6 @@ export const editUserClasses = (userId, body) => {
 
 export const getUserClasses = () => {
   const requestString = `${BASE_URL}/user/classes`;
-  console.log(requestString);
   return axios
     .get(requestString, {
       headers: {

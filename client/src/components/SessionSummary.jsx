@@ -8,7 +8,7 @@ import '../css/SessionSummary.scss';
 import DeleteModal from '../components/DeleteModal.jsx';
 
 function SessionSummary(props) {
-  const { user, session, setSession, ...rest } = props;
+  const { user, session, setSession, sessions, setSessions, ...rest } = props;
 
   const [sessionAttendees, setSessionAttendees] = useState([]);
   const [isAttending, setIsAttending] = useState(false);
@@ -106,6 +106,8 @@ function SessionSummary(props) {
               isActive={isActive}
               creator={session.creator}
               id={session._id}
+              sessions={sessions}
+              setSessions={setSessions}
             />
           ) : (
             <Button

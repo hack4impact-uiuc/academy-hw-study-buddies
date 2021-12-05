@@ -6,11 +6,18 @@ import { deleteSession } from '../utils/apiWrapper.js';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/DeleteModal.scss';
 
-function DeleteModal({ isActive, creator, id }) {
+function DeleteModal(props) {
+  const { isActive, creator, id, sessions, setSessions } = props;
+
   const [open, setOpen] = React.useState(false);
 
   const handleEndAndDelete = async () => {
-    await deleteSession(id);
+    const resp = await deleteSession(id);
+    if (!resp.error) {
+      const updatedSessions = sessions.filter((curr) => curr._id !== id);
+      setSessions([...updatedSessions]);
+      setOpen(false);
+    }
   };
 
   return (
@@ -40,7 +47,7 @@ function DeleteModal({ isActive, creator, id }) {
             className="join-session-button"
             onClick={(e) => {
               e.stopPropagation();
-              setOpen(false);
+
               handleEndAndDelete();
             }}
           >

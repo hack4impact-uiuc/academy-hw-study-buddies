@@ -114,7 +114,7 @@ router.get(
   '/attending/:userId',
   errorWrap(async (req, res) => {
     const attendingSessions = await Session.find({
-      $or: [{attendees: req.params.userId}, {creator: req.params.userId}]
+      $or: [{ attendees: req.params.userId }, { creator: req.params.userId }],
     })
       .sort({ startTime: 1 })
       .populate('creator', { firstName: 1, lastName: 1 })
@@ -143,7 +143,9 @@ router.put(
       req.params.sessionId,
       req.body,
       { new: true, runValidators: true },
-    ).populate('creator', { firstName: 1, lastName: 1 }).populate('attendees', { firstName: 1, lastName: 1 });;
+    )
+      .populate('creator', { firstName: 1, lastName: 1 })
+      .populate('attendees', { firstName: 1, lastName: 1 });
 
     if (!updatedSession) {
       res.status(404).json({

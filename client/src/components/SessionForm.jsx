@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Modal, Form, Input, TextArea, Radio, Dropdown } from 'semantic-ui-react';
+import {
+  Modal,
+  Form,
+  Input,
+  TextArea,
+  Radio,
+  Dropdown,
+} from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
 import { addSession, editSession, getAllUsers } from '../utils/apiWrapper';
@@ -28,7 +35,7 @@ function SessionForm(props) {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [endTimeDefined, setEndTimeDefined] = useState(false);
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
 
   async function populateUsers() {
     const allUsers = await getAllUsers();
@@ -36,9 +43,13 @@ function SessionForm(props) {
       let finalUsers = [];
       allUsers.data.result.map((user) => {
         if (user.firstName && user.lastName && user._id !== creator._id) {
-          finalUsers.push({key: user._id, value: user, text: `${user.firstName} ${user.lastName}`})
+          finalUsers.push({
+            key: user._id,
+            value: user,
+            text: `${user.firstName} ${user.lastName}`,
+          });
         }
-      })
+      });
       setUsers(finalUsers);
     }
   }
@@ -135,7 +146,7 @@ function SessionForm(props) {
     // console.log(initialAttendees);
     let initialAttendees = [];
     initialAttendees = [...session.attendees];
-    initialAttendees.filter((attendee) => attendee._id !== creator._id)
+    initialAttendees.filter((attendee) => attendee._id !== creator._id);
     setAttendees(initialAttendees);
     setNotes(session.notes);
 
@@ -307,8 +318,15 @@ function SessionForm(props) {
               }}
             />
           </Form.Group>
-          <Form.Group inline style={{display: "flex", flexDirection: "column", textAlign: "left"}}>
-            <p style={{textAlign: "left"}}>Invite</p>
+          <Form.Group
+            inline
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              textAlign: 'left',
+            }}
+          >
+            <p style={{ textAlign: 'left' }}>Invite</p>
             <Dropdown
               placeholder="List the other attendees"
               fluid
@@ -317,9 +335,9 @@ function SessionForm(props) {
               selection
               options={users}
               onChange={(e, data) => {
-                  console.log(data.value);
-                  setAttendees(data.value)
-                }}
+                console.log(data.value);
+                setAttendees(data.value);
+              }}
               value={attendees}
             />
           </Form.Group>

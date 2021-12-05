@@ -3,7 +3,6 @@ import { Button, Card } from 'semantic-ui-react';
 
 import { editSession } from '../utils/apiWrapper.js';
 import SessionForm from '../components/SessionForm';
-// import DetailsModal from './DetailsModal.jsx';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/SessionSummary.scss';
 import DeleteModal from '../components/DeleteModal.jsx';

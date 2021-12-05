@@ -38,6 +38,8 @@ function Home(props) {
             key={i}
             user={user}
             initialSession={session}
+            sessions={sessions}
+            setSessions={setSessions}
             {...props}
           />
         ))}
@@ -47,7 +49,7 @@ function Home(props) {
               <i className="plus icon" id="plus-icon"></i>
             </Button>
           }
-          id={user._id}
+          creator={user}
           isEditMode={false}
           sessions={sessions}
           setSessions={setSessions}

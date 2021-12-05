@@ -6,8 +6,15 @@ import { addSession, editSession } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
-  const { button, id, isEditMode, session, setSessions, setSession, sessions } =
-    props;
+  const {
+    button,
+    creator,
+    isEditMode,
+    session,
+    setSessions,
+    setSession,
+    sessions,
+  } = props;
 
   const [open, setOpen] = useState(false);
   const [isLater, setIsLater] = useState(false);
@@ -15,7 +22,7 @@ function SessionForm(props) {
   const [courseNumber, setCourseNumber] = useState();
   const [courseSuffix, setCourseSuffix] = useState('');
   const [location, setLocation] = useState('');
-  const [attendees, setAttendees] = useState('');
+  const [attendees, setAttendees] = useState([]);
   const [notes, setNotes] = useState('');
   const [date, setDate] = useState();
   const [startTime, setStartTime] = useState();
@@ -34,7 +41,7 @@ function SessionForm(props) {
     }
 
     const course = courseCode + courseNumber + courseSuffix;
-    const attendeeArray = attendees.length > 0 ? attendees.split(',') : [''];
+    const attendeeArray = attendees;
 
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
@@ -53,7 +60,6 @@ function SessionForm(props) {
           0,
         );
     const processedStart = active ? new Date() : laterStart;
-    console.log(processedStart.getMonth());
     const startSeconds = processedStart.getTime() / 1000;
 
     const processedEndTime = endTimeDefined ? endTime.split(':') : 0;
@@ -79,10 +85,10 @@ function SessionForm(props) {
         : timeoutTry;
 
     const sessionData = {
-      creator: id,
+      creator: creator._id,
       class: course,
       location: location,
-      attendees: attendeeArray,
+      attendees: attendeeArray ? attendeeArray : [],
       notes: notes,
       active: !isLater,
       startTime: startSeconds,
@@ -91,9 +97,10 @@ function SessionForm(props) {
 
     if (isEditMode) {
       await editSession(session._id, sessionData);
-      setSession({ ...sessionData, _id: session._id });
+      setSession({ ...sessionData, _id: session._id, creator });
     } else {
       const updatedSession = await addSession(sessionData);
+      updatedSession.data.result['creator'] = creator;
       setSessions([...sessions, updatedSession.data.result]);
     }
     setOpen(false);
@@ -107,11 +114,7 @@ function SessionForm(props) {
       setCourseSuffix(splitClass[2]);
     }
     setLocation(session.location);
-    setAttendees(
-      session.attendees.length > 0
-        ? session.attendees.join(',')
-        : session.attendees,
-    );
+    setAttendees(session.attendees);
     setNotes(session.notes);
 
     setIsLater(!session.active);
@@ -169,6 +172,7 @@ function SessionForm(props) {
 
   return (
     <Modal
+      size="large"
       onClose={() => setOpen(false)}
       onOpen={() => {
         setOpen(true);

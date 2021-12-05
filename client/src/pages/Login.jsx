@@ -32,7 +32,7 @@ function Login({ setUser }) {
 
   return (
     <div>
-      <h1 textAlign="center" size="lg" fontWeight="extrabold">
+      <h1 size="lg" fontWeight="extrabold">
         Welcome to Étude{' '}
         <span role="img" aria-label="books">
           📚

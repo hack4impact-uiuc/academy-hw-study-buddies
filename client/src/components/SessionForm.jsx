@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Modal, Form, Input, TextArea, Radio } from 'semantic-ui-react';
 
 import 'semantic-ui-css/semantic.min.css';
-import { addSession } from '../utils/apiWrapper';
+import { addSession, editSession } from '../utils/apiWrapper';
 import '../css/SessionForm.scss';
 
 function SessionForm(props) {
-  const { button, id } = props;
+  const { button, id, isEditMode, session, setSessions, setSession, sessions } =
+    props;
+
   const [open, setOpen] = useState(false);
   const [isLater, setIsLater] = useState(false);
   const [courseCode, setCourseCode] = useState('');
@@ -21,19 +23,29 @@ function SessionForm(props) {
   const [endTimeDefined, setEndTimeDefined] = useState(false);
 
   const processFormAndSubmit = async () => {
+    if (
+      !courseCode ||
+      !courseNumber ||
+      !location ||
+      (isLater && !startTime) ||
+      (isLater && !date)
+    ) {
+      throw 'Form is incomplete';
+    }
+
     const course = courseCode + courseNumber + courseSuffix;
-    const attendeeArray = attendees.split(',');
+    const attendeeArray = attendees.length > 0 ? attendees.split(',') : [''];
 
     const defaultTimeout = 43200;
     const millisecondsInDay = 86400000;
     const active = !isLater;
-    const processedStartDate = active ? 0 : date.split('-'); //2021-11-17
+    const processedStartDate = active ? 0 : date.split('-');
     const processedStartTime = active ? 0 : startTime.split(':');
     const laterStart = active
       ? 0
       : new Date(
           parseInt(processedStartDate[0]),
-          parseInt(processedStartDate[1]),
+          parseInt(processedStartDate[1] - 1),
           parseInt(processedStartDate[2]),
           parseInt(processedStartTime[0]),
           parseInt(processedStartTime[1]),
@@ -41,6 +53,7 @@ function SessionForm(props) {
           0,
         );
     const processedStart = active ? new Date() : laterStart;
+    console.log(processedStart.getMonth());
     const startSeconds = processedStart.getTime() / 1000;
 
     const processedEndTime = endTimeDefined ? endTime.split(':') : 0;
@@ -75,16 +88,99 @@ function SessionForm(props) {
       startTime: startSeconds,
       timeout: timeout,
     };
-    console.log(sessionData);
-    await addSession(sessionData);
+
+    if (isEditMode) {
+      await editSession(session._id, sessionData);
+      setSession({ ...sessionData, _id: session._id });
+    } else {
+      const updatedSession = await addSession(sessionData);
+      setSessions([...sessions, updatedSession.data.result]);
+    }
+    setOpen(false);
+  };
+
+  const formSetup = () => {
+    const splitClass = session.class.split(/([0-9]+)/);
+    setCourseCode(splitClass[0]);
+    setCourseNumber(splitClass[1]);
+    if (splitClass.length > 2) {
+      setCourseSuffix(splitClass[2]);
+    }
+    setLocation(session.location);
+    setAttendees(
+      session.attendees.length > 0
+        ? session.attendees.join(',')
+        : session.attendees,
+    );
+    setNotes(session.notes);
+
+    setIsLater(!session.active);
+    const startSeconds = session.startTime;
+
+    if (!session.active) {
+      const startDate = new Date(startSeconds * 1000);
+      const year = startDate.getFullYear();
+      const month = startDate.getMonth() + 1;
+      const day = startDate.getDate();
+
+      const processedMonth = month < 10 ? '0'.concat(month) : ''.concat(month);
+      const processedDay = day < 10 ? '0'.concat(day) : ''.concat(day);
+
+      const processedDate = ''
+        .concat(year)
+        .concat('-')
+        .concat(processedMonth)
+        .concat('-')
+        .concat(processedDay);
+      setDate(processedDate);
+
+      const startHour = startDate.getHours();
+      const startMinute = startDate.getMinutes();
+
+      const processedStartHour =
+        startHour < 10 ? '0'.concat(startHour) : ''.concat(startHour);
+      const processedStartMinute =
+        startMinute < 10 ? '0'.concat(startMinute) : ''.concat(startMinute);
+      const processedStartTime = processedStartHour
+        .concat(':')
+        .concat(processedStartMinute);
+      setStartTime(processedStartTime);
+    }
+
+    const endDate = new Date((startSeconds + session.timeout) * 1000);
+    const endHour = endDate.getHours();
+    const endMinute = endDate.getMinutes();
+
+    const processedEndHour =
+      endHour < 10 ? '0'.concat(endHour) : ''.concat(endHour);
+    const processedEndMinute =
+      endMinute < 10 ? '0'.concat(endMinute) : ''.concat(endMinute);
+    const processedEndTime = processedEndHour
+      .concat(':')
+      .concat(processedEndMinute);
+    setEndTime(processedEndTime);
+
+    const defaultTimeout = 43200;
+
+    if (session.timeout !== defaultTimeout) {
+      setEndTimeDefined(true);
+    }
   };
 
   return (
     <Modal
       onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onOpen={() => {
+        setOpen(true);
+        if (isEditMode) {
+          formSetup();
+        }
+      }}
       open={open}
       trigger={button}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
       className="session-form-modal"
     >
       <Modal.Content form>
@@ -99,7 +195,6 @@ function SessionForm(props) {
               value={courseCode}
               onChange={(e) => {
                 setCourseCode(e.target.value);
-                console.log(courseCode);
               }}
             />
             <Form.Field
@@ -110,7 +205,6 @@ function SessionForm(props) {
               value={courseNumber}
               onChange={(e) => {
                 setCourseNumber(e.target.value);
-                console.log(courseNumber);
               }}
             />
             <Form.Field
@@ -120,7 +214,6 @@ function SessionForm(props) {
               value={courseSuffix}
               onChange={(e) => {
                 setCourseSuffix(e.target.value);
-                console.log(courseSuffix);
               }}
             />
             <Form.Field
@@ -131,7 +224,6 @@ function SessionForm(props) {
               value={location}
               onChange={(e) => {
                 setLocation(e.target.value);
-                console.log(location);
               }}
             />
           </Form.Group>
@@ -163,7 +255,6 @@ function SessionForm(props) {
               value={date}
               onChange={(e) => {
                 setDate(e.target.value);
-                console.log(date);
               }}
             />
             <Form.Field
@@ -176,7 +267,6 @@ function SessionForm(props) {
               value={startTime}
               onChange={(e) => {
                 setStartTime(e.target.value);
-                console.log(startTime);
               }}
             />
             <Form.Field
@@ -198,7 +288,6 @@ function SessionForm(props) {
             value={attendees}
             onChange={(e) => {
               setAttendees(e.target.value);
-              console.log(attendees);
             }}
           />
           <Form.TextArea
@@ -208,10 +297,12 @@ function SessionForm(props) {
             value={notes}
             onChange={(e) => {
               setNotes(e.target.value);
-              console.log(notes);
             }}
           />
-          <Form.Button onClick={processFormAndSubmit}>CREATE</Form.Button>
+          <Form.Button
+            onClick={processFormAndSubmit}
+            content={isEditMode ? 'UPDATE' : 'CREATE'}
+          ></Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

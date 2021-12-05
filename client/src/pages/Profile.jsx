@@ -4,8 +4,28 @@ import { getAttendingSessions } from '../utils/apiWrapper';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/Profile.scss';
 import SessionSummary from '../components/SessionSummary';
+import DetailsModal from '../components/DetailsModal';
 import ClassForm from '../components/ClassForm.jsx';
 import ClassCard from '../components/ClassCard';
+import 'semantic-ui-css/semantic.min.css';
+import '../css/Profile.scss';
+
+function Profile(props) {
+  const { user, setUser } = props;
+  const [sessions, setSessions] = useState([]);
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    const populateSessionsAndClasses = async () => {
+      const resp = await getAttendingSessions(user._id);
+      if (!resp.error) {
+        setSessions(resp.data.result);
+      }
+      setClasses(user.classes);
+    };
+
+    populateSessionsAndClasses();
+  }, [user]);
 
 /**
  * Returns a sample API response to demonstrate a working backend
@@ -62,6 +82,7 @@ function Profile({ user }) {
           </button>
         }
         user={user}
+        setUser={setUser}
         setClasses={setClasses}
       />
     </>

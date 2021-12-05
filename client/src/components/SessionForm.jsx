@@ -85,8 +85,10 @@ function SessionForm(props) {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={button}
+      className="session-form-modal"
     >
       <Modal.Content form>
+        <div id="form-title">Studying? </div>
         <Form centered className="popup-form">
           <Form.Group inline>
             <Form.Field
@@ -200,8 +202,8 @@ function SessionForm(props) {
             }}
           />
           <Form.TextArea
-            label="Notes"
-            placeholder="Additional notes"
+            label="Additional Notes"
+            placeholder="Studying for an exam? Quiet individual study? "
             control={TextArea}
             value={notes}
             onChange={(e) => {
@@ -209,7 +211,7 @@ function SessionForm(props) {
               console.log(notes);
             }}
           />
-          <Form.Button onClick={processFormAndSubmit}>Submit</Form.Button>
+          <Form.Button onClick={processFormAndSubmit}>CREATE</Form.Button>
         </Form>
       </Modal.Content>
     </Modal>

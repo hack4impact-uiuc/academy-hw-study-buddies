@@ -46,7 +46,6 @@ function DeleteModal(props) {
             className="join-session-button"
             onClick={(e) => {
               e.stopPropagation();
-
               handleEndAndDelete();
             }}
           >

@@ -38,12 +38,7 @@ function ClassForm(props) {
       trigger={button}
     >
       <Modal.Content form>
-        <Form
-          size="small"
-          centered
-          className="popup-form"
-          onSubmit={handleSubmit}
-        >
+        <Form size="small" centered>
           <Form.Group inline>
             <Form.Input
               required

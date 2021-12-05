@@ -4,11 +4,15 @@ import { getAttendingSessions } from '../utils/apiWrapper';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/Profile.scss';
 import SessionSummary from '../components/SessionSummary';
-import DetailsModal from '../components/DetailsModal';
 import ClassForm from '../components/ClassForm.jsx';
 import ClassCard from '../components/ClassCard';
 import 'semantic-ui-css/semantic.min.css';
 import '../css/Profile.scss';
+
+/**
+ * Returns a sample API response to demonstrate a working backend
+ * Returns GET_SAMPLE_FAIL upon failure
+ */
 
 function Profile(props) {
   const { user, setUser } = props;
@@ -19,28 +23,6 @@ function Profile(props) {
     const populateSessionsAndClasses = async () => {
       const resp = await getAttendingSessions(user._id);
       if (!resp.error) {
-        setSessions(resp.data.result);
-      }
-      setClasses(user.classes);
-    };
-
-    populateSessionsAndClasses();
-  }, [user]);
-
-/**
- * Returns a sample API response to demonstrate a working backend
- * Returns GET_SAMPLE_FAIL upon failure
- */
-
-function Profile({ user }) {
-  const [sessions, setSessions] = useState([]);
-  const [classes, setClasses] = useState([]);
-
-  useEffect(() => {
-    const populateSessionsAndClasses = async () => {
-      const resp = await getAttendingSessions(user._id);
-      if (!resp.error) {
-        console.log(resp.data.result);
         setSessions(resp.data.result);
       }
       setClasses(user.classes);

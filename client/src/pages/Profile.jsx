@@ -24,28 +24,6 @@ function Profile(props) {
     populateSessionsAndClasses();
   }, [user]);
 
-/**
- * Returns a sample API response to demonstrate a working backend
- * Returns GET_SAMPLE_FAIL upon failure
- */
-
-function Profile({ user }) {
-  const [sessions, setSessions] = useState([]);
-  const [classes, setClasses] = useState([]);
-
-  useEffect(() => {
-    const populateSessionsAndClasses = async () => {
-      const resp = await getAttendingSessions(user._id);
-      if (!resp.error) {
-        console.log(resp.data.result);
-        setSessions(resp.data.result);
-      }
-      setClasses(user.classes);
-    };
-
-    populateSessionsAndClasses();
-  }, [user]);
-
   return (
     <>
       <h2>Welcome to your Profile Page, {user.firstName}</h2>
@@ -93,5 +71,4 @@ function Profile({ user }) {
     </>
   );
 }
-
 export default Profile;

@@ -43,15 +43,17 @@ function SessionSummary(props) {
   }, [user, session]);
 
   const handleJoinAndLeave = async () => {
+    console.log(sessionAttendees);
+    console.log(session);
     let updatedAttendees = sessionAttendees;
 
     if (!isAttending) {
       // Join session if user is not currently attending
-      updatedAttendees = [...sessionAttendees, user._id];
+      updatedAttendees = [...sessionAttendees, user];
     } else {
       // Remove user from attendees array if currently attending
       updatedAttendees = sessionAttendees.filter(
-        (attendee) => attendee !== user._id,
+        (attendee) => attendee._id !== user._id,
       );
     }
 
@@ -60,7 +62,11 @@ function SessionSummary(props) {
     const updatedSession = {
       attendees: updatedAttendees,
     };
-    await editSession(session._id, updatedSession);
+    const finalSession = await editSession(session._id, updatedSession);
+    if (!finalSession.error) {
+      setSession(finalSession.data.result);
+    }
+    console.log(finalSession);
   };
 
   return (

@@ -320,15 +320,8 @@ function SessionForm(props) {
               }}
             />
           </Form.Group>
-          <Form.Group
-            inline
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              textAlign: 'left',
-            }}
-          >
-            <p style={{ textAlign: 'left' }}>Invite</p>
+          <p className="dropdown-label">Invite</p>
+          <Form.Group inline>
             <Dropdown
               placeholder="List the other attendees"
               fluid
